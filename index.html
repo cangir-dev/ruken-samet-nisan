@@ -3,22 +3,25 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ruken & Samet | Anılarınızı Bırakın</title>
+  <title>Ruken & Samet | Nişan Anıları</title>
 
   <style>
     :root{
+      /* Tema */
       --bg1:#eef7f2;
-      --bg2:#d8eee3;
+      --bg2:#d6eee2;
 
-      --green:#3f7a63;
-      --green2:#2f6a54;
-      --text:#1f3a2f;
-      --muted:#4b6b5e;
+      --forest:#1f4a39;     /* koyu yeşil */
+      --pine:#275a45;       /* buton */
+      --sage:#3b7a62;       /* vurgu */
+      --text:#173228;
+      --muted:#2a4d41;
 
-      --card: rgba(255,255,255,.72);
-      --stroke: rgba(255,255,255,.65);
-      --shadow: 0 24px 60px rgba(19, 45, 34, .18);
-      --radius: 26px;
+      /* Kart */
+      --card: rgba(255,255,255,.90);
+      --stroke: rgba(31,74,57,.16);
+      --shadow: 0 26px 70px rgba(12, 34, 26, .18);
+      --radius: 28px;
     }
 
     *{ box-sizing:border-box; font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial; }
@@ -26,130 +29,165 @@
     body{
       margin:0;
       min-height:100vh;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      background: radial-gradient(1200px 700px at 20% 10%, var(--bg2), transparent 60%),
-                  radial-gradient(1200px 700px at 80% 90%, var(--bg2), transparent 60%),
-                  linear-gradient(135deg, var(--bg1), var(--bg2), var(--bg1));
+      display:grid;
+      place-items:center;
       color:var(--text);
+      background:
+        radial-gradient(1000px 650px at 12% 18%, var(--bg2), transparent 62%),
+        radial-gradient(1000px 650px at 88% 82%, var(--bg2), transparent 62%),
+        linear-gradient(135deg, var(--bg1), var(--bg2), var(--bg1));
       overflow-x:hidden;
     }
 
-    /* ORİJİNAL “ÇİÇEK” OVERLAY — dış link yok */
-    .flowers{
+    /* Floral + afiş havası: dış link YOK */
+    .bg-art{
       position:fixed;
-      inset:-40px;
+      inset:0;
       pointer-events:none;
       z-index:0;
-      opacity:.55;
-      filter: blur(.2px);
-      background:
-        /* büyük petal halkaları */
-        radial-gradient(circle at 12% 20%, rgba(63,122,99,.18) 0 18px, transparent 19px),
-        radial-gradient(circle at 16% 24%, rgba(255,255,255,.65) 0 10px, transparent 11px),
-        radial-gradient(circle at 88% 26%, rgba(63,122,99,.16) 0 20px, transparent 21px),
-        radial-gradient(circle at 84% 22%, rgba(255,255,255,.6) 0 10px, transparent 11px),
-        radial-gradient(circle at 20% 86%, rgba(63,122,99,.14) 0 22px, transparent 23px),
-        radial-gradient(circle at 24% 82%, rgba(255,255,255,.55) 0 11px, transparent 12px),
-        radial-gradient(circle at 82% 84%, rgba(63,122,99,.14) 0 22px, transparent 23px),
-        radial-gradient(circle at 78% 80%, rgba(255,255,255,.55) 0 11px, transparent 12px),
-        /* yumuşak ışık lekeleri */
-        radial-gradient(900px 600px at 10% 10%, rgba(183,215,196,.40), transparent 60%),
-        radial-gradient(900px 600px at 90% 30%, rgba(165,203,181,.35), transparent 60%),
-        radial-gradient(900px 600px at 30% 90%, rgba(200,225,212,.35), transparent 60%),
-        radial-gradient(900px 600px at 85% 90%, rgba(170,210,190,.30), transparent 60%);
-      animation: floaty 10s ease-in-out infinite;
     }
-
-    @keyframes floaty{
-      0%,100%{ transform: translateY(0px); }
-      50%{ transform: translateY(-8px); }
+    .bg-art::before{
+      content:"";
+      position:absolute;
+      inset:-40px;
+      opacity:.22; /* sis yok */
+      background:
+        /* yumuşak çiçek/petal noktaları */
+        radial-gradient(circle at 10% 20%, rgba(39,90,69,.22) 0 18px, transparent 19px),
+        radial-gradient(circle at 14% 24%, rgba(255,255,255,.55) 0 9px, transparent 10px),
+        radial-gradient(circle at 88% 28%, rgba(39,90,69,.18) 0 22px, transparent 23px),
+        radial-gradient(circle at 84% 24%, rgba(255,255,255,.55) 0 10px, transparent 11px),
+        radial-gradient(circle at 22% 86%, rgba(39,90,69,.14) 0 24px, transparent 25px),
+        radial-gradient(circle at 80% 84%, rgba(39,90,69,.14) 0 24px, transparent 25px),
+        /* ışık lekeleri */
+        radial-gradient(900px 600px at 12% 10%, rgba(183,215,196,.30), transparent 60%),
+        radial-gradient(900px 600px at 90% 30%, rgba(165,203,181,.24), transparent 60%),
+        radial-gradient(900px 600px at 30% 92%, rgba(200,225,212,.22), transparent 60%);
+      filter: blur(.25px);
+    }
+    .bg-art::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        radial-gradient(700px 420px at 50% 45%, rgba(255,255,255,.50), transparent 65%);
+      opacity:.55;
     }
 
     .wrap{
-      width:min(920px, 94vw);
-      padding: 28px 18px;
+      width:min(980px, 94vw);
+      padding: 30px 16px 44px;
       position:relative;
       z-index:1;
     }
 
-    .card{
-      margin: 0 auto;
-      width:min(560px, 100%);
-      border-radius: var(--radius);
+    /* Afiş / Poster kart */
+    .poster{
+      margin:0 auto;
+      width:min(620px, 100%);
       background: var(--card);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      box-shadow: var(--shadow);
       border: 1px solid var(--stroke);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
       overflow:hidden;
       position:relative;
     }
 
-    .card::before{
+    /* Afiş çerçeve */
+    .poster::before{
       content:"";
       position:absolute;
-      inset:-24px;
-      background:
-        radial-gradient(circle at 10% 10%, rgba(63,122,99,.18), transparent 60%),
-        radial-gradient(circle at 90% 85%, rgba(63,122,99,.12), transparent 55%);
-      z-index:0;
+      inset:14px;
+      border-radius: calc(var(--radius) - 12px);
+      border: 1px solid rgba(31,74,57,.16);
+      pointer-events:none;
     }
 
-    .header{
+    /* Üst şerit */
+    .topband{
+      padding: 18px 22px 12px;
+      background:
+        linear-gradient(135deg, rgba(31,74,57,.95), rgba(39,90,69,.92));
+      color: #fff;
+      position:relative;
+    }
+    .topband::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        radial-gradient(500px 220px at 10% 20%, rgba(255,255,255,.18), transparent 60%),
+        radial-gradient(520px 220px at 90% 80%, rgba(255,255,255,.12), transparent 60%);
+      opacity:.55;
+      pointer-events:none;
+    }
+
+    .toprow{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
       position:relative;
       z-index:1;
-      padding: 26px 24px 10px;
-      text-align:center;
     }
 
-    .badge{
+    .tag{
       display:inline-flex;
       align-items:center;
       gap:8px;
       padding: 8px 12px;
       border-radius: 999px;
-      background: rgba(255,255,255,.70);
-      border: 1px solid rgba(63,122,99,.18);
-      color: var(--muted);
-      font-size: 13px;
+      background: rgba(255,255,255,.14);
+      border: 1px solid rgba(255,255,255,.22);
+      font-size: 12px;
+      letter-spacing:.2px;
+      white-space:nowrap;
     }
 
-    h1{
-      margin: 14px 0 8px;
-      font-size: 30px;
-      letter-spacing: .2px;
-      color: var(--green2);
+    .date{
+      font-size: 12px;
+      opacity:.92;
+      white-space:nowrap;
     }
 
+    .title{
+      margin: 14px 0 6px;
+      font-size: 34px;
+      letter-spacing:.2px;
+      position:relative;
+      z-index:1;
+    }
     .subtitle{
-      margin:0;
-      color: var(--muted);
-      font-size: 15px;
-      line-height:1.4;
+      margin:0 0 6px;
+      font-size: 14px;
+      opacity:.95;
+      position:relative;
+      z-index:1;
+      line-height:1.45;
     }
 
     .content{
-      position:relative;
-      z-index:1;
-      padding: 18px 22px 24px;
+      padding: 18px 22px 20px;
     }
 
+    /* Upload alanı */
     .dropzone{
-      border: 2px dashed rgba(63,122,99,.45);
-      border-radius: 20px;
-      padding: 18px;
-      background: rgba(255,255,255,.55);
+      border: 2px dashed rgba(31,74,57,.35);
+      border-radius: 18px;
+      padding: 16px;
+      background: rgba(255,255,255,.75);
       transition: .25s ease;
       cursor:pointer;
       user-select:none;
     }
-
-    .dropzone:hover{ background: rgba(255,255,255,.85); }
+    .dropzone:hover{
+      background: rgba(255,255,255,.95);
+      border-color: rgba(31,74,57,.55);
+      transform: translateY(-1px);
+    }
     .dropzone.dragover{
-      border-color: rgba(63,122,99,.9);
-      background: rgba(233, 247, 240, .9);
+      background: rgba(231, 246, 239, .95);
+      border-color: rgba(31,74,57,.80);
       transform: translateY(-1px);
     }
 
@@ -160,58 +198,58 @@
       gap:10px;
       margin-bottom:10px;
     }
-
     .dz-title{
-      font-weight: 700;
-      color: var(--green2);
+      font-weight: 800;
+      color: var(--forest);
       font-size: 15px;
     }
-
     .dz-meta{
       font-size: 12px;
       color: var(--muted);
+      background: rgba(31,74,57,.06);
+      border: 1px solid rgba(31,74,57,.12);
+      padding: 6px 10px;
+      border-radius: 999px;
+      white-space:nowrap;
     }
-
     .dz-hint{
-      margin: 0;
+      margin:0;
       font-size: 13px;
-      color: var(--muted);
+      color: rgba(42,77,65,.92);
       line-height:1.45;
     }
-
     input[type=file]{ display:none; }
 
+    /* Liste */
     .filelist{
-      margin-top: 14px;
+      margin-top: 12px;
       display:none;
-      border-radius: 18px;
-      border: 1px solid rgba(63,122,99,.15);
-      background: rgba(255,255,255,.60);
+      border-radius: 16px;
+      border: 1px solid rgba(31,74,57,.14);
+      background: rgba(255,255,255,.78);
       overflow:hidden;
     }
-
     .filelist-head{
       padding: 10px 12px;
       display:flex;
       justify-content:space-between;
       gap:10px;
-      color: var(--muted);
       font-size: 12px;
-      border-bottom: 1px solid rgba(63,122,99,.12);
+      color: rgba(42,77,65,.95);
+      background: rgba(31,74,57,.05);
+      border-bottom: 1px solid rgba(31,74,57,.10);
     }
-
     .fileitems{
-      max-height: 190px;
+      max-height: 200px;
       overflow:auto;
     }
-
     .fileitem{
       padding: 10px 12px;
       display:flex;
       align-items:center;
       justify-content:space-between;
       gap:10px;
-      border-bottom: 1px solid rgba(63,122,99,.10);
+      border-bottom: 1px solid rgba(31,74,57,.08);
     }
     .fileitem:last-child{ border-bottom:none; }
 
@@ -221,18 +259,16 @@
       gap:10px;
       min-width:0;
     }
-
     .icon{
-      width:28px; height:28px;
+      width:30px; height:30px;
       border-radius: 10px;
       display:grid;
       place-items:center;
-      background: rgba(63,122,99,.12);
-      color: var(--green2);
+      background: rgba(31,74,57,.10);
+      color: var(--forest);
       flex: 0 0 auto;
       font-size: 14px;
     }
-
     .fname b{
       display:block;
       font-size: 13px;
@@ -240,35 +276,35 @@
       white-space:nowrap;
       overflow:hidden;
       text-overflow:ellipsis;
-      max-width: 320px;
+      max-width: 340px;
+      font-weight: 800;
     }
-
     .fname span{
       display:block;
       font-size: 12px;
-      color: var(--muted);
+      color: rgba(42,77,65,.92);
     }
 
     .remove{
       border:none;
-      background: rgba(255,255,255,.7);
-      border: 1px solid rgba(63,122,99,.18);
-      color: var(--muted);
+      background: rgba(255,255,255,.85);
+      border: 1px solid rgba(31,74,57,.16);
+      color: rgba(42,77,65,.95);
       border-radius: 12px;
       padding: 8px 10px;
       cursor:pointer;
-      font-weight: 600;
+      font-weight: 800;
       transition:.2s ease;
       flex: 0 0 auto;
     }
     .remove:hover{ transform: translateY(-1px); }
 
+    /* Butonlar */
     .actions{
-      margin-top: 14px;
+      margin-top: 12px;
       display:flex;
       gap:10px;
     }
-
     .btn{
       width:100%;
       padding: 14px 14px;
@@ -276,77 +312,91 @@
       border-radius: 16px;
       cursor:pointer;
       font-size: 15px;
-      font-weight: 800;
-      color:white;
-      background: linear-gradient(135deg, #6fa98f, #3f7a63);
-      box-shadow: 0 14px 30px rgba(63,122,99,.25);
+      font-weight: 900;
+      letter-spacing:.2px;
       transition:.2s ease;
     }
-    .btn:hover{ transform: translateY(-1px); opacity:.96; }
+    .btn.primary{
+      color:white;
+      background: linear-gradient(135deg, rgba(31,74,57,1), rgba(39,90,69,1));
+      box-shadow: 0 16px 34px rgba(31,74,57,.28);
+    }
+    .btn.primary:hover{ transform: translateY(-1px); opacity:.98; }
+    .btn.secondary{
+      background: rgba(255,255,255,.88);
+      color: var(--forest);
+      border: 1px solid rgba(31,74,57,.18);
+    }
+    .btn.secondary:hover{ transform: translateY(-1px); }
     .btn:disabled{ opacity:.55; cursor:not-allowed; transform:none; }
 
-    .btn.secondary{
-      background: rgba(255,255,255,.72);
-      color: var(--green2);
-      border: 1px solid rgba(63,122,99,.22);
-      box-shadow:none;
-      font-weight: 800;
-    }
-
-    .status{
-      margin-top: 12px;
-      font-size: 13px;
-      color: var(--muted);
-      line-height: 1.35;
-      min-height: 18px;
-    }
-
+    /* Progress */
     .progresswrap{
-      margin-top: 10px;
+      margin-top: 12px;
       display:none;
     }
-
     progress{
       width:100%;
       height: 12px;
       border-radius: 999px;
       overflow:hidden;
-      border: 1px solid rgba(63,122,99,.18);
-      background: rgba(255,255,255,.7);
+      border: 1px solid rgba(31,74,57,.16);
+      background: rgba(255,255,255,.9);
     }
-
     .small{
       margin-top: 8px;
       font-size: 12px;
-      color: var(--muted);
+      color: rgba(42,77,65,.95);
       display:flex;
       justify-content:space-between;
       gap:10px;
     }
 
-    .footer-note{
-      margin-top: 14px;
-      font-size: 12px;
-      color: rgba(75, 107, 94, .9);
-      text-align:center;
+    .status{
+      margin-top: 10px;
+      font-size: 13px;
+      color: rgba(42,77,65,.95);
+      line-height: 1.35;
+      min-height: 18px;
     }
 
-    @media (max-width:520px){
-      h1{ font-size: 26px; }
+    /* Afiş alt bilgi */
+    .bottomband{
+      padding: 14px 18px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+      border-top: 1px solid rgba(31,74,57,.12);
+      background: rgba(31,74,57,.04);
+      color: rgba(42,77,65,.95);
+      font-size: 12px;
+    }
+    .bottomband b{
+      color: var(--forest);
+      font-weight: 900;
+    }
+
+    @media (max-width:560px){
+      .title{ font-size: 28px; }
       .fname b{ max-width: 190px; }
+      .actions{ flex-direction:column; }
     }
   </style>
 </head>
 
 <body>
-  <div class="flowers"></div>
+  <div class="bg-art"></div>
 
   <div class="wrap">
-    <div class="card">
-      <div class="header">
-        <div class="badge">🌿 Anı Kutusu • Fotoğraf & Video</div>
-        <h1>Ruken & Samet</h1>
-        <p class="subtitle">Bu özel günde çektiğiniz fotoğraf ve videoları bize bırakın.</p>
+    <div class="poster">
+      <div class="topband">
+        <div class="toprow">
+          <div class="tag">💍 Nişan Anı Kutusu • Fotoğraf & Video</div>
+          <div class="date" id="dateLabel"> </div>
+        </div>
+        <div class="title">Ruken & Samet</div>
+        <p class="subtitle">Bu özel günde çektiğiniz fotoğraf ve videoları buraya yükleyin. Anılarınız bizim için çok değerli. 🌿</p>
       </div>
 
       <div class="content">
@@ -355,9 +405,7 @@
             <div class="dz-title">📸 Fotoğraf / 🎥 Video seçin</div>
             <div class="dz-meta">Maks: 25 dosya</div>
           </div>
-          <p class="dz-hint">
-            Tıklayın ya da dosyaları buraya sürükleyip bırakın.
-          </p>
+          <p class="dz-hint">Tıklayın veya dosyaları buraya sürükleyip bırakın. Yükleme sırayla yapılır.</p>
           <input id="fileInput" type="file" multiple accept="image/*,video/*">
         </label>
 
@@ -371,7 +419,7 @@
 
         <div class="actions">
           <button class="btn secondary" id="clearBtn" type="button" disabled>Temizle</button>
-          <button class="btn" id="uploadBtn" type="button" disabled>Yüklemeyi Başlat</button>
+          <button class="btn primary" id="uploadBtn" type="button" disabled>Yüklemeyi Başlat</button>
         </div>
 
         <div class="progresswrap" id="progresswrap">
@@ -383,17 +431,21 @@
         </div>
 
         <div class="status" id="status"></div>
-        <div class="footer-note">📌 Dosyalar sırayla yüklenecek. Lütfen sayfayı kapatmayın.</div>
+      </div>
+
+      <div class="bottomband">
+        <div>📌 Lütfen yükleme bitene kadar sayfayı kapatmayın.</div>
+        <div><b>Ruken</b> & <b>Samet</b> • Teşekkürler 🤍</div>
       </div>
     </div>
   </div>
 
 <script>
-  // ✅ BURAYA KENDİ APPS SCRIPT WEB APP URL’Nİ KOY
-  const API_URL = "BURAYA_WEB_APP_URL";
+  // ✅ BURAYA APPS SCRIPT WEB APP URL’Nİ KOY
+  const API_URL = "https://script.google.com/macros/s/AKfycbwa-B1HCBVM_LbU8yxK-vJDlhrbPMBzVAXyEoGuXXkoxI9RGmj_wICiRCPh7JNypiQX/exec";
 
   const MAX_FILES = 25;
-  const MAX_TOTAL_MB = 250; // istersen değiştir (Apps Script için çok yükseltme önerilmez)
+  const MAX_TOTAL_MB = 250; // Apps Script için çok yükseltme önerilmez
 
   const fileInput = document.getElementById("fileInput");
   const dropzone = document.getElementById("dropzone");
@@ -413,40 +465,36 @@
 
   let files = [];
 
-  // ---- Helpers ----
-  function formatMB(bytes){
-    return (bytes / (1024*1024)).toFixed(bytes > 1024*1024 ? 1 : 2);
-  }
+  // Tarih etiketi (opsiyonel)
+  (function setDate(){
+    const d = new Date();
+    const months = ["Ocak","Şubat","Mart","Nisan","Mayıs","Haziran","Temmuz","Ağustos","Eylül","Ekim","Kasım","Aralık"];
+    document.getElementById("dateLabel").textContent = `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`;
+  })();
 
+  function formatMB(bytes){ return (bytes / (1024*1024)).toFixed(bytes > 1024*1024 ? 1 : 2); }
+  function totalBytes(list){ return list.reduce((a,f)=>a+f.size,0); }
   function iconFor(file){
     if(file.type.startsWith("image/")) return "🖼️";
     if(file.type.startsWith("video/")) return "🎬";
     return "📄";
   }
 
-  function setStatus(text, color="var(--muted)"){
+  function setStatus(text, color="rgba(42,77,65,.95)"){
     statusEl.textContent = text;
     statusEl.style.color = color;
   }
 
-  function totalBytes(list){
-    return list.reduce((a,f)=>a+f.size,0);
-  }
-
   function validateAndSet(newFiles){
-    // limit: count
     if(newFiles.length > MAX_FILES){
       setStatus(`En fazla ${MAX_FILES} dosya yükleyebilirsiniz.`, "crimson");
       return false;
     }
-
-    // limit: total size
     const totalMB = totalBytes(newFiles) / (1024*1024);
     if(totalMB > MAX_TOTAL_MB){
       setStatus(`Toplam boyut ${MAX_TOTAL_MB} MB’ı geçemez. (Şu an: ${totalMB.toFixed(1)} MB)`, "crimson");
       return false;
     }
-
     files = newFiles;
     renderList();
     return true;
@@ -505,36 +553,30 @@
 
       row.appendChild(left);
       row.appendChild(btn);
-
       fileitems.appendChild(row);
     });
 
     setStatus("Hazır. Yüklemeyi başlatabilirsiniz.");
   }
 
-  // ---- Input change ----
   fileInput.addEventListener("change", (e)=>{
     const picked = [...e.target.files];
     validateAndSet(picked);
   });
 
-  // ---- Drag & drop ----
+  // Drag & drop
   ["dragenter","dragover"].forEach(ev=>{
     dropzone.addEventListener(ev, (e)=>{
-      e.preventDefault();
-      e.stopPropagation();
+      e.preventDefault(); e.stopPropagation();
       dropzone.classList.add("dragover");
     });
   });
-
   ["dragleave","drop"].forEach(ev=>{
     dropzone.addEventListener(ev, (e)=>{
-      e.preventDefault();
-      e.stopPropagation();
+      e.preventDefault(); e.stopPropagation();
       dropzone.classList.remove("dragover");
     });
   });
-
   dropzone.addEventListener("drop", (e)=>{
     const dropped = [...e.dataTransfer.files].filter(f => f.type.startsWith("image/") || f.type.startsWith("video/"));
     if(dropped.length === 0){
@@ -544,7 +586,6 @@
     validateAndSet(dropped);
   });
 
-  // ---- Clear ----
   clearBtn.addEventListener("click", ()=>{
     files = [];
     fileInput.value = "";
@@ -555,11 +596,10 @@
     renderList();
   });
 
-  // ---- Upload ----
   uploadBtn.addEventListener("click", startUpload);
 
   async function startUpload(){
-    if(!API_URL || API_URL.includes("https://script.google.com/macros/s/AKfycbwa-B1HCBVM_LbU8yxK-vJDlhrbPMBzVAXyEoGuXXkoxI9RGmj_wICiRCPh7JNypiQX/execL")){
+    if(!API_URL || API_URL.includes("BURAYA_WEB_APP_URL")){
       setStatus("API_URL boş. Apps Script Web App URL’nizi ekleyin.", "crimson");
       return;
     }
@@ -575,7 +615,7 @@
     progresswrap.style.display = "block";
     progress.value = 0;
     progressText.textContent = "0%";
-    setStatus("Yükleme başladı…", "var(--muted)");
+    setStatus("Yükleme başladı…");
 
     let done = 0;
 
@@ -600,7 +640,6 @@
     setStatus("🎉 Tüm dosyalar başarıyla yüklendi!", "green");
     currentFile.textContent = "Bitti";
 
-    // reset
     files = [];
     fileInput.value = "";
     renderList();
@@ -618,10 +657,8 @@
         try{
           const base64 = String(reader.result).split(",")[1];
 
-          // uzantıyı koru
           const ext = (file.name.split(".").pop() || "").toLowerCase();
           const safeExt = ext ? "." + ext.replace(/[^a-z0-9]/g,"") : "";
-
           const filename = "ruken_samet_" + Date.now() + safeExt;
 
           const res = await fetch(API_URL, {
@@ -635,7 +672,6 @@
 
           const text = await res.text();
 
-          // Apps Script bazen JSON yerine HTML hata döndürebilir:
           let json;
           try { json = JSON.parse(text); }
           catch {
