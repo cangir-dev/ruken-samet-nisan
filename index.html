@@ -10,7 +10,7 @@
       --bg1:#eef7f2;
       --bg2:#d6eee2;
 
-      --forest:#163a2d;   /* daha koyu */
+      --forest:#163a2d;   /* koyu yeşil */
       --pine:#1f4a39;
       --pine2:#275a45;
 
@@ -38,7 +38,6 @@
         linear-gradient(135deg, var(--bg1), var(--bg2), var(--bg1));
     }
 
-    /* Floral overlay (sis yok) */
     .bg-art{
       position:fixed; inset:0; pointer-events:none; z-index:0;
     }
@@ -69,7 +68,6 @@
       overflow:hidden;
       position:relative;
     }
-
     .poster::before{
       content:"";
       position:absolute;
@@ -100,11 +98,10 @@
       justify-content:space-between;
       align-items:center;
       gap:10px;
+      flex-wrap:wrap;
       position:relative;
       z-index:1;
-      flex-wrap:wrap;
     }
-
     .tag{
       display:inline-flex;
       align-items:center;
@@ -116,12 +113,7 @@
       font-size: 12px;
       white-space:nowrap;
     }
-
-    .date{
-      font-size: 12px;
-      opacity:.92;
-      white-space:nowrap;
-    }
+    .date{ font-size: 12px; opacity:.92; white-space:nowrap; }
 
     .title{
       margin: 12px 0 6px;
@@ -322,7 +314,6 @@
     }
     .bottomband b{ color: var(--forest); font-weight: 950; }
 
-    /* Mobil: tam profesyonel görünüm */
     @media (max-width:560px){
       body{ padding: max(14px, env(safe-area-inset-top)) 12px max(18px, env(safe-area-inset-bottom)); }
       .title{ font-size: 28px; }
@@ -389,8 +380,8 @@
   </div>
 
 <script>
-  // ✅ Apps Script Web App URL: .../exec
-  const API_URL = "https://script.google.com/macros/s/AKfycbzLZl9nBgswCutslCVsf76uPt5S3XerilTpX9TT59T4T4pUGsht7Jh-zRBRI-mq0VQq/exec";
+  // ✅ SENİN API URL (düzgün hali: /exec ile bitmeli)
+  const API_URL = "https://script.google.com/macros/s/AKfycbwa-B1HCBVM_LbU8yxK-vJDlhrbPMBzVAXyEoGuXXkoxI9RGmj_wICiRCPh7JNypiQX/exec";
 
   const MAX_FILES = 25;
   const MAX_TOTAL_MB = 250;
@@ -543,8 +534,8 @@
   uploadBtn.addEventListener("click", startUpload);
 
   async function startUpload(){
-    if(!API_URL || API_URL.includes("https://script.google.com/macros/s/AKfycbzLZl9nBgswCutslCVsf76uPt5S3XerilTpX9TT59T4T4pUGsht7Jh-zRBRI-mq0VQq/exec")){
-      setStatus("API_URL boş. Apps Script Web App URL’nizi ekleyin.", "crimson");
+    if(!API_URL || !API_URL.includes("/exec")){
+      setStatus("API_URL hatalı görünüyor. /exec ile bitmeli.", "crimson");
       return;
     }
     if(files.length === 0){
@@ -622,6 +613,7 @@
           if(json.status !== "ok"){
             return reject(json.message || "Drive'a kaydedilemedi");
           }
+
           resolve();
         }catch{
           reject("Yükleme hatası");
