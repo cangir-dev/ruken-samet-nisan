@@ -2,26 +2,25 @@
 <html lang="tr">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Ruken & Samet | Nişan Anıları</title>
 
   <style>
     :root{
-      /* Tema */
       --bg1:#eef7f2;
       --bg2:#d6eee2;
 
-      --forest:#1f4a39;     /* koyu yeşil */
-      --pine:#275a45;       /* buton */
-      --sage:#3b7a62;       /* vurgu */
-      --text:#173228;
-      --muted:#2a4d41;
+      --forest:#163a2d;   /* daha koyu */
+      --pine:#1f4a39;
+      --pine2:#275a45;
 
-      /* Kart */
-      --card: rgba(255,255,255,.90);
-      --stroke: rgba(31,74,57,.16);
-      --shadow: 0 26px 70px rgba(12, 34, 26, .18);
-      --radius: 28px;
+      --text:#10271f;
+      --muted:#234a3d;
+
+      --card: rgba(255,255,255,.92);
+      --stroke: rgba(22,58,45,.16);
+      --shadow: 0 26px 70px rgba(10, 28, 21, .22);
+      --radius: 26px;
     }
 
     *{ box-sizing:border-box; font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial; }
@@ -29,6 +28,7 @@
     body{
       margin:0;
       min-height:100vh;
+      padding: max(18px, env(safe-area-inset-top)) 16px max(22px, env(safe-area-inset-bottom));
       display:grid;
       place-items:center;
       color:var(--text);
@@ -36,55 +36,32 @@
         radial-gradient(1000px 650px at 12% 18%, var(--bg2), transparent 62%),
         radial-gradient(1000px 650px at 88% 82%, var(--bg2), transparent 62%),
         linear-gradient(135deg, var(--bg1), var(--bg2), var(--bg1));
-      overflow-x:hidden;
     }
 
-    /* Floral + afiş havası: dış link YOK */
+    /* Floral overlay (sis yok) */
     .bg-art{
-      position:fixed;
-      inset:0;
-      pointer-events:none;
-      z-index:0;
+      position:fixed; inset:0; pointer-events:none; z-index:0;
     }
     .bg-art::before{
-      content:"";
-      position:absolute;
-      inset:-40px;
-      opacity:.22; /* sis yok */
+      content:""; position:absolute; inset:-40px; opacity:.20;
       background:
-        /* yumuşak çiçek/petal noktaları */
-        radial-gradient(circle at 10% 20%, rgba(39,90,69,.22) 0 18px, transparent 19px),
+        radial-gradient(circle at 10% 20%, rgba(31,74,57,.22) 0 18px, transparent 19px),
         radial-gradient(circle at 14% 24%, rgba(255,255,255,.55) 0 9px, transparent 10px),
-        radial-gradient(circle at 88% 28%, rgba(39,90,69,.18) 0 22px, transparent 23px),
-        radial-gradient(circle at 84% 24%, rgba(255,255,255,.55) 0 10px, transparent 11px),
-        radial-gradient(circle at 22% 86%, rgba(39,90,69,.14) 0 24px, transparent 25px),
-        radial-gradient(circle at 80% 84%, rgba(39,90,69,.14) 0 24px, transparent 25px),
-        /* ışık lekeleri */
-        radial-gradient(900px 600px at 12% 10%, rgba(183,215,196,.30), transparent 60%),
-        radial-gradient(900px 600px at 90% 30%, rgba(165,203,181,.24), transparent 60%),
-        radial-gradient(900px 600px at 30% 92%, rgba(200,225,212,.22), transparent 60%);
+        radial-gradient(circle at 88% 28%, rgba(31,74,57,.18) 0 22px, transparent 23px),
+        radial-gradient(circle at 22% 86%, rgba(31,74,57,.12) 0 24px, transparent 25px),
+        radial-gradient(900px 600px at 12% 10%, rgba(183,215,196,.28), transparent 60%),
+        radial-gradient(900px 600px at 90% 30%, rgba(165,203,181,.22), transparent 60%),
+        radial-gradient(900px 600px at 30% 92%, rgba(200,225,212,.20), transparent 60%);
       filter: blur(.25px);
-    }
-    .bg-art::after{
-      content:"";
-      position:absolute;
-      inset:0;
-      background:
-        radial-gradient(700px 420px at 50% 45%, rgba(255,255,255,.50), transparent 65%);
-      opacity:.55;
     }
 
     .wrap{
-      width:min(980px, 94vw);
-      padding: 30px 16px 44px;
+      width: min(640px, 100%);
       position:relative;
       z-index:1;
     }
 
-    /* Afiş / Poster kart */
     .poster{
-      margin:0 auto;
-      width:min(620px, 100%);
       background: var(--card);
       border: 1px solid var(--stroke);
       border-radius: var(--radius);
@@ -93,42 +70,39 @@
       position:relative;
     }
 
-    /* Afiş çerçeve */
     .poster::before{
       content:"";
       position:absolute;
-      inset:14px;
+      inset:12px;
       border-radius: calc(var(--radius) - 12px);
-      border: 1px solid rgba(31,74,57,.16);
+      border: 1px solid rgba(22,58,45,.14);
       pointer-events:none;
     }
 
-    /* Üst şerit */
     .topband{
-      padding: 18px 22px 12px;
-      background:
-        linear-gradient(135deg, rgba(31,74,57,.95), rgba(39,90,69,.92));
-      color: #fff;
+      padding: 18px 18px 16px;
+      background: linear-gradient(135deg, var(--forest), var(--pine2));
+      color:#fff;
       position:relative;
     }
     .topband::after{
       content:"";
-      position:absolute;
-      inset:0;
+      position:absolute; inset:0;
       background:
-        radial-gradient(500px 220px at 10% 20%, rgba(255,255,255,.18), transparent 60%),
-        radial-gradient(520px 220px at 90% 80%, rgba(255,255,255,.12), transparent 60%);
+        radial-gradient(520px 240px at 15% 25%, rgba(255,255,255,.16), transparent 60%),
+        radial-gradient(520px 240px at 90% 85%, rgba(255,255,255,.10), transparent 60%);
       opacity:.55;
       pointer-events:none;
     }
 
     .toprow{
       display:flex;
-      align-items:center;
       justify-content:space-between;
+      align-items:center;
       gap:10px;
       position:relative;
       z-index:1;
+      flex-wrap:wrap;
     }
 
     .tag{
@@ -140,7 +114,6 @@
       background: rgba(255,255,255,.14);
       border: 1px solid rgba(255,255,255,.22);
       font-size: 12px;
-      letter-spacing:.2px;
       white-space:nowrap;
     }
 
@@ -151,82 +124,73 @@
     }
 
     .title{
-      margin: 14px 0 6px;
+      margin: 12px 0 6px;
       font-size: 34px;
       letter-spacing:.2px;
       position:relative;
       z-index:1;
     }
     .subtitle{
-      margin:0 0 6px;
+      margin:0;
       font-size: 14px;
       opacity:.95;
+      line-height:1.45;
       position:relative;
       z-index:1;
-      line-height:1.45;
     }
 
-    .content{
-      padding: 18px 22px 20px;
-    }
+    .content{ padding: 16px 18px 18px; }
 
-    /* Upload alanı */
     .dropzone{
-      border: 2px dashed rgba(31,74,57,.35);
+      border: 2px dashed rgba(22,58,45,.35);
       border-radius: 18px;
-      padding: 16px;
-      background: rgba(255,255,255,.75);
-      transition: .25s ease;
+      padding: 14px;
+      background: rgba(255,255,255,.80);
+      transition: .2s ease;
       cursor:pointer;
       user-select:none;
     }
     .dropzone:hover{
-      background: rgba(255,255,255,.95);
-      border-color: rgba(31,74,57,.55);
+      background: rgba(255,255,255,.98);
+      border-color: rgba(22,58,45,.55);
       transform: translateY(-1px);
     }
     .dropzone.dragover{
-      background: rgba(231, 246, 239, .95);
-      border-color: rgba(31,74,57,.80);
-      transform: translateY(-1px);
+      background: rgba(231, 246, 239, .96);
+      border-color: rgba(22,58,45,.82);
     }
 
     .dz-top{
       display:flex;
-      align-items:center;
       justify-content:space-between;
+      align-items:center;
       gap:10px;
       margin-bottom:10px;
+      flex-wrap:wrap;
     }
     .dz-title{
-      font-weight: 800;
+      font-weight: 900;
       color: var(--forest);
       font-size: 15px;
     }
     .dz-meta{
       font-size: 12px;
       color: var(--muted);
-      background: rgba(31,74,57,.06);
-      border: 1px solid rgba(31,74,57,.12);
+      background: rgba(22,58,45,.06);
+      border: 1px solid rgba(22,58,45,.12);
       padding: 6px 10px;
       border-radius: 999px;
       white-space:nowrap;
     }
-    .dz-hint{
-      margin:0;
-      font-size: 13px;
-      color: rgba(42,77,65,.92);
-      line-height:1.45;
-    }
+    .dz-hint{ margin:0; font-size: 13px; color: rgba(35,74,61,.95); line-height:1.45; }
     input[type=file]{ display:none; }
 
-    /* Liste */
     .filelist{
       margin-top: 12px;
       display:none;
       border-radius: 16px;
-      border: 1px solid rgba(31,74,57,.14);
-      background: rgba(255,255,255,.78);
+      border: 1px solid rgba(22,58,45,.14);
+      background: rgba(255,255,255,.85);
       overflow:hidden;
     }
     .filelist-head{
@@ -235,71 +199,54 @@
       justify-content:space-between;
       gap:10px;
       font-size: 12px;
-      color: rgba(42,77,65,.95);
-      background: rgba(31,74,57,.05);
-      border-bottom: 1px solid rgba(31,74,57,.10);
+      color: rgba(35,74,61,.95);
+      background: rgba(22,58,45,.05);
+      border-bottom: 1px solid rgba(22,58,45,.10);
     }
-    .fileitems{
-      max-height: 200px;
-      overflow:auto;
-    }
+    .fileitems{ max-height: 180px; overflow:auto; }
+
     .fileitem{
       padding: 10px 12px;
       display:flex;
-      align-items:center;
       justify-content:space-between;
+      align-items:center;
       gap:10px;
-      border-bottom: 1px solid rgba(31,74,57,.08);
+      border-bottom: 1px solid rgba(22,58,45,.08);
     }
     .fileitem:last-child{ border-bottom:none; }
 
-    .fname{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      min-width:0;
-    }
+    .fname{ display:flex; align-items:center; gap:10px; min-width:0; }
     .icon{
-      width:30px; height:30px;
-      border-radius: 10px;
-      display:grid;
-      place-items:center;
-      background: rgba(31,74,57,.10);
+      width:30px; height:30px; border-radius: 10px;
+      display:grid; place-items:center;
+      background: rgba(22,58,45,.10);
       color: var(--forest);
-      flex: 0 0 auto;
+      flex:0 0 auto;
       font-size: 14px;
     }
     .fname b{
       display:block;
       font-size: 13px;
-      color: var(--text);
+      font-weight: 900;
       white-space:nowrap;
       overflow:hidden;
       text-overflow:ellipsis;
-      max-width: 340px;
-      font-weight: 800;
+      max-width: 320px;
     }
-    .fname span{
-      display:block;
-      font-size: 12px;
-      color: rgba(42,77,65,.92);
-    }
+    .fname span{ display:block; font-size: 12px; color: rgba(35,74,61,.92); }
 
     .remove{
       border:none;
-      background: rgba(255,255,255,.85);
-      border: 1px solid rgba(31,74,57,.16);
-      color: rgba(42,77,65,.95);
+      background: rgba(255,255,255,.90);
+      border: 1px solid rgba(22,58,45,.16);
+      color: rgba(35,74,61,.95);
       border-radius: 12px;
       padding: 8px 10px;
       cursor:pointer;
-      font-weight: 800;
-      transition:.2s ease;
-      flex: 0 0 auto;
+      font-weight: 900;
+      flex:0 0 auto;
     }
-    .remove:hover{ transform: translateY(-1px); }
 
-    /* Butonlar */
     .actions{
       margin-top: 12px;
       display:flex;
@@ -312,75 +259,76 @@
       border-radius: 16px;
       cursor:pointer;
       font-size: 15px;
-      font-weight: 900;
+      font-weight: 950;
       letter-spacing:.2px;
       transition:.2s ease;
     }
     .btn.primary{
-      color:white;
-      background: linear-gradient(135deg, rgba(31,74,57,1), rgba(39,90,69,1));
-      box-shadow: 0 16px 34px rgba(31,74,57,.28);
+      color:#fff;
+      background: linear-gradient(135deg, var(--forest), var(--pine2));
+      box-shadow: 0 16px 34px rgba(22,58,45,.30);
     }
-    .btn.primary:hover{ transform: translateY(-1px); opacity:.98; }
     .btn.secondary{
-      background: rgba(255,255,255,.88);
+      background: rgba(255,255,255,.92);
       color: var(--forest);
-      border: 1px solid rgba(31,74,57,.18);
+      border: 1px solid rgba(22,58,45,.18);
     }
-    .btn.secondary:hover{ transform: translateY(-1px); }
     .btn:disabled{ opacity:.55; cursor:not-allowed; transform:none; }
 
-    /* Progress */
-    .progresswrap{
-      margin-top: 12px;
-      display:none;
-    }
+    .progresswrap{ margin-top: 12px; display:none; }
     progress{
       width:100%;
       height: 12px;
       border-radius: 999px;
       overflow:hidden;
-      border: 1px solid rgba(31,74,57,.16);
-      background: rgba(255,255,255,.9);
+      border: 1px solid rgba(22,58,45,.16);
+      background: rgba(255,255,255,.95);
     }
     .small{
       margin-top: 8px;
       font-size: 12px;
-      color: rgba(42,77,65,.95);
+      color: rgba(35,74,61,.95);
       display:flex;
       justify-content:space-between;
       gap:10px;
+      align-items:center;
+    }
+    .small #currentFile{
+      max-width: 55%;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      white-space:nowrap;
     }
 
     .status{
       margin-top: 10px;
       font-size: 13px;
-      color: rgba(42,77,65,.95);
-      line-height: 1.35;
+      color: rgba(35,74,61,.95);
       min-height: 18px;
+      line-height:1.35;
     }
 
-    /* Afiş alt bilgi */
     .bottomband{
-      padding: 14px 18px;
+      padding: 12px 16px;
       display:flex;
       justify-content:space-between;
       align-items:center;
       gap:10px;
-      border-top: 1px solid rgba(31,74,57,.12);
-      background: rgba(31,74,57,.04);
-      color: rgba(42,77,65,.95);
+      border-top: 1px solid rgba(22,58,45,.12);
+      background: rgba(22,58,45,.04);
       font-size: 12px;
+      color: rgba(35,74,61,.95);
+      flex-wrap:wrap;
     }
-    .bottomband b{
-      color: var(--forest);
-      font-weight: 900;
-    }
+    .bottomband b{ color: var(--forest); font-weight: 950; }
 
+    /* Mobil: tam profesyonel görünüm */
     @media (max-width:560px){
+      body{ padding: max(14px, env(safe-area-inset-top)) 12px max(18px, env(safe-area-inset-bottom)); }
       .title{ font-size: 28px; }
-      .fname b{ max-width: 190px; }
       .actions{ flex-direction:column; }
+      .fname b{ max-width: 190px; }
+      .fileitems{ max-height: 160px; }
     }
   </style>
 </head>
@@ -393,10 +341,10 @@
       <div class="topband">
         <div class="toprow">
           <div class="tag">💍 Nişan Anı Kutusu • Fotoğraf & Video</div>
-          <div class="date" id="dateLabel"> </div>
+          <div class="date" id="dateLabel"></div>
         </div>
         <div class="title">Ruken & Samet</div>
-        <p class="subtitle">Bu özel günde çektiğiniz fotoğraf ve videoları buraya yükleyin. Anılarınız bizim için çok değerli. 🌿</p>
+        <p class="subtitle">Bu özel günde çektiğiniz fotoğraf ve videoları buraya yükleyin. 🌿</p>
       </div>
 
       <div class="content">
@@ -405,7 +353,7 @@
             <div class="dz-title">📸 Fotoğraf / 🎥 Video seçin</div>
             <div class="dz-meta">Maks: 25 dosya</div>
           </div>
-          <p class="dz-hint">Tıklayın veya dosyaları buraya sürükleyip bırakın. Yükleme sırayla yapılır.</p>
+          <p class="dz-hint">Tıklayın veya dosyaları sürükleyip bırakın. Yükleme sırayla yapılır.</p>
           <input id="fileInput" type="file" multiple accept="image/*,video/*">
         </label>
 
@@ -434,18 +382,18 @@
       </div>
 
       <div class="bottomband">
-        <div>📌 Lütfen yükleme bitene kadar sayfayı kapatmayın.</div>
+        <div>📌 Yükleme bitene kadar sayfayı kapatmayın.</div>
         <div><b>Ruken</b> & <b>Samet</b> • Teşekkürler 🤍</div>
       </div>
     </div>
   </div>
 
 <script>
-  // ✅ BURAYA APPS SCRIPT WEB APP URL’Nİ KOY
-  const API_URL = "https://script.google.com/macros/s/AKfycbwa-B1HCBVM_LbU8yxK-vJDlhrbPMBzVAXyEoGuXXkoxI9RGmj_wICiRCPh7JNypiQX/exec";
+  // ✅ Apps Script Web App URL: .../exec
+  const API_URL = "https://script.google.com/macros/s/AKfycbzLZl9nBgswCutslCVsf76uPt5S3XerilTpX9TT59T4T4pUGsht7Jh-zRBRI-mq0VQq/exec";
 
   const MAX_FILES = 25;
-  const MAX_TOTAL_MB = 250; // Apps Script için çok yükseltme önerilmez
+  const MAX_TOTAL_MB = 250;
 
   const fileInput = document.getElementById("fileInput");
   const dropzone = document.getElementById("dropzone");
@@ -465,7 +413,6 @@
 
   let files = [];
 
-  // Tarih etiketi (opsiyonel)
   (function setDate(){
     const d = new Date();
     const months = ["Ocak","Şubat","Mart","Nisan","Mayıs","Haziran","Temmuz","Ağustos","Eylül","Ekim","Kasım","Aralık"];
@@ -479,8 +426,7 @@
     if(file.type.startsWith("video/")) return "🎬";
     return "📄";
   }
-
-  function setStatus(text, color="rgba(42,77,65,.95)"){
+  function setStatus(text, color="rgba(35,74,61,.95)"){
     statusEl.textContent = text;
     statusEl.style.color = color;
   }
@@ -560,11 +506,9 @@
   }
 
   fileInput.addEventListener("change", (e)=>{
-    const picked = [...e.target.files];
-    validateAndSet(picked);
+    validateAndSet([...e.target.files]);
   });
 
-  // Drag & drop
   ["dragenter","dragover"].forEach(ev=>{
     dropzone.addEventListener(ev, (e)=>{
       e.preventDefault(); e.stopPropagation();
@@ -599,7 +543,7 @@
   uploadBtn.addEventListener("click", startUpload);
 
   async function startUpload(){
-    if(!API_URL || API_URL.includes("BURAYA_WEB_APP_URL")){
+    if(!API_URL || API_URL.includes("https://script.google.com/macros/s/AKfycbzLZl9nBgswCutslCVsf76uPt5S3XerilTpX9TT59T4T4pUGsht7Jh-zRBRI-mq0VQq/exec")){
       setStatus("API_URL boş. Apps Script Web App URL’nizi ekleyin.", "crimson");
       return;
     }
@@ -671,23 +615,15 @@
           });
 
           const text = await res.text();
-
           let json;
           try { json = JSON.parse(text); }
-          catch {
-            return reject("Sunucu JSON dönmedi (Deploy/izin/CORS olabilir). Network → Response kontrol edin.");
-          }
-
-          if(!res.ok){
-            return reject("HTTP " + res.status + " - " + (json.message || "Sunucu hatası"));
-          }
+          catch { return reject("Sunucu JSON dönmedi. Deploy ayarlarını kontrol edin."); }
 
           if(json.status !== "ok"){
             return reject(json.message || "Drive'a kaydedilemedi");
           }
-
           resolve();
-        }catch(e){
+        }catch{
           reject("Yükleme hatası");
         }
       };
