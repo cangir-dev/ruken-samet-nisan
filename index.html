@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ruken & Samet – Nişan Hatıraları</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  min-height: 100vh;
+  background:
+    url("https://www.transparenttextures.com/patterns/flowers.png"),
+    linear-gradient(135deg, #e6f5ea, #f9fff9);
+  background-size: 300px, cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+body::before {
+  content: "🌸 🌿 🌼 🌿 🌸 🌿 🌼";
+  position: fixed;
+  inset: 0;
+  font-size: 90px;
+  opacity: 0.14;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.card {
+  background: rgba(255,255,255,0.9);
+  backdrop-filter: blur(12px);
+  padding: 50px 30px 45px;
+  width: 90%;
+  max-width: 460px;
+  border-radius: 28px;
+  box-shadow: 0 30px 70px rgba(0,0,0,0.18);
+  text-align: center;
+  animation: softIn 1.2s ease;
+}
+
+h1 {
+  color: #2e7d32;
+  margin-bottom: 14px;
+  font-weight: 600;
+}
+
+.subtitle {
+  color: #555;
+  font-size: 15px;
+  line-height: 1.7;
+  margin-bottom: 30px;
+}
+
+.upload-btn {
+  background: linear-gradient(135deg, #2e7d32, #43a047);
+  color: #fff;
+  border: none;
+  padding: 18px;
+  width: 100%;
+  border-radius: 18px;
+  font-size: 18px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 12px 28px rgba(46,125,50,0.4);
+  display: inline-block;
+}
+
+.upload-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 18px 35px rgba(46,125,50,0.5);
+}
+
+input[type="file"] {
+  display: none;
+}
+
+.rules {
+  margin-top: 20px;
+  font-size: 13px;
+  color: #666;
+  line-height: 1.6;
+}
+
+.loading {
+  display: none;
+  margin-top: 20px;
+  font-size: 14px;
+  color: #2e7d32;
+}
+
+.success {
+  display: none;
+  margin-top: 28px;
+  color: #2e7d32;
+  font-weight: 600;
+  animation: softIn 1s ease;
+}
+
+@keyframes softIn {
+  from { opacity: 0; transform: translateY(25px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+  <h1>💍 Ruken & Samet</h1>
+
+  <div class="subtitle">
+    Bu özel günümüzde çektiğiniz<br>
+    fotoğraf ve videoları bizimle paylaşır mısınız?
+  </div>
+
+  <label class="upload-btn">
+    📸 Fotoğraf & Video Yükle
+    <input type="file" id="files" multiple accept="image/*,video/*">
+  </label>
+
+  <div class="rules">
+    • En fazla <strong>25</strong> dosya<br>
+    • Video süresi maksimum <strong>10 dakika</strong>
+  </div>
+
+  <div class="loading" id="loading">
+    ⏳ Yükleniyor, lütfen bekleyin...
+  </div>
+
+  <div class="success" id="successMsg">
+    🌿 Anılarınız için teşekkür ederiz<br>
+    <strong>Ruken & Samet</strong> 💚
+  </div>
+</div>
+
+<script>
+const fileInput = document.getElementById("files");
+const successMsg = document.getElementById("successMsg");
+const loading = document.getElementById("loading");
+
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwqp1HyIFp52ab-K5MmSnkO3cI6v7qu6kbVvNMsiOR2fgVRJV725vFtb5EYznsh8uY/exec";
+
+fileInput.addEventListener("change", async () => {
+  const files = fileInput.files;
+
+  if (files.length > 25) {
+    alert("En fazla 25 dosya yükleyebilirsiniz.");
+    fileInput.value = "";
+    return;
+  }
+
+  // Video süre kontrolü
+  for (let file of files) {
+    if (file.type.startsWith("video")) {
+      const video = document.createElement("video");
+      video.preload = "metadata";
+      video.src = URL.createObjectURL(file);
+
+      await new Promise(resolve => {
+        video.onloadedmetadata = () => {
+          if (video.duration > 600) {
+            alert("Video süresi 10 dakikayı geçemez.");
+            fileInput.value = "";
+            resolve(false);
+          }
+          resolve(true);
+        };
+      });
+    }
+  }
+
+  loading.style.display = "block";
+
+  for (let i = 0; i < files.length; i++) {
+    const reader = new FileReader();
+
+    reader.onload = async () => {
+      const base64 = reader.result.split(",")[1];
+
+      await fetch(SCRIPT_URL, {
+        method: "POST",
+        body: new URLSearchParams({
+          data: base64,
+          name: `Ruken_Samet_${Date.now()}_${i}`,
+          type: files[i].type
+        })
+      });
+    };
+
+    reader.readAsDataURL(files[i]);
+  }
+
+  loading.style.display = "none";
+  successMsg.style.display = "block";
+});
+</script>
+
+</body>
+</html>
