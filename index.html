@@ -10,17 +10,21 @@
       --bg1:#eef7f2;
       --bg2:#d6eee2;
 
-      --forest:#163a2d;   /* koyu yeşil */
+      --forest:#14362a;
       --pine:#1f4a39;
-      --pine2:#275a45;
+      --pine2:#2a5c47;
+      --gold:#c9b27d;
 
-      --text:#10271f;
-      --muted:#234a3d;
+      --text:#0f261e;
+      --muted:#24483c;
 
-      --card: rgba(255,255,255,.92);
-      --stroke: rgba(22,58,45,.16);
+      --card: rgba(255,255,255,.93);
+      --stroke: rgba(20,54,42,.16);
       --shadow: 0 26px 70px rgba(10, 28, 21, .22);
       --radius: 26px;
+
+      --ok:#157a37;
+      --err:#c62828;
     }
 
     *{ box-sizing:border-box; font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial; }
@@ -28,7 +32,7 @@
     body{
       margin:0;
       min-height:100vh;
-      padding: max(18px, env(safe-area-inset-top)) 16px max(22px, env(safe-area-inset-bottom));
+      padding: max(18px, env(safe-area-inset-top)) 14px max(22px, env(safe-area-inset-bottom));
       display:grid;
       place-items:center;
       color:var(--text);
@@ -36,30 +40,26 @@
         radial-gradient(1000px 650px at 12% 18%, var(--bg2), transparent 62%),
         radial-gradient(1000px 650px at 88% 82%, var(--bg2), transparent 62%),
         linear-gradient(135deg, var(--bg1), var(--bg2), var(--bg1));
+      overflow-x:hidden;
     }
 
-    .bg-art{
-      position:fixed; inset:0; pointer-events:none; z-index:0;
-    }
+    /* Floral overlay */
+    .bg-art{ position:fixed; inset:0; pointer-events:none; z-index:0; }
     .bg-art::before{
-      content:""; position:absolute; inset:-40px; opacity:.20;
+      content:""; position:absolute; inset:-40px; opacity:.18;
       background:
-        radial-gradient(circle at 10% 20%, rgba(31,74,57,.22) 0 18px, transparent 19px),
-        radial-gradient(circle at 14% 24%, rgba(255,255,255,.55) 0 9px, transparent 10px),
-        radial-gradient(circle at 88% 28%, rgba(31,74,57,.18) 0 22px, transparent 23px),
-        radial-gradient(circle at 22% 86%, rgba(31,74,57,.12) 0 24px, transparent 25px),
-        radial-gradient(900px 600px at 12% 10%, rgba(183,215,196,.28), transparent 60%),
-        radial-gradient(900px 600px at 90% 30%, rgba(165,203,181,.22), transparent 60%),
-        radial-gradient(900px 600px at 30% 92%, rgba(200,225,212,.20), transparent 60%);
+        radial-gradient(circle at 12% 22%, rgba(31,74,57,.20) 0 18px, transparent 19px),
+        radial-gradient(circle at 88% 30%, rgba(31,74,57,.16) 0 22px, transparent 23px),
+        radial-gradient(circle at 22% 86%, rgba(31,74,57,.10) 0 24px, transparent 25px),
+        radial-gradient(900px 600px at 12% 10%, rgba(183,215,196,.26), transparent 60%),
+        radial-gradient(900px 600px at 90% 30%, rgba(165,203,181,.20), transparent 60%),
+        radial-gradient(900px 600px at 30% 92%, rgba(200,225,212,.18), transparent 60%);
       filter: blur(.25px);
     }
 
-    .wrap{
-      width: min(640px, 100%);
-      position:relative;
-      z-index:1;
-    }
+    .wrap{ width:min(680px, 100%); position:relative; z-index:1; }
 
+    /* Poster */
     .poster{
       background: var(--card);
       border: 1px solid var(--stroke);
@@ -73,7 +73,7 @@
       position:absolute;
       inset:12px;
       border-radius: calc(var(--radius) - 12px);
-      border: 1px solid rgba(22,58,45,.14);
+      border: 1px solid rgba(20,54,42,.14);
       pointer-events:none;
     }
 
@@ -87,7 +87,7 @@
       content:"";
       position:absolute; inset:0;
       background:
-        radial-gradient(520px 240px at 15% 25%, rgba(255,255,255,.16), transparent 60%),
+        radial-gradient(520px 240px at 15% 25%, rgba(255,255,255,.14), transparent 60%),
         radial-gradient(520px 240px at 90% 85%, rgba(255,255,255,.10), transparent 60%);
       opacity:.55;
       pointer-events:none;
@@ -113,10 +113,14 @@
       font-size: 12px;
       white-space:nowrap;
     }
-    .date{ font-size: 12px; opacity:.92; white-space:nowrap; }
+    .date{
+      font-size: 12px;
+      opacity:.92;
+      white-space:nowrap;
+    }
 
     .title{
-      margin: 12px 0 6px;
+      margin: 12px 0 4px;
       font-size: 34px;
       letter-spacing:.2px;
       position:relative;
@@ -129,29 +133,43 @@
       line-height:1.45;
       position:relative;
       z-index:1;
+      display:flex;
+      gap:8px;
+      align-items:center;
+      flex-wrap:wrap;
+    }
+    .goldline{
+      height:2px;
+      width:78px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      border-radius: 999px;
+      opacity:.85;
+      margin-top:10px;
+      position:relative;
+      z-index:1;
     }
 
     .content{ padding: 16px 18px 18px; }
 
+    /* Dropzone */
     .dropzone{
-      border: 2px dashed rgba(22,58,45,.35);
+      border: 2px dashed rgba(20,54,42,.33);
       border-radius: 18px;
       padding: 14px;
-      background: rgba(255,255,255,.80);
+      background: rgba(255,255,255,.84);
       transition: .2s ease;
       cursor:pointer;
       user-select:none;
     }
     .dropzone:hover{
-      background: rgba(255,255,255,.98);
-      border-color: rgba(22,58,45,.55);
+      background: rgba(255,255,255,.99);
+      border-color: rgba(20,54,42,.55);
       transform: translateY(-1px);
     }
     .dropzone.dragover{
-      background: rgba(231, 246, 239, .96);
-      border-color: rgba(22,58,45,.82);
+      background: rgba(231, 246, 239, .97);
+      border-color: rgba(20,54,42,.80);
     }
-
     .dz-top{
       display:flex;
       justify-content:space-between;
@@ -161,28 +179,32 @@
       flex-wrap:wrap;
     }
     .dz-title{
-      font-weight: 900;
+      font-weight: 950;
       color: var(--forest);
       font-size: 15px;
+      display:flex;
+      align-items:center;
+      gap:8px;
     }
     .dz-meta{
       font-size: 12px;
       color: var(--muted);
-      background: rgba(22,58,45,.06);
-      border: 1px solid rgba(22,58,45,.12);
+      background: rgba(20,54,42,.06);
+      border: 1px solid rgba(20,54,42,.12);
       padding: 6px 10px;
       border-radius: 999px;
       white-space:nowrap;
     }
-    .dz-hint{ margin:0; font-size: 13px; color: rgba(35,74,61,.95); line-height:1.45; }
+    .dz-hint{ margin:0; font-size: 13px; color: rgba(36,72,60,.95); line-height:1.45; }
     input[type=file]{ display:none; }
 
+    /* List */
     .filelist{
       margin-top: 12px;
       display:none;
       border-radius: 16px;
-      border: 1px solid rgba(22,58,45,.14);
-      background: rgba(255,255,255,.85);
+      border: 1px solid rgba(20,54,42,.14);
+      background: rgba(255,255,255,.88);
       overflow:hidden;
     }
     .filelist-head{
@@ -191,11 +213,11 @@
       justify-content:space-between;
       gap:10px;
       font-size: 12px;
-      color: rgba(35,74,61,.95);
-      background: rgba(22,58,45,.05);
-      border-bottom: 1px solid rgba(22,58,45,.10);
+      color: rgba(36,72,60,.95);
+      background: rgba(20,54,42,.05);
+      border-bottom: 1px solid rgba(20,54,42,.10);
     }
-    .fileitems{ max-height: 180px; overflow:auto; }
+    .fileitems{ max-height: 190px; overflow:auto; }
 
     .fileitem{
       padding: 10px 12px;
@@ -203,45 +225,47 @@
       justify-content:space-between;
       align-items:center;
       gap:10px;
-      border-bottom: 1px solid rgba(22,58,45,.08);
+      border-bottom: 1px solid rgba(20,54,42,.08);
     }
     .fileitem:last-child{ border-bottom:none; }
 
     .fname{ display:flex; align-items:center; gap:10px; min-width:0; }
     .icon{
-      width:30px; height:30px; border-radius: 10px;
+      width:32px; height:32px; border-radius: 11px;
       display:grid; place-items:center;
-      background: rgba(22,58,45,.10);
+      background: rgba(20,54,42,.10);
       color: var(--forest);
       flex:0 0 auto;
-      font-size: 14px;
+      font-size: 15px;
     }
     .fname b{
       display:block;
       font-size: 13px;
-      font-weight: 900;
+      font-weight: 950;
       white-space:nowrap;
       overflow:hidden;
       text-overflow:ellipsis;
-      max-width: 320px;
+      max-width: 360px;
     }
-    .fname span{ display:block; font-size: 12px; color: rgba(35,74,61,.92); }
+    .fname span{ display:block; font-size: 12px; color: rgba(36,72,60,.92); }
 
     .remove{
       border:none;
-      background: rgba(255,255,255,.90);
-      border: 1px solid rgba(22,58,45,.16);
-      color: rgba(35,74,61,.95);
+      background: rgba(255,255,255,.95);
+      border: 1px solid rgba(20,54,42,.16);
+      color: rgba(36,72,60,.95);
       border-radius: 12px;
       padding: 8px 10px;
       cursor:pointer;
-      font-weight: 900;
+      font-weight: 950;
       flex:0 0 auto;
     }
 
+    /* Buttons: tek parça gibi (aynı yükseklik, aynı radius, tam oturur) */
     .actions{
       margin-top: 12px;
-      display:flex;
+      display:grid;
+      grid-template-columns: 1fr 1fr;
       gap:10px;
     }
     .btn{
@@ -253,49 +277,57 @@
       font-size: 15px;
       font-weight: 950;
       letter-spacing:.2px;
-      transition:.2s ease;
+      transition:.18s ease;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      gap:10px;
+      min-height: 50px;
     }
     .btn.primary{
       color:#fff;
       background: linear-gradient(135deg, var(--forest), var(--pine2));
-      box-shadow: 0 16px 34px rgba(22,58,45,.30);
+      box-shadow: 0 16px 34px rgba(20,54,42,.30);
     }
     .btn.secondary{
-      background: rgba(255,255,255,.92);
+      background: rgba(255,255,255,.94);
       color: var(--forest);
-      border: 1px solid rgba(22,58,45,.18);
+      border: 1px solid rgba(20,54,42,.18);
     }
+    .btn:hover{ transform: translateY(-1px); }
     .btn:disabled{ opacity:.55; cursor:not-allowed; transform:none; }
 
+    /* Progress */
     .progresswrap{ margin-top: 12px; display:none; }
     progress{
       width:100%;
       height: 12px;
       border-radius: 999px;
       overflow:hidden;
-      border: 1px solid rgba(22,58,45,.16);
+      border: 1px solid rgba(20,54,42,.16);
       background: rgba(255,255,255,.95);
     }
     .small{
       margin-top: 8px;
       font-size: 12px;
-      color: rgba(35,74,61,.95);
+      color: rgba(36,72,60,.95);
       display:flex;
       justify-content:space-between;
       gap:10px;
       align-items:center;
     }
     .small #currentFile{
-      max-width: 55%;
+      max-width: 58%;
       overflow:hidden;
       text-overflow:ellipsis;
       white-space:nowrap;
     }
 
+    /* Status */
     .status{
       margin-top: 10px;
       font-size: 13px;
-      color: rgba(35,74,61,.95);
+      color: rgba(36,72,60,.95);
       min-height: 18px;
       line-height:1.35;
     }
@@ -306,26 +338,46 @@
       justify-content:space-between;
       align-items:center;
       gap:10px;
-      border-top: 1px solid rgba(22,58,45,.12);
-      background: rgba(22,58,45,.04);
+      border-top: 1px solid rgba(20,54,42,.12);
+      background: rgba(20,54,42,.04);
       font-size: 12px;
-      color: rgba(35,74,61,.95);
+      color: rgba(36,72,60,.95);
       flex-wrap:wrap;
     }
     .bottomband b{ color: var(--forest); font-weight: 950; }
 
+    /* Toast */
+    .toast{
+      position:fixed;
+      left:50%;
+      bottom: max(14px, env(safe-area-inset-bottom));
+      transform: translateX(-50%);
+      background: rgba(15,38,30,.92);
+      color:#fff;
+      padding: 10px 12px;
+      border-radius: 14px;
+      font-size: 13px;
+      box-shadow: 0 18px 40px rgba(0,0,0,.18);
+      display:none;
+      z-index:10;
+      max-width: min(520px, 92vw);
+    }
+
+    /* Mobile */
     @media (max-width:560px){
       body{ padding: max(14px, env(safe-area-inset-top)) 12px max(18px, env(safe-area-inset-bottom)); }
       .title{ font-size: 28px; }
-      .actions{ flex-direction:column; }
-      .fname b{ max-width: 190px; }
-      .fileitems{ max-height: 160px; }
+      .actions{ grid-template-columns: 1fr; }
+      .fname b{ max-width: 210px; }
+      .fileitems{ max-height: 165px; }
+      .date{ opacity:.9; }
     }
   </style>
 </head>
 
 <body>
   <div class="bg-art"></div>
+  <div class="toast" id="toast"></div>
 
   <div class="wrap">
     <div class="poster">
@@ -335,7 +387,8 @@
           <div class="date" id="dateLabel"></div>
         </div>
         <div class="title">Ruken & Samet</div>
-        <p class="subtitle">Bu özel günde çektiğiniz fotoğraf ve videoları buraya yükleyin. 🌿</p>
+        <p class="subtitle">Anılarınızı bizimle paylaşın <span aria-hidden="true">🌿</span></p>
+        <div class="goldline"></div>
       </div>
 
       <div class="content">
@@ -344,7 +397,7 @@
             <div class="dz-title">📸 Fotoğraf / 🎥 Video seçin</div>
             <div class="dz-meta">Maks: 25 dosya</div>
           </div>
-          <p class="dz-hint">Tıklayın veya dosyaları sürükleyip bırakın. Yükleme sırayla yapılır.</p>
+          <p class="dz-hint">Tıklayın veya sürükleyip bırakın. Yükleme sırayla yapılır.</p>
           <input id="fileInput" type="file" multiple accept="image/*,video/*">
         </label>
 
@@ -357,8 +410,8 @@
         </div>
 
         <div class="actions">
-          <button class="btn secondary" id="clearBtn" type="button" disabled>Temizle</button>
-          <button class="btn primary" id="uploadBtn" type="button" disabled>Yüklemeyi Başlat</button>
+          <button class="btn secondary" id="clearBtn" type="button" disabled>🧹 Temizle</button>
+          <button class="btn primary" id="uploadBtn" type="button" disabled>⬆️ Yüklemeyi Başlat</button>
         </div>
 
         <div class="progresswrap" id="progresswrap">
@@ -380,8 +433,8 @@
   </div>
 
 <script>
-  // ✅ SENİN API URL (düzgün hali: /exec ile bitmeli)
-  const API_URL = "https://script.google.com/macros/s/AKfycbwh1KryvHyOPlGvRTNBvaVoboxEInyK4N8no3s3QuRzli3l5yRPj598JZlpOWKt80Q/exec";
+  // ✅ Senin API URL
+  const API_URL = "https://script.google.com/macros/s/AKfycbzWZyw9dc1IWQ0N6GRmWkJCkbq8A3oQYS-7BY3CNUH-LBWefRrW7HRywm1OathQ0Bkh/exec";
 
   const MAX_FILES = 25;
   const MAX_TOTAL_MB = 250;
@@ -392,23 +445,30 @@
   const fileitems = document.getElementById("fileitems");
   const countLabel = document.getElementById("countLabel");
   const sizeLabel = document.getElementById("sizeLabel");
-
   const uploadBtn = document.getElementById("uploadBtn");
   const clearBtn = document.getElementById("clearBtn");
-
   const progresswrap = document.getElementById("progresswrap");
   const progress = document.getElementById("progress");
   const progressText = document.getElementById("progressText");
   const currentFile = document.getElementById("currentFile");
   const statusEl = document.getElementById("status");
+  const toastEl = document.getElementById("toast");
 
   let files = [];
 
+  // Tarih etiketi
   (function setDate(){
     const d = new Date();
     const months = ["Ocak","Şubat","Mart","Nisan","Mayıs","Haziran","Temmuz","Ağustos","Eylül","Ekim","Kasım","Aralık"];
     document.getElementById("dateLabel").textContent = `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`;
   })();
+
+  function showToast(msg){
+    toastEl.textContent = msg;
+    toastEl.style.display = "block";
+    clearTimeout(showToast._t);
+    showToast._t = setTimeout(()=> toastEl.style.display = "none", 2600);
+  }
 
   function formatMB(bytes){ return (bytes / (1024*1024)).toFixed(bytes > 1024*1024 ? 1 : 2); }
   function totalBytes(list){ return list.reduce((a,f)=>a+f.size,0); }
@@ -417,19 +477,21 @@
     if(file.type.startsWith("video/")) return "🎬";
     return "📄";
   }
-  function setStatus(text, color="rgba(35,74,61,.95)"){
+  function setStatus(text, color="rgba(36,72,60,.95)"){
     statusEl.textContent = text;
     statusEl.style.color = color;
   }
 
   function validateAndSet(newFiles){
     if(newFiles.length > MAX_FILES){
-      setStatus(`En fazla ${MAX_FILES} dosya yükleyebilirsiniz.`, "crimson");
+      setStatus(`En fazla ${MAX_FILES} dosya yükleyebilirsiniz.`, "var(--err)");
+      showToast(`En fazla ${MAX_FILES} dosya`);
       return false;
     }
     const totalMB = totalBytes(newFiles) / (1024*1024);
     if(totalMB > MAX_TOTAL_MB){
-      setStatus(`Toplam boyut ${MAX_TOTAL_MB} MB’ı geçemez. (Şu an: ${totalMB.toFixed(1)} MB)`, "crimson");
+      setStatus(`Toplam boyut ${MAX_TOTAL_MB} MB’ı geçemez. (Şu an: ${totalMB.toFixed(1)} MB)`, "var(--err)");
+      showToast(`Toplam ${MAX_TOTAL_MB} MB sınırı`);
       return false;
     }
     files = newFiles;
@@ -500,6 +562,7 @@
     validateAndSet([...e.target.files]);
   });
 
+  // Drag & drop
   ["dragenter","dragover"].forEach(ev=>{
     dropzone.addEventListener(ev, (e)=>{
       e.preventDefault(); e.stopPropagation();
@@ -515,7 +578,8 @@
   dropzone.addEventListener("drop", (e)=>{
     const dropped = [...e.dataTransfer.files].filter(f => f.type.startsWith("image/") || f.type.startsWith("video/"));
     if(dropped.length === 0){
-      setStatus("Sadece fotoğraf veya video bırakabilirsiniz.", "crimson");
+      setStatus("Sadece fotoğraf veya video bırakabilirsiniz.", "var(--err)");
+      showToast("Sadece fotoğraf/video");
       return;
     }
     validateAndSet(dropped);
@@ -529,17 +593,18 @@
     progressText.textContent = "0%";
     currentFile.textContent = "-";
     renderList();
+    showToast("Temizlendi");
   });
 
   uploadBtn.addEventListener("click", startUpload);
 
   async function startUpload(){
     if(!API_URL || !API_URL.includes("/exec")){
-      setStatus("API_URL hatalı görünüyor. /exec ile bitmeli.", "crimson");
+      setStatus("API_URL hatalı görünüyor. /exec ile bitmeli.", "var(--err)");
       return;
     }
     if(files.length === 0){
-      setStatus("Dosya seçilmedi.", "crimson");
+      setStatus("Dosya seçilmedi.", "var(--err)");
       return;
     }
 
@@ -564,7 +629,7 @@
         progress.value = pct;
         progressText.textContent = pct + "%";
       }catch(err){
-        setStatus("HATA: " + err, "crimson");
+        setStatus("HATA: " + err, "var(--err)");
         uploadBtn.disabled = false;
         clearBtn.disabled = false;
         fileInput.disabled = false;
@@ -572,8 +637,9 @@
       }
     }
 
-    setStatus("🎉 Tüm dosyalar başarıyla yüklendi!", "green");
+    setStatus("🎉 Tüm dosyalar başarıyla yüklendi!", "var(--ok)");
     currentFile.textContent = "Bitti";
+    showToast("Yükleme tamam ✅");
 
     files = [];
     fileInput.value = "";
@@ -592,15 +658,11 @@
         try{
           const base64 = String(reader.result).split(",")[1];
 
-          const ext = (file.name.split(".").pop() || "").toLowerCase();
-          const safeExt = ext ? "." + ext.replace(/[^a-z0-9]/g,"") : "";
-          const filename = "ruken_samet_" + Date.now() + safeExt;
-
           const res = await fetch(API_URL, {
             method: "POST",
             body: new URLSearchParams({
               file: base64,
-              name: filename,
+              originalName: file.name,   // ✅ uzantı buradan alınacak
               type: file.type
             })
           });
@@ -627,4 +689,3 @@
 </script>
 </body>
 </html>
-
