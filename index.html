@@ -9,124 +9,149 @@
 
 body{
   margin:0;
-  height:100vh;
+  min-height:100vh;
   display:flex;
   justify-content:center;
   align-items:center;
   font-family:"Segoe UI", Arial, sans-serif;
 
-  /* GERÇEK ÇİÇEK ARKA PLAN */
   background:
-    linear-gradient(rgba(255,255,255,.78),rgba(255,255,255,.78)),
-    url("https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&w=1600&q=80");
+    linear-gradient(rgba(255,255,255,.72),rgba(255,255,255,.72)),
+    url("https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&w=1800&q=80");
   background-size:cover;
   background-position:center;
 }
 
-/* ANA KART */
-.card{
-  background:#ffffff;
-  width:390px;
-  padding:45px 35px;
-  border-radius:26px;
-  text-align:center;
-  box-shadow:0 25px 60px rgba(0,0,0,.2);
-  animation:fadeIn 1.2s ease;
+/* ÇEVRESEL ÇİÇEK ÇERÇEVE */
+.wrapper{
+  position:relative;
+  padding:55px;
 }
 
-/* GİRİŞ ANİMASYONU */
-@keyframes fadeIn{
-  from{opacity:0; transform:translateY(35px)}
+.wrapper::before{
+  content:"";
+  position:absolute;
+  inset:-45px;
+  background:url("https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=1600&q=80");
+  background-size:cover;
+  background-position:center;
+  border-radius:60px;
+  z-index:-1;
+  opacity:.85;
+}
+
+/* ANA AFİŞ KUTUSU */
+.card{
+  background:#ffffff;
+  width:520px;
+  max-width:94vw;
+  padding:65px 55px;
+  border-radius:34px;
+  text-align:center;
+  box-shadow:0 35px 80px rgba(0,0,0,.28);
+  animation:rise 1.1s ease;
+}
+
+@keyframes rise{
+  from{opacity:0; transform:translateY(45px)}
   to{opacity:1; transform:translateY(0)}
 }
 
 h1{
   color:#2e7d32;
-  margin-bottom:8px;
-  font-size:27px;
+  font-size:32px;
+  margin-bottom:14px;
 }
 
 .subtitle{
+  font-size:17px;
   color:#555;
-  font-size:15px;
-  line-height:1.6;
-  margin-bottom:26px;
+  line-height:1.8;
+  margin-bottom:36px;
 }
 
-/* YÜKLE BUTONU */
+/* BUTON */
 .upload-btn{
   background:linear-gradient(135deg,#2e7d32,#66bb6a);
   color:#fff;
   border:none;
-  padding:16px 36px;
-  border-radius:45px;
-  font-size:16px;
+  padding:20px 54px;
+  border-radius:60px;
+  font-size:18px;
   cursor:pointer;
   display:inline-flex;
   align-items:center;
-  gap:10px;
+  gap:12px;
   transition:.3s;
 }
 
 .upload-btn:hover{
-  transform:scale(1.06);
-  box-shadow:0 10px 24px rgba(0,0,0,.28);
+  transform:scale(1.08);
+  box-shadow:0 14px 34px rgba(0,0,0,.32);
 }
 
 .info{
-  margin-top:18px;
-  font-size:13px;
+  margin-top:26px;
+  font-size:15px;
   color:#444;
+  line-height:1.6;
 }
 
 progress{
   width:100%;
-  height:12px;
-  margin-top:20px;
+  height:14px;
+  margin-top:28px;
   display:none;
 }
 
 #status{
-  margin-top:10px;
-  font-size:14px;
+  margin-top:14px;
+  font-size:15px;
+  font-weight:600;
   color:#2e7d32;
 }
 
 /* MOBİL */
-@media(max-width:420px){
-  .card{width:92%}
+@media(max-width:480px){
+  .card{
+    padding:50px 30px;
+  }
 }
 </style>
 </head>
 
 <body>
 
-<div class="card">
-  <h1>💍 Ruken & Samet</h1>
+<div class="wrapper">
+  <div class="card">
 
-  <div class="subtitle">
-    Bu güzel günümüzde çektiğiniz<br>
-    fotoğraf ve videoları bizimle paylaşır mısınız?
+    <h1>💍 Ruken & Samet</h1>
+
+    <div class="subtitle">
+      Bu özel günümüzde çektiğiniz<br>
+      fotoğraf ve videoları bizimle paylaşır mısınız?
+    </div>
+
+    <input type="file" id="fileInput" hidden multiple accept="image/*,video/*">
+
+    <button class="upload-btn" onclick="selectFiles()">
+      📸 Fotoğraf & Video Yükle
+    </button>
+
+    <div class="info">
+      • En fazla <b>25 dosya</b><br>
+      • Video süresi <b>maksimum 10 dakika</b>
+    </div>
+
+    <progress id="progressBar" value="0" max="100"></progress>
+    <div id="status"></div>
+
   </div>
-
-  <input type="file" id="fileInput" hidden multiple accept="image/*,video/*">
-
-  <button class="upload-btn" onclick="selectFiles()">
-    📸 Fotoğraf & Video Yükle
-  </button>
-
-  <div class="info">
-    • En fazla <b>25 dosya</b><br>
-    • Video süresi <b>maksimum 10 dakika</b>
-  </div>
-
-  <progress id="progressBar" value="0" max="100"></progress>
-  <div id="status"></div>
 </div>
 
 <script>
 const API_URL = "APPS_SCRIPT_URL_BURAYA";
-let fileCounter = 1;
+let sayac = 1;
 
 function selectFiles(){
   document.getElementById("fileInput").click();
@@ -151,24 +176,24 @@ document.getElementById("fileInput").addEventListener("change", async function()
 
     reader.onload = async function(){
       document.getElementById("progressBar").style.display="block";
-      document.getElementById("status").innerText="Yükleniyor...";
+      document.getElementById("status").innerText="⏳ Yükleniyor...";
 
       const base64 = reader.result.split(",")[1];
       const ext = file.name.split(".").pop();
-      const newName = `ruken_samet_${fileCounter}.${ext}`;
-      fileCounter++;
+      const filename = `ruken_samet_${sayac}.${ext}`;
+      sayac++;
 
       await fetch(API_URL,{
         method:"POST",
         body:new URLSearchParams({
           file: base64,
-          name: newName,
+          name: filename,
           type: file.type
         })
       });
 
       document.getElementById("progressBar").value=100;
-      document.getElementById("status").innerText="✅ Yükleme başarılı";
+      document.getElementById("status").innerText="✅ Yükleme başarıyla tamamlandı";
     };
 
     reader.readAsDataURL(file);
