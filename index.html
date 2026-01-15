@@ -8,8 +8,8 @@
 
   <style>
     :root{
-      --bg:#e9f3ee;
       --ink:#0d1b15;
+      --muted: rgba(13,27,21,.72);
 
       --brand-950:#071b14;
       --brand-900:#0f2f24;
@@ -17,69 +17,60 @@
 
       --gold:#cbb57e;
 
-      --card: rgba(255,255,255,.82);
+      --card: rgba(255,255,255,.92);
       --stroke: rgba(15,47,36,.14);
 
       --shadow: 0 22px 70px rgba(10,28,21,.16);
-      --shadow-soft: 0 10px 26px rgba(10,28,21,.09);
-
       --radius-xl: 28px;
       --radius-lg: 18px;
 
       --ok:#167a3a;
       --err:#c62828;
 
-      /* ✅ cache kır: sayı değiştir */
-      --bg-image: url("assets/floral-bg.png?v=99");
+      /* ✅ cache kır (sayıyı artırdıkça tarayıcı yeni dosyayı çeker) */
+      --bg-image: url("assets/floral-bg.png?v=200");
     }
 
     *{ box-sizing:border-box; }
     html,body{ height:100%; }
 
+    /* ✅ ARKA PLAN NET: blur/filter yok, direkt görsel */
     body{
       margin:0;
       font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
       color: var(--ink);
-      background: var(--bg);
-      padding: max(18px, env(safe-area-inset-top)) 14px max(22px, env(safe-area-inset-bottom));
+
+      /* Arka plan görseli */
+      background-color: #e9f3ee;
+      background-image: var(--bg-image);
+      background-repeat: no-repeat;
+      background-position: center;
+      /* ✅ cover yerine “NET” için kontrollü ölçek:
+         büyük ekranda görseli aşırı büyütmez, daha keskin kalır */
+      background-size: min(1600px, 120vw);
+
+      padding:
+        max(18px, env(safe-area-inset-top))
+        14px
+        max(22px, env(safe-area-inset-bottom));
+
       display:grid;
       place-items:center;
       overflow-x:hidden;
     }
 
-    /* ✅ ARKA PLAN NET: üst sis katmanı KALDIRILDI */
-    .bg{
-      position:fixed;
-      inset:0;
-      z-index:0;
-      pointer-events:none;
-      overflow:hidden;
-
-      /* palet */
-      background:
-        radial-gradient(1150px 780px at 18% 18%, rgba(66,153,122,.20), transparent 62%),
-        radial-gradient(1100px 760px at 82% 86%, rgba(203,181,126,.12), transparent 62%),
-        linear-gradient(135deg, rgba(240,249,245,.92), rgba(220,241,231,.90));
+    /* Desktop’ta sabit dursun (net hissi artar) */
+    @media (min-width: 900px){
+      body{ background-attachment: fixed; }
     }
 
-    .bg::before{
-      content:"";
-      position:absolute;
-      inset:-40px;
-      background: var(--bg-image) center/cover no-repeat;
-
-      /* ✅ daha NET görünmesi için blur azalttık */
-      opacity:.85;
-      filter: blur(2px) saturate(1.15) contrast(1.08);
-      transform: scale(1.03);
+    /* ✅ Çok geniş ekranlarda biraz daha büyütebiliriz ama kontrollü */
+    @media (min-width: 1600px){
+      body{ background-size: 1800px; }
     }
-
-    /* ✅ KALDIRDIK: .bg::after yok! */
 
     .wrap{
       width:min(860px, 100%);
-      position:relative;
-      z-index:1;
     }
 
     .card{
@@ -88,9 +79,7 @@
       border: 1px solid var(--stroke);
       box-shadow: var(--shadow);
       overflow:hidden;
-
-      /* blur çok az: arka planı öldürmesin */
-      backdrop-filter: blur(0px);
+      /* ✅ backdrop-filter yok: arka planı “çamur” yapmasın */
     }
 
     .header{
@@ -164,7 +153,7 @@
 
     .content{
       padding: 16px 18px 18px;
-      background: rgba(255,255,255,.60);
+      background: rgba(255,255,255,.92);
     }
 
     .dropzone{
@@ -172,12 +161,11 @@
       width:100%;
       border-radius: var(--radius-lg);
       border: 1.5px dashed rgba(15,47,36,.42);
-      background: rgba(255,255,255,.78);
+      background: rgba(255,255,255,.96);
       padding: 16px;
       cursor:pointer;
       user-select:none;
-      transition: transform .16s ease, border-color .16s ease, box-shadow .16s ease, background .16s ease;
-      box-shadow: var(--shadow-soft);
+      transition: transform .16s ease, border-color .16s ease;
       outline:none;
     }
     .dropzone:hover{
@@ -185,7 +173,7 @@
       border-color: rgba(15,47,36,.65);
     }
     .dropzone.dragover{
-      background: rgba(231, 246, 239, .88);
+      background: rgba(231, 246, 239, .96);
       border-color: rgba(15,47,36,.90);
       transform: translateY(-1px);
     }
@@ -228,7 +216,7 @@
       font-size: 13px;
       min-height: 18px;
       line-height:1.35;
-      color: rgba(13,27,21,.76);
+      color: var(--muted);
     }
 
     .footer{
@@ -239,7 +227,7 @@
       gap:10px;
       flex-wrap:wrap;
       border-top: 1px solid rgba(15,47,36,.10);
-      background: rgba(255,255,255,.55);
+      background: rgba(255,255,255,.92);
       font-size: 12px;
       color: rgba(13,27,21,.76);
     }
@@ -247,13 +235,12 @@
 
     @media (max-width:560px){
       .title{ font-size: 28px; }
+      body{ background-size: 1200px; }
     }
   </style>
 </head>
 
 <body>
-  <div class="bg" aria-hidden="true"></div>
-
   <main class="wrap">
     <section class="card">
       <header class="header">
@@ -295,7 +282,6 @@
   const fileInput = el("fileInput");
   const dropzone  = el("dropzone");
   const statusEl  = el("status");
-
   let busy = false;
 
   (function setDate(){
@@ -309,7 +295,7 @@
 
   function setStatus(msg, type="default"){
     statusEl.textContent = msg || "";
-    statusEl.style.color = (type==="err") ? "var(--err)" : "rgba(13,27,21,.76)";
+    statusEl.style.color = (type==="err") ? "var(--err)" : "rgba(13,27,21,.72)";
   }
 
   function validate(files){
@@ -351,11 +337,11 @@
 
   async function startUpload(files){
     busy = true;
-    setStatus(""); // ✅ mesaj bile istemiyorsan bunu bırak
+    setStatus("");
     try{
       for(const f of files) await uploadFile(f);
-      // ✅ başarı mesajı istemiyorsan boş bırak:
-      // setStatus("Yükleme tamamlandı.");
+      // İstersen mesaj tamamen kapalı kalsın:
+      // setStatus("Yüklendi. Teşekkürler!");
     }catch(err){
       setStatus("HATA: " + String(err), "err");
     }finally{
@@ -394,4 +380,3 @@
 </script>
 </body>
 </html>
-
