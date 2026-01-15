@@ -8,24 +8,18 @@
 
   <style>
     :root{
-      /* ✅ Premium palette (daha belirgin) */
       --bg:#e9f3ee;
       --ink:#0d1b15;
-      --muted: rgba(13,27,21,.72);
 
       --brand-950:#071b14;
       --brand-900:#0f2f24;
-      --brand-700:#1e4b3a;
       --brand-600:#2a5c47;
 
       --gold:#cbb57e;
-      --rose:#d7a7b3;
 
-      --card: rgba(255,255,255,.84);
-      --card-strong: rgba(255,255,255,.90);
+      --card: rgba(255,255,255,.82);
       --stroke: rgba(15,47,36,.14);
 
-      /* ✅ kart gölgesi biraz daha az, arka plan daha görünür */
       --shadow: 0 22px 70px rgba(10,28,21,.16);
       --shadow-soft: 0 10px 26px rgba(10,28,21,.09);
 
@@ -35,8 +29,8 @@
       --ok:#167a3a;
       --err:#c62828;
 
-      /* ✅ cache kır */
-      --bg-image: url("assets/floral-bg.png?v=20");
+      /* ✅ cache kır: sayı değiştir */
+      --bg-image: url("assets/floral-bg.png?v=99");
     }
 
     *{ box-sizing:border-box; }
@@ -47,53 +41,40 @@
       font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
       color: var(--ink);
       background: var(--bg);
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-
-      padding:
-        max(18px, env(safe-area-inset-top))
-        14px
-        max(22px, env(safe-area-inset-bottom));
+      padding: max(18px, env(safe-area-inset-top)) 14px max(22px, env(safe-area-inset-bottom));
       display:grid;
       place-items:center;
       overflow-x:hidden;
     }
 
-    /* ✅ Background (palet NET) */
+    /* ✅ ARKA PLAN NET: üst sis katmanı KALDIRILDI */
     .bg{
-      position:fixed; inset:0; z-index:0;
-      pointer-events:none; overflow:hidden;
+      position:fixed;
+      inset:0;
+      z-index:0;
+      pointer-events:none;
+      overflow:hidden;
 
-      /* ✅ palet katmanları (belirgin) */
+      /* palet */
       background:
-        radial-gradient(1150px 780px at 18% 18%, rgba(66, 153, 122, .22), transparent 62%),
-        radial-gradient(1100px 760px at 82% 86%, rgba(215, 167, 179, .18), transparent 62%),
-        radial-gradient(900px 520px at 50% 12%, rgba(203, 181, 126, .12), transparent 70%),
-        linear-gradient(135deg, rgba(240, 249, 245, .96), rgba(220, 241, 231, .94));
+        radial-gradient(1150px 780px at 18% 18%, rgba(66,153,122,.20), transparent 62%),
+        radial-gradient(1100px 760px at 82% 86%, rgba(203,181,126,.12), transparent 62%),
+        linear-gradient(135deg, rgba(240,249,245,.92), rgba(220,241,231,.90));
     }
 
     .bg::before{
       content:"";
-      position:absolute; inset:-70px;
+      position:absolute;
+      inset:-40px;
       background: var(--bg-image) center/cover no-repeat;
 
-      /* ✅ görseli daha belirgin yap */
-      opacity:.72;
-      filter: blur(8px) saturate(1.20) contrast(1.05);
-      transform: scale(1.08);
+      /* ✅ daha NET görünmesi için blur azalttık */
+      opacity:.85;
+      filter: blur(2px) saturate(1.15) contrast(1.08);
+      transform: scale(1.03);
     }
 
-    .bg::after{
-      content:"";
-      position:absolute; inset:0;
-
-      /* ✅ “süt” katmanını AZALTTIK: arka plan boğulmasın */
-      background:
-        radial-gradient(900px 520px at 50% 10%, rgba(255,255,255,.45), transparent 70%),
-        radial-gradient(900px 520px at 50% 95%, rgba(255,255,255,.30), transparent 70%),
-        linear-gradient(180deg, rgba(255,255,255,.18), rgba(255,255,255,.08));
-      opacity:.24;
-    }
+    /* ✅ KALDIRDIK: .bg::after yok! */
 
     .wrap{
       width:min(860px, 100%);
@@ -108,8 +89,8 @@
       box-shadow: var(--shadow);
       overflow:hidden;
 
-      /* ✅ blur azalt: arka planı öldürmesin */
-      backdrop-filter: blur(6px);
+      /* blur çok az: arka planı öldürmesin */
+      backdrop-filter: blur(3px);
     }
 
     .header{
@@ -149,6 +130,7 @@
       border: 1px solid rgba(255,255,255,.22);
       white-space:nowrap;
     }
+
     .date{ font-size:12px; opacity:.92; white-space:nowrap; }
 
     .title{
@@ -157,6 +139,7 @@
       letter-spacing:.2px;
       position:relative; z-index:1;
     }
+
     .subtitle{
       margin:0;
       font-size: 14px;
@@ -181,9 +164,7 @@
 
     .content{
       padding: 16px 18px 18px;
-
-      /* ✅ content arkasını biraz şeffaf yaptık */
-      background: linear-gradient(180deg, rgba(255,255,255,.86), rgba(255,255,255,.78));
+      background: rgba(255,255,255,.60);
     }
 
     .dropzone{
@@ -191,7 +172,7 @@
       width:100%;
       border-radius: var(--radius-lg);
       border: 1.5px dashed rgba(15,47,36,.42);
-      background: var(--card-strong);
+      background: rgba(255,255,255,.78);
       padding: 16px;
       cursor:pointer;
       user-select:none;
@@ -203,12 +184,8 @@
       transform: translateY(-1px);
       border-color: rgba(15,47,36,.65);
     }
-    .dropzone:focus-visible{
-      box-shadow: 0 0 0 4px rgba(203,181,126,.35), var(--shadow-soft);
-      border-color: rgba(203,181,126,.85);
-    }
     .dropzone.dragover{
-      background: rgba(231, 246, 239, .96);
+      background: rgba(231, 246, 239, .88);
       border-color: rgba(15,47,36,.90);
       transform: translateY(-1px);
     }
@@ -246,43 +223,6 @@
     }
     input[type=file]{ display:none; }
 
-    .progresswrap{
-      margin-top: 12px;
-      display:none;
-      border-radius: var(--radius-lg);
-      border: 1px solid rgba(15,47,36,.12);
-      background: rgba(255,255,255,.84);
-      padding: 12px;
-    }
-    progress{
-      width:100%;
-      height: 12px;
-      border-radius: 999px;
-      overflow:hidden;
-      border: 1px solid rgba(15,47,36,.14);
-      background: rgba(255,255,255,.96);
-    }
-    progress::-webkit-progress-bar{ background: rgba(255,255,255,.96); }
-    progress::-webkit-progress-value{
-      background: linear-gradient(90deg, var(--brand-700), var(--gold));
-      border-radius:999px;
-    }
-    .small{
-      margin-top: 8px;
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:10px;
-      font-size: 12px;
-      color: rgba(13,27,21,.76);
-    }
-    #currentFile{
-      max-width: 60%;
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
-    }
-
     .status{
       margin-top: 10px;
       font-size: 13px;
@@ -299,9 +239,7 @@
       gap:10px;
       flex-wrap:wrap;
       border-top: 1px solid rgba(15,47,36,.10);
-
-      /* ✅ footer’ı da şeffaf yaptık */
-      background: rgba(255,255,255,.50);
+      background: rgba(255,255,255,.55);
       font-size: 12px;
       color: rgba(13,27,21,.76);
     }
@@ -310,9 +248,6 @@
     @media (max-width:560px){
       .title{ font-size: 28px; }
     }
-    @media (prefers-reduced-motion: reduce){
-      *{ transition:none !important; }
-    }
   </style>
 </head>
 
@@ -320,7 +255,7 @@
   <div class="bg" aria-hidden="true"></div>
 
   <main class="wrap">
-    <section class="card" aria-label="Nişan anıları yükleme paneli">
+    <section class="card">
       <header class="header">
         <div class="row">
           <div class="chip">💍 Nişan Anı Kutusu • Fotoğraf & Video</div>
@@ -332,7 +267,7 @@
       </header>
 
       <div class="content">
-        <label class="dropzone" id="dropzone" for="fileInput" tabindex="0">
+        <label class="dropzone" id="dropzone" for="fileInput">
           <div class="dz-top">
             <div class="dz-title">📸 Fotoğraf / 🎥 Video seçin</div>
             <div class="pill">Maks: 25 dosya • Toplam: 250 MB</div>
@@ -340,14 +275,6 @@
           <p class="dz-hint">Tıklayın → galeriden seçin → otomatik yüklensin.</p>
           <input id="fileInput" type="file" multiple accept="image/*,video/*" />
         </label>
-
-        <div class="progresswrap" id="progressWrap">
-          <progress id="progress" value="0" max="100"></progress>
-          <div class="small">
-            <span id="progressText">0%</span>
-            <span id="currentFile">-</span>
-          </div>
-        </div>
 
         <div class="status" id="status"></div>
       </div>
@@ -361,18 +288,13 @@
 
 <script>
   const API_URL = "https://script.google.com/macros/s/AKfycbwIgq1XMRIH4l0nubP-5HRUl9Znq2MzimEGLlRGzoiKJnSjXe3UYs9KYUlI3XdlL2kw/exec";
-
   const MAX_FILES = 25;
   const MAX_TOTAL_MB = 250;
 
-  const el = (id) => document.getElementById(id);
-  const fileInput    = el("fileInput");
-  const dropzone     = el("dropzone");
-  const progressWrap = el("progressWrap");
-  const progress     = el("progress");
-  const progressText = el("progressText");
-  const currentFile  = el("currentFile");
-  const statusEl     = el("status");
+  const el = (id)=>document.getElementById(id);
+  const fileInput = el("fileInput");
+  const dropzone  = el("dropzone");
+  const statusEl  = el("status");
 
   let busy = false;
 
@@ -382,100 +304,58 @@
     el("dateLabel").textContent = `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`;
   })();
 
-  const sumBytes = (list) => list.reduce((a,f)=>a+f.size,0);
-  const isAllowed = (f) => f.type?.startsWith("image/") || f.type?.startsWith("video/");
+  const sumBytes = (list)=> list.reduce((a,f)=>a+f.size,0);
+  const isAllowed = (f)=> f.type?.startsWith("image/") || f.type?.startsWith("video/");
 
   function setStatus(msg, type="default"){
     statusEl.textContent = msg || "";
-    statusEl.style.color =
-      type === "ok"  ? "var(--ok)" :
-      type === "err" ? "var(--err)" :
-      "rgba(13,27,21,.76)";
+    statusEl.style.color = (type==="err") ? "var(--err)" : "rgba(13,27,21,.76)";
   }
 
   function validate(files){
-    if(files.length === 0) return {ok:false, msg:"Dosya seçilmedi."};
-    if(files.length > MAX_FILES) return {ok:false, msg:`En fazla ${MAX_FILES} dosya seçebilirsiniz.`};
-
-    const totalMB = sumBytes(files) / (1024*1024);
-    if(totalMB > MAX_TOTAL_MB){
-      return {ok:false, msg:`Toplam boyut ${MAX_TOTAL_MB} MB’ı geçemez. (Şu an: ${totalMB.toFixed(1)} MB)`};
-    }
+    if(files.length===0) return {ok:false, msg:"Dosya seçilmedi."};
+    if(files.length>MAX_FILES) return {ok:false, msg:`En fazla ${MAX_FILES} dosya seçebilirsiniz.`};
+    const totalMB = sumBytes(files)/(1024*1024);
+    if(totalMB>MAX_TOTAL_MB) return {ok:false, msg:`Toplam ${MAX_TOTAL_MB} MB sınırı aşıldı.`};
     return {ok:true};
-  }
-
-  function resetProgress(){
-    progressWrap.style.display = "none";
-    progress.value = 0;
-    progressText.textContent = "0%";
-    currentFile.textContent = "-";
   }
 
   fileInput.addEventListener("change", async (e)=>{
     if(busy) return;
     const picked = [...e.target.files].filter(isAllowed);
     const v = validate(picked);
-
-    if(!v.ok){
-      setStatus(v.msg, "err");
-      fileInput.value = "";
-      return;
-    }
-
+    if(!v.ok){ setStatus(v.msg,"err"); fileInput.value=""; return; }
     await startUpload(picked);
-    fileInput.value = "";
+    fileInput.value="";
   });
 
   ["dragenter","dragover"].forEach(ev=>{
-    dropzone.addEventListener(ev, (e)=>{
+    dropzone.addEventListener(ev,(e)=>{
       e.preventDefault(); e.stopPropagation();
       dropzone.classList.add("dragover");
     });
   });
   ["dragleave","drop"].forEach(ev=>{
-    dropzone.addEventListener(ev, (e)=>{
+    dropzone.addEventListener(ev,(e)=>{
       e.preventDefault(); e.stopPropagation();
       dropzone.classList.remove("dragover");
     });
   });
-
   dropzone.addEventListener("drop", async (e)=>{
     if(busy) return;
-
     const dropped = [...e.dataTransfer.files].filter(isAllowed);
     const v = validate(dropped);
-
-    if(!v.ok){
-      setStatus(v.msg || "Sadece fotoğraf/video yükleyebilirsiniz.", "err");
-      return;
-    }
+    if(!v.ok){ setStatus(v.msg,"err"); return; }
     await startUpload(dropped);
   });
 
   async function startUpload(files){
     busy = true;
-
-    progressWrap.style.display = "block";
-    progress.value = 0;
-    progressText.textContent = "0%";
-    setStatus("Yükleme başladı…");
-
+    setStatus(""); // ✅ mesaj bile istemiyorsan bunu bırak
     try{
-      let done = 0;
-
-      for(const f of files){
-        currentFile.textContent = f.name;
-        await uploadFile(f);
-
-        done++;
-        const pct = Math.round((done / files.length) * 100);
-        progress.value = pct;
-        progressText.textContent = pct + "%";
-      }
-
-      currentFile.textContent = "Bitti";
-      setStatus("🎉 Yükleme tamamlandı. Teşekkürler!", "ok");
-      setTimeout(resetProgress, 1200);
+      for(const f of files) await uploadFile(f);
+      // ✅ başarı mesajı istemiyorsan boş bırak:
+      // setStatus("Yükleme tamamlandı.");
     }catch(err){
       setStatus("HATA: " + String(err), "err");
     }finally{
@@ -484,43 +364,30 @@
   }
 
   function uploadFile(file){
-    return new Promise((resolve, reject)=>{
+    return new Promise((resolve,reject)=>{
       const reader = new FileReader();
       reader.onload = async ()=>{
         try{
           const base64 = String(reader.result).split(",")[1];
-
-          const controller = new AbortController();
-          const t = setTimeout(()=>controller.abort(), 60000);
-
-          const res = await fetch(API_URL, {
-            method: "POST",
+          const res = await fetch(API_URL,{
+            method:"POST",
             body: new URLSearchParams({
               file: base64,
               originalName: file.name,
               type: file.type || "application/octet-stream"
-            }),
-            signal: controller.signal
+            })
           });
-
-          clearTimeout(t);
-
           const text = await res.text();
           let json;
-          try { json = JSON.parse(text); }
-          catch {
-            const preview = text.slice(0, 180).replace(/\s+/g," ").trim();
-            return reject("Sunucu JSON dönmedi (Deploy/izin). Yanıt: " + preview);
-          }
-
-          if(json.status !== "ok") return reject(json.message || "Drive'a kaydedilemedi.");
+          try{ json = JSON.parse(text); }
+          catch{ return reject("Sunucu JSON dönmedi."); }
+          if(json.status!=="ok") return reject(json.message || "Drive'a kaydedilemedi.");
           resolve();
         }catch(e){
-          if(String(e).includes("AbortError")) return reject("Zaman aşımı. İnternet yavaş olabilir.");
           reject(e?.message || "Yükleme hatası");
         }
       };
-      reader.onerror = ()=> reject("Dosya okunamadı.");
+      reader.onerror = ()=>reject("Dosya okunamadı.");
       reader.readAsDataURL(file);
     });
   }
