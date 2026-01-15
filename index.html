@@ -19,8 +19,8 @@
 
       --card: rgba(255,255,255,.92);
       --stroke: rgba(15,47,36,.14);
-
       --shadow: 0 22px 70px rgba(10,28,21,.16);
+
       --radius-xl: 28px;
       --radius-lg: 18px;
 
@@ -28,74 +28,62 @@
       --err:#c62828;
 
       /* ✅ cache kır */
-      --bg-image: url("assets/floral-bg.png?v=300");
+      --bg-image: url("assets/floral-bg.png?v=500");
     }
 
     *{ box-sizing:border-box; }
     html,body{ height:100%; }
 
-    /* ✅ HER TELEFONDA UYUMLU ARKA PLAN:
-       - 1) cover ile ekranı full doldur
-       - 2) üstüne hafif repeat desen katmanı ekle (her çözünürlükte dolu hissi)
-    */
     body{
       margin:0;
       font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
       color: var(--ink);
+      background: #e9f3ee;
+      min-height: 100dvh;
 
-      background-color: #e9f3ee;
-
-      /* 2 katman: altta cover, üstte hafif repeat */
-      background-image:
-        var(--bg-image),
-        var(--bg-image);
-
-      background-repeat:
-        no-repeat,
-        repeat;
-
-      background-position:
-        center center,
-        center center;
-
-      /* ✅ mobilde cover: tam ekran dolsun */
-      background-size:
-        cover,
-        420px auto;  /* ✅ repeat katmanı: telefonda da dolu görünür */
-
-      padding:
-        max(18px, env(safe-area-inset-top))
-        14px
-        max(22px, env(safe-area-inset-bottom));
-
+      padding: max(18px, env(safe-area-inset-top)) 14px max(22px, env(safe-area-inset-bottom));
       display:grid;
       place-items:center;
       overflow-x:hidden;
     }
 
-    /* ✅ Büyük ekranlarda repeat katmanını biraz büyütelim */
+    /* ✅ ARKA PLAN KATMANI (asıl çözüm burada) */
+    .bg{
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      min-height: 100dvh;
+      background:
+        radial-gradient(1150px 780px at 18% 18%, rgba(66,153,122,.18), transparent 62%),
+        radial-gradient(1100px 760px at 82% 86%, rgba(203,181,126,.10), transparent 62%),
+        linear-gradient(135deg, rgba(240,249,245,.96), rgba(220,241,231,.94));
+    }
+
+    /* ✅ Mobil kesin çözüm: görseli 100% 100% esnet -> köşeler her cihazda görünür */
+    .bg::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background-image: var(--bg-image);
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: 100% 100%; /* ✅ KRİTİK: her telefona tam oturur */
+      opacity: 1;
+    }
+
+    /* ✅ Desktop’ta daha doğal gözüksün diye cover (istersen kapatabilirsin) */
     @media (min-width: 900px){
-      body{
-        background-size:
-          cover,
-          560px auto;
-        background-attachment:
-          fixed,
-          fixed;
+      .bg::before{
+        background-size: cover;
       }
     }
 
-    /* ✅ Çok küçük telefonlarda repeat biraz küçülsün */
-    @media (max-width: 380px){
-      body{
-        background-size:
-          cover,
-          360px auto;
-      }
+    .wrap{
+      width:min(860px, 100%);
+      position: relative;
+      z-index: 1;
     }
-
-    /* Kart */
-    .wrap{ width:min(860px, 100%); }
 
     .card{
       border-radius: var(--radius-xl);
@@ -263,6 +251,8 @@
 </head>
 
 <body>
+  <div class="bg" aria-hidden="true"></div>
+
   <main class="wrap">
     <section class="card">
       <header class="header">
@@ -362,7 +352,6 @@
     setStatus("");
     try{
       for(const f of files) await uploadFile(f);
-      // setStatus("Yüklendi. Teşekkürler!");
     }catch(err){
       setStatus("HATA: " + String(err), "err");
     }finally{
