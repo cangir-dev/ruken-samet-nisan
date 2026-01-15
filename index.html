@@ -8,14 +8,18 @@
 
   <style>
     :root{
-      --bg: #eef6f0;
-      --ink: #0d1b15;
+      /* Premium palette */
+      --bg:#eef6f0;
+      --ink:#0d1b15;
+      --muted: rgba(13,27,21,.72);
 
+      --brand-950:#0b231b;
       --brand-900:#0f2f24;
       --brand-700:#1e4b3a;
       --brand-600:#2a5c47;
 
       --gold:#cbb57e;
+      --rose:#d7a7b3;
 
       --card: rgba(255,255,255,.86);
       --card-strong: rgba(255,255,255,.92);
@@ -30,8 +34,8 @@
       --ok:#167a3a;
       --err:#c62828;
 
-      /* ✅ GitHub cache kırma: v=6 arttır */
-      --bg-image: url("assets/floral-bg.png?v=6");
+      /* ✅ cache kırmak için v= */
+      --bg-image: url("assets/floral-bg.png?v=12");
     }
 
     *{ box-sizing:border-box; }
@@ -49,42 +53,42 @@
         max(18px, env(safe-area-inset-top))
         14px
         max(22px, env(safe-area-inset-bottom));
+
       display:grid;
       place-items:center;
       overflow-x:hidden;
     }
 
-    /* ✅ Background (net görünsün) */
+    /* ✅ Background: arka plan net, ama gözü yormaz */
     .bg{
-      position:fixed;
-      inset:0;
-      z-index:0;
+      position:fixed; inset:0; z-index:0;
       pointer-events:none;
       overflow:hidden;
       background:
-        radial-gradient(1000px 700px at 20% 15%, rgba(214,238,226,.65), transparent 60%),
-        radial-gradient(1000px 700px at 80% 85%, rgba(214,238,226,.55), transparent 60%),
-        linear-gradient(135deg, rgba(245,250,247,.92), rgba(226,242,233,.92));
+        radial-gradient(1100px 760px at 18% 18%, rgba(214,238,226,.75), transparent 62%),
+        radial-gradient(1100px 760px at 82% 86%, rgba(231,217,224,.42), transparent 62%),
+        linear-gradient(135deg, rgba(245,250,247,.96), rgba(226,242,233,.94));
     }
     .bg::before{
       content:"";
-      position:absolute;
-      inset:-60px;
+      position:absolute; inset:-60px;
       background: var(--bg-image) center/cover no-repeat;
-      opacity:.45;                 /* ✅ daha görünür */
-      filter: blur(10px) saturate(1.08);
+      opacity:.55; /* ✅ daha görünür */
+      filter: blur(10px) saturate(1.12);
       transform: scale(1.08);
     }
     .bg::after{
       content:"";
-      position:absolute;
-      inset:0;
-      background: linear-gradient(180deg, rgba(255,255,255,.62), rgba(255,255,255,.30));
-      opacity:.35;                 /* ✅ üst katman az kapatsın */
+      position:absolute; inset:0;
+      background:
+        radial-gradient(900px 500px at 50% 15%, rgba(255,255,255,.72), transparent 70%),
+        radial-gradient(900px 500px at 50% 95%, rgba(255,255,255,.55), transparent 70%),
+        linear-gradient(180deg, rgba(255,255,255,.40), rgba(255,255,255,.20));
+      opacity:.34; /* ✅ kapatma az */
     }
 
     .wrap{
-      width:min(820px, 100%);
+      width:min(860px, 100%);
       position:relative;
       z-index:1;
     }
@@ -100,17 +104,16 @@
 
     .header{
       padding: 18px 18px 16px;
-      background: linear-gradient(135deg, var(--brand-900), var(--brand-600));
-      color: #fff;
+      background: linear-gradient(135deg, var(--brand-950), var(--brand-600));
+      color:#fff;
       position:relative;
     }
     .header::after{
       content:"";
-      position:absolute;
-      inset:0;
+      position:absolute; inset:0;
       background:
-        radial-gradient(520px 260px at 18% 22%, rgba(255,255,255,.16), transparent 62%),
-        radial-gradient(520px 260px at 90% 88%, rgba(255,255,255,.12), transparent 60%);
+        radial-gradient(560px 280px at 18% 22%, rgba(255,255,255,.16), transparent 62%),
+        radial-gradient(560px 280px at 90% 88%, rgba(255,255,255,.12), transparent 60%);
       opacity:.55;
       pointer-events:none;
     }
@@ -136,43 +139,33 @@
       border: 1px solid rgba(255,255,255,.22);
       white-space:nowrap;
     }
-
-    .date{
-      font-size: 12px;
-      opacity:.92;
-      white-space:nowrap;
-    }
+    .date{ font-size:12px; opacity:.92; white-space:nowrap; }
 
     .title{
       margin: 12px 0 4px;
       font-size: 34px;
       letter-spacing:.2px;
-      position:relative;
-      z-index:1;
+      position:relative; z-index:1;
     }
-
     .subtitle{
       margin:0;
       font-size: 14px;
       opacity:.95;
       line-height:1.45;
-      position:relative;
-      z-index:1;
+      position:relative; z-index:1;
       display:flex;
       gap:8px;
       align-items:center;
       flex-wrap:wrap;
     }
-
     .accent-line{
       height:2px;
-      width:96px;
+      width:110px;
       background: linear-gradient(90deg, transparent, var(--gold), transparent);
       border-radius:999px;
-      opacity:.9;
+      opacity:.95;
       margin-top:10px;
-      position:relative;
-      z-index:1;
+      position:relative; z-index:1;
     }
 
     .content{
@@ -180,7 +173,7 @@
       background: linear-gradient(180deg, rgba(255,255,255,.92), rgba(255,255,255,.86));
     }
 
-    /* ✅ Dropzone */
+    /* ✅ Tek tık dropzone */
     .dropzone{
       display:block;
       width:100%;
@@ -192,7 +185,7 @@
       user-select:none;
       transition: transform .16s ease, border-color .16s ease, box-shadow .16s ease, background .16s ease;
       box-shadow: var(--shadow-soft);
-      outline: none;
+      outline:none;
     }
     .dropzone:hover{
       transform: translateY(-1px);
@@ -216,16 +209,14 @@
       flex-wrap:wrap;
       margin-bottom:10px;
     }
-
     .dz-title{
       display:flex;
       align-items:center;
       gap:10px;
-      font-weight: 850;
+      font-weight: 900;
       color: var(--brand-900);
       font-size: 15px;
     }
-
     .pill{
       font-size: 12px;
       color: rgba(13,27,21,.72);
@@ -235,14 +226,12 @@
       border-radius: 999px;
       white-space:nowrap;
     }
-
     .dz-hint{
       margin:0;
       color: rgba(13,27,21,.70);
       font-size: 13px;
       line-height:1.45;
     }
-
     input[type=file]{ display:none; }
 
     /* ✅ Progress */
@@ -254,7 +243,6 @@
       background: rgba(255,255,255,.88);
       padding: 12px;
     }
-
     progress{
       width:100%;
       height: 12px;
@@ -268,7 +256,6 @@
       background: linear-gradient(90deg, var(--brand-700), var(--gold));
       border-radius:999px;
     }
-
     .small{
       margin-top: 8px;
       display:flex;
@@ -332,7 +319,6 @@
       </header>
 
       <div class="content">
-        <!-- ✅ Tek tık: seçince otomatik yükle -->
         <label class="dropzone" id="dropzone" for="fileInput" tabindex="0">
           <div class="dz-top">
             <div class="dz-title">📸 Fotoğraf / 🎥 Video seçin</div>
@@ -361,18 +347,13 @@
   </main>
 
 <script>
-  /* =========================
-     CONFIG
-  ========================== */
-  const API_URL = "https://script.google.com/macros/s/AKfycbzWZyw9dc1IWQ0N6GRmWkJCkbq8A3oQYS-7BY3CNUH-LBWefRrW7HRywm1OathQ0Bkh/exec";
+  /* ✅ Buraya Apps Script Web App URL’in (seninki) */
+  const API_URL = "https://script.google.com/macros/s/AKfycbwIgq1XMRIH4l0nubP-5HRUl9Znq2MzimEGLlRGzoiKJnSjXe3UYs9KYUlI3XdlL2kw/exec";
+
   const MAX_FILES = 25;
   const MAX_TOTAL_MB = 250;
 
-  /* =========================
-     DOM
-  ========================== */
   const el = (id) => document.getElementById(id);
-
   const fileInput    = el("fileInput");
   const dropzone     = el("dropzone");
   const progressWrap = el("progressWrap");
@@ -383,18 +364,12 @@
 
   let busy = false;
 
-  /* =========================
-     Date
-  ========================== */
   (function setDate(){
     const d = new Date();
     const months = ["Ocak","Şubat","Mart","Nisan","Mayıs","Haziran","Temmuz","Ağustos","Eylül","Ekim","Kasım","Aralık"];
     el("dateLabel").textContent = `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`;
   })();
 
-  /* =========================
-     Helpers
-  ========================== */
   const sumBytes = (list) => list.reduce((a,f)=>a+f.size,0);
   const isAllowed = (f) => f.type?.startsWith("image/") || f.type?.startsWith("video/");
 
@@ -424,9 +399,6 @@
     currentFile.textContent = "-";
   }
 
-  /* =========================
-     Events
-  ========================== */
   fileInput.addEventListener("change", async (e)=>{
     if(busy) return;
 
@@ -443,7 +415,6 @@
     fileInput.value = "";
   });
 
-  // Drag & drop
   ["dragenter","dragover"].forEach(ev=>{
     dropzone.addEventListener(ev, (e)=>{
       e.preventDefault(); e.stopPropagation();
@@ -471,9 +442,6 @@
     await startUpload(dropped);
   });
 
-  /* =========================
-     Upload
-  ========================== */
   async function startUpload(files){
     busy = true;
 
@@ -497,11 +465,10 @@
 
       currentFile.textContent = "Bitti";
       setStatus("🎉 Yükleme tamamlandı. Teşekkürler!", "ok");
-      setTimeout(resetProgress, 1400);
+      setTimeout(resetProgress, 1200);
 
     }catch(err){
       setStatus("HATA: " + String(err), "err");
-      // progress görünür kalsın (kullanıcı görsün)
     }finally{
       busy = false;
     }
@@ -515,7 +482,6 @@
         try{
           const base64 = String(reader.result).split(",")[1];
 
-          // timeout (donma olmasın)
           const controller = new AbortController();
           const t = setTimeout(()=>controller.abort(), 60000);
 
@@ -532,19 +498,14 @@
           clearTimeout(t);
 
           const text = await res.text();
-
-          // JSON dönmüyorsa: Deploy/CORS ihtimali çok yüksek
           let json;
           try { json = JSON.parse(text); }
           catch {
-            const preview = text.slice(0, 160).replace(/\s+/g," ").trim();
-            return reject("Sunucu JSON dönmedi (Deploy/CORS). Yanıt: " + preview);
+            const preview = text.slice(0, 180).replace(/\s+/g," ").trim();
+            return reject("Sunucu JSON dönmedi (Deploy/izin). Yanıt: " + preview);
           }
 
-          if(json.status !== "ok"){
-            return reject(json.message || "Drive'a kaydedilemedi.");
-          }
-
+          if(json.status !== "ok") return reject(json.message || "Drive'a kaydedilemedi.");
           resolve();
         }catch(e){
           if(String(e).includes("AbortError")) return reject("Zaman aşımı. İnternet yavaş olabilir.");
