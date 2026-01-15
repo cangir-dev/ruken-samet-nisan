@@ -14,7 +14,6 @@
       --brand-950:#071b14;
       --brand-900:#0f2f24;
       --brand-600:#2a5c47;
-
       --gold:#cbb57e;
 
       --card: rgba(255,255,255,.92);
@@ -28,7 +27,7 @@
       --err:#c62828;
 
       /* ✅ cache kır */
-      --bg-image: url("assets/floral-bg.png?v=500");
+      --floral: url("assets/floral-bg.png?v=700");
     }
 
     *{ box-sizing:border-box; }
@@ -38,51 +37,152 @@
       margin:0;
       font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
       color: var(--ink);
-      background: #e9f3ee;
       min-height: 100dvh;
 
-      padding: max(18px, env(safe-area-inset-top)) 14px max(22px, env(safe-area-inset-bottom));
+      padding:
+        max(18px, env(safe-area-inset-top))
+        14px
+        max(22px, env(safe-area-inset-bottom));
+
       display:grid;
       place-items:center;
       overflow-x:hidden;
+
+      background: #eaf4ee;
     }
 
-    /* ✅ ARKA PLAN KATMANI (asıl çözüm burada) */
+    /* ✅ PREMIUM BACKGROUND: 4 köşe + paper + soft gradients (no stretch) */
     .bg{
-      position: fixed;
-      inset: 0;
-      z-index: 0;
-      pointer-events: none;
-      min-height: 100dvh;
-      background:
-        radial-gradient(1150px 780px at 18% 18%, rgba(66,153,122,.18), transparent 62%),
-        radial-gradient(1100px 760px at 82% 86%, rgba(203,181,126,.10), transparent 62%),
-        linear-gradient(135deg, rgba(240,249,245,.96), rgba(220,241,231,.94));
-    }
-
-    /* ✅ Mobil kesin çözüm: görseli 100% 100% esnet -> köşeler her cihazda görünür */
-    .bg::before{
-      content:"";
-      position:absolute;
+      position:fixed;
       inset:0;
-      background-image: var(--bg-image);
-      background-repeat: no-repeat;
-      background-position: center;
-      background-size: 100% 100%; /* ✅ KRİTİK: her telefona tam oturur */
-      opacity: 1;
+      z-index:0;
+      pointer-events:none;
+      min-height:100dvh;
+
+      /* Katman sırası: en üstte köşeler, sonra paper, sonra gradient */
+      background-image:
+        /* Köşeler (aynı görsel, farklı anchor) */
+        var(--floral),
+        var(--floral),
+        var(--floral),
+        var(--floral),
+
+        /* Paper hissi */
+        radial-gradient(1200px 700px at 50% 20%, rgba(255,255,255,.85), transparent 68%),
+        radial-gradient(1200px 700px at 50% 90%, rgba(255,255,255,.72), transparent 68%),
+
+        /* Palet */
+        radial-gradient(1100px 760px at 18% 18%, rgba(66,153,122,.18), transparent 62%),
+        radial-gradient(1100px 760px at 82% 86%, rgba(215,167,179,.12), transparent 62%),
+        radial-gradient(900px 520px at 50% 12%, rgba(203,181,126,.10), transparent 70%),
+        linear-gradient(135deg, rgba(240,249,245,.98), rgba(220,241,231,.96));
+
+      background-repeat:
+        no-repeat,
+        no-repeat,
+        no-repeat,
+        no-repeat,
+
+        no-repeat,
+        no-repeat,
+
+        no-repeat,
+        no-repeat,
+        no-repeat,
+        no-repeat;
+
+      /* Köşelere sabitle */
+      background-position:
+        left top,
+        right top,
+        left bottom,
+        right bottom,
+
+        center top,
+        center bottom,
+
+        18% 18%,
+        82% 86%,
+        50% 12%,
+        center;
+
+      /* ✅ Köşe görselleri: cihazdan bağımsız “maksimum boyut” */
+      background-size:
+        720px auto,  /* left top */
+        720px auto,  /* right top */
+        720px auto,  /* left bottom */
+        720px auto,  /* right bottom */
+
+        100% 100%,
+        100% 100%,
+
+        100% 100%,
+        100% 100%,
+        100% 100%,
+        100% 100%;
     }
 
-    /* ✅ Desktop’ta daha doğal gözüksün diye cover (istersen kapatabilirsin) */
-    @media (min-width: 900px){
-      .bg::before{
-        background-size: cover;
+    /* Telefonlarda köşe boyutu küçülsün */
+    @media (max-width: 560px){
+      .bg{
+        background-size:
+          520px auto,
+          520px auto,
+          520px auto,
+          520px auto,
+
+          100% 100%,
+          100% 100%,
+
+          100% 100%,
+          100% 100%,
+          100% 100%,
+          100% 100%;
+      }
+    }
+
+    /* Çok küçük telefonlarda daha da küçült */
+    @media (max-width: 380px){
+      .bg{
+        background-size:
+          460px auto,
+          460px auto,
+          460px auto,
+          460px auto,
+
+          100% 100%,
+          100% 100%,
+
+          100% 100%,
+          100% 100%,
+          100% 100%,
+          100% 100%;
+      }
+    }
+
+    /* Büyük ekran: köşeler daha büyük */
+    @media (min-width: 1200px){
+      .bg{
+        background-size:
+          860px auto,
+          860px auto,
+          860px auto,
+          860px auto,
+
+          100% 100%,
+          100% 100%,
+
+          100% 100%,
+          100% 100%,
+          100% 100%,
+          100% 100%;
       }
     }
 
     .wrap{
       width:min(860px, 100%);
-      position: relative;
-      z-index: 1;
+      position:relative;
+      z-index:1;
     }
 
     .card{
