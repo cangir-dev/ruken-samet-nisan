@@ -8,36 +8,24 @@
 
   <style>
     :root{
-      /* =========================
-         ✅ KONSEPT: "Sage & Blush Wedding"
-         Yeşil header + ivory kart + blush detay + gold vurgu
-         ========================= */
+      /* ✅ ARKA PLANLA UYUMLU SAGE/OLIVE PALET */
+      --sage-950:#1f2b22;
+      --sage-900:#26352a;
+      --sage-800:#2f4335;
+      --sage-700:#395040;
+      --sage-650:#3f5a47;
+      --sage-600:#486553;
 
-      --sage-950:#0a1f18;
-      --sage-900:#123326;
-      --sage-800:#174031;
-      --sage-700:#1e4f3b;
-      --sage-650:#245844;
-      --sage-600:#2a5c47;
+      --leaf:#5f7a62;        /* buton/çizgi için canlı yaprak tonu */
+      --gold:#cbb57e;        /* sıcak vurgu */
+      --ivory:#fffaf1;       /* krem zemin */
+      --ivory2:rgba(255,250,241,.88);
 
-      --blush-100:#fbf0f3;
-      --blush-200:#f5dde4;
-      --blush-300:#efc6d2;
-      --blush-500:#d7a7b3;
+      --ink:#152018;
+      --muted: rgba(21,32,24,.68);
 
-      --gold-300:#e2d0a3;
-      --gold-400:#d9c79a;
-      --gold-500:#cbb57e;
-
-      --ink:#0e1c16;
-      --muted: rgba(14,28,22,.68);
-
-      /* kart yüzeyleri */
-      --ivory: rgba(255,252,246,.92);
-      --ivory2: rgba(255,252,246,.84);
-
-      --stroke: rgba(18,51,38,.14);
-      --shadow: 0 26px 90px rgba(10,28,21,.16);
+      --stroke: rgba(47,67,53,.16);
+      --shadow: 0 26px 90px rgba(10,28,21,.14);
       --shadow-soft: 0 14px 32px rgba(10,28,21,.10);
 
       --r-xl: 28px;
@@ -46,8 +34,8 @@
       --ok:#167a3a;
       --err:#c62828;
 
-      /* ✅ Tek görsel arka plan */
-      --bg: url("assets/floral-bg.png?v=1200");
+      /* ✅ Tek arka plan görseli */
+      --bg: url("assets/floral-bg.png?v=1300");
     }
 
     *{ box-sizing:border-box; }
@@ -62,24 +50,24 @@
       display:grid;
       place-items:center;
       overflow-x:hidden;
-      background: #eaf4ee;
+      background: #eef6ef;
     }
 
-    /* ✅ Arka plan */
+    /* ✅ Arka plan (tek görsel) */
     .bg{
       position:fixed; inset:0; z-index:0;
       pointer-events:none;
       background: var(--bg) center/cover no-repeat;
-      filter: saturate(1.15) contrast(1.05);
+      filter: saturate(1.12) contrast(1.05);
     }
+    /* okunabilirlik için hafif “paper” overlay */
     .bg::after{
       content:"";
       position:absolute; inset:0;
       background:
-        radial-gradient(1200px 760px at 18% 18%, rgba(42,92,71,.16), transparent 62%),
-        radial-gradient(1200px 760px at 82% 86%, rgba(215,167,179,.18), transparent 62%),
-        radial-gradient(900px 520px at 50% 12%, rgba(203,181,126,.14), transparent 70%),
-        linear-gradient(135deg, rgba(255,252,246,.42), rgba(225,244,234,.20));
+        radial-gradient(1200px 760px at 18% 18%, rgba(95,122,98,.14), transparent 62%),
+        radial-gradient(1200px 760px at 82% 86%, rgba(203,181,126,.10), transparent 62%),
+        linear-gradient(135deg, rgba(255,250,241,.44), rgba(238,246,239,.18));
       opacity:.86;
     }
 
@@ -94,30 +82,21 @@
       backdrop-filter: blur(8px);
     }
 
-    /* ✅ HEADER: daha premium, gold çizgi + blush highlight */
+    /* ✅ HEADER: arka planla uyumlu SAGE */
     .header{
       padding: 18px 18px 16px;
       background:
-        radial-gradient(900px 260px at 20% 0%, rgba(255,255,255,.16), transparent 60%),
-        radial-gradient(700px 240px at 85% 100%, rgba(255,255,255,.10), transparent 58%),
-        linear-gradient(135deg, var(--sage-950), var(--sage-650));
+        radial-gradient(900px 260px at 18% 0%, rgba(255,255,255,.18), transparent 60%),
+        radial-gradient(700px 240px at 88% 100%, rgba(255,255,255,.10), transparent 58%),
+        linear-gradient(135deg, var(--sage-900), var(--sage-650));
       color:#fff;
       position:relative;
-    }
-    .header::before{
-      content:"";
-      position:absolute; inset:0;
-      background:
-        radial-gradient(520px 260px at 12% 55%, rgba(239,198,210,.12), transparent 62%),
-        radial-gradient(520px 260px at 92% 30%, rgba(226,208,163,.10), transparent 62%);
-      opacity:.9;
-      pointer-events:none;
     }
     .header::after{
       content:"";
       position:absolute; left:0; right:0; bottom:0;
       height: 2px;
-      background: linear-gradient(90deg, transparent, var(--gold-400), transparent);
+      background: linear-gradient(90deg, transparent, rgba(203,181,126,.9), transparent);
       opacity:.9;
       pointer-events:none;
     }
@@ -138,8 +117,8 @@
       padding: 8px 12px;
       border-radius: 999px;
       font-size: 12px;
-      background: rgba(255,255,255,.12);
-      border: 1px solid rgba(255,255,255,.20);
+      background: rgba(255,255,255,.14);
+      border: 1px solid rgba(255,255,255,.22);
       backdrop-filter: blur(6px);
       white-space:nowrap;
     }
@@ -160,10 +139,11 @@
       width:34px; height:34px;
       border-radius: 14px;
       display:grid; place-items:center;
-      background: rgba(255,255,255,.12);
-      border: 1px solid rgba(255,255,255,.18);
-      box-shadow: 0 10px 26px rgba(0,0,0,.12);
+      background: rgba(255,255,255,.14);
+      border: 1px solid rgba(255,255,255,.20);
+      box-shadow: 0 10px 26px rgba(0,0,0,.10);
     }
+
     .subtitle{
       margin:0;
       font-size: 14px;
@@ -176,28 +156,27 @@
       z-index:1;
     }
     .subtitle .dot{
-      width:6px;height:6px;border-radius:999px;
-      background: rgba(226,208,163,.92);
+      width:7px;height:7px;border-radius:999px;
+      background: rgba(203,181,126,.92);
       display:inline-block;
-      box-shadow: 0 0 0 4px rgba(226,208,163,.12);
+      box-shadow: 0 0 0 4px rgba(203,181,126,.14);
     }
 
-    /* ✅ CONTENT: kutuların rengi artık header ile uyumlu */
     .content{
       padding: 16px 18px 18px;
-      background: rgba(255,252,246,.58);
+      background: rgba(255,250,241,.56);
     }
 
-    /* ✅ Dropzone: Sage border + blush tint + gold pill */
+    /* ✅ Dropzone: krem + sage border */
     .dropzone{
       display:block;
       width:100%;
       border-radius: var(--r-lg);
-      border: 1.6px dashed rgba(30,79,59,.32);
+      border: 1.6px dashed rgba(72,101,83,.48);
       background:
-        radial-gradient(700px 240px at 10% 20%, rgba(239,198,210,.18), transparent 58%),
-        radial-gradient(700px 240px at 90% 90%, rgba(226,208,163,.14), transparent 58%),
-        linear-gradient(180deg, rgba(255,252,246,.96), rgba(255,252,246,.88));
+        radial-gradient(700px 240px at 10% 20%, rgba(95,122,98,.12), transparent 58%),
+        radial-gradient(700px 240px at 90% 90%, rgba(203,181,126,.12), transparent 58%),
+        linear-gradient(180deg, rgba(255,250,241,.96), rgba(255,250,241,.88));
       padding: 16px;
       cursor:pointer;
       user-select:none;
@@ -207,13 +186,14 @@
     }
     .dropzone:hover{
       transform: translateY(-1px);
-      border-color: rgba(30,79,59,.52);
+      border-color: rgba(72,101,83,.68);
     }
     .dropzone.dragover{
-      border-color: rgba(203,181,126,.72);
+      border-color: rgba(203,181,126,.85);
       box-shadow: 0 18px 44px rgba(10,28,21,.12);
       transform: translateY(-1px);
     }
+
     .dzTop{
       display:flex;
       justify-content:space-between;
@@ -232,9 +212,9 @@
     }
     .pill{
       font-size: 12px;
-      color: rgba(14,28,22,.76);
-      background: rgba(255,252,246,.90);
-      border: 1px solid rgba(203,181,126,.42);
+      color: rgba(21,32,24,.76);
+      background: rgba(255,250,241,.92);
+      border: 1px solid rgba(203,181,126,.45);
       padding: 6px 10px;
       border-radius: 999px;
       white-space:nowrap;
@@ -243,18 +223,18 @@
     .dzHint{
       margin:0;
       font-size: 13px;
-      color: rgba(14,28,22,.70);
+      color: rgba(21,32,24,.70);
       line-height:1.45;
     }
     input[type=file]{ display:none; }
 
-    /* ✅ Önizleme: küçük küçük + kompakt */
+    /* ✅ Önizleme: küçük küçük */
     .preview{
       margin-top: 14px;
       display:none;
       border-radius: var(--r-lg);
-      border: 1px solid rgba(18,51,38,.10);
-      background: rgba(255,252,246,.78);
+      border: 1px solid rgba(47,67,53,.10);
+      background: rgba(255,250,241,.78);
       overflow:hidden;
       box-shadow: 0 14px 40px rgba(10,28,21,.10);
     }
@@ -265,10 +245,9 @@
       align-items:center;
       gap:10px;
       font-size: 12px;
-      color: rgba(14,28,22,.70);
-      background:
-        linear-gradient(90deg, rgba(239,198,210,.18), rgba(226,208,163,.14));
-      border-bottom: 1px solid rgba(18,51,38,.08);
+      color: rgba(21,32,24,.70);
+      background: linear-gradient(90deg, rgba(95,122,98,.14), rgba(203,181,126,.12));
+      border-bottom: 1px solid rgba(47,67,53,.08);
     }
 
     .grid{
@@ -284,8 +263,8 @@
 
     .item{
       border-radius: 14px;
-      border: 1px solid rgba(18,51,38,.10);
-      background: rgba(255,252,246,.92);
+      border: 1px solid rgba(47,67,53,.10);
+      background: rgba(255,250,241,.94);
       overflow:hidden;
       box-shadow: 0 10px 20px rgba(10,28,21,.06);
       display:flex;
@@ -294,7 +273,7 @@
     .thumb{
       position:relative;
       aspect-ratio: 1 / 1;
-      background: rgba(18,51,38,.05);
+      background: rgba(47,67,53,.05);
       overflow:hidden;
     }
     .thumb img, .thumb video{
@@ -308,7 +287,7 @@
       padding: 5px 8px;
       border-radius: 999px;
       font-size: 11px;
-      background: rgba(18,51,38,.74);
+      background: rgba(38,53,42,.78);
       color:#fff;
       border: 1px solid rgba(255,255,255,.18);
       backdrop-filter: blur(4px);
@@ -334,7 +313,7 @@
     .name span{
       display:block;
       font-size: 11px;
-      color: rgba(14,28,22,.64);
+      color: rgba(21,32,24,.64);
       margin-top: 1px;
       white-space:nowrap;
       overflow:hidden;
@@ -344,15 +323,15 @@
     .remove{
       border:none;
       cursor:pointer;
-      background: rgba(255,252,246,.96);
-      border: 1px solid rgba(239,198,210,.70);
-      color: rgba(14,28,22,.84);
+      background: rgba(255,250,241,.96);
+      border: 1px solid rgba(203,181,126,.55);
+      color: rgba(21,32,24,.84);
       border-radius: 12px;
       padding: 7px 9px;
       font-weight: 950;
     }
 
-    /* ✅ Butonlar: uyumlu (sage primary, blush secondary) */
+    /* ✅ Butonlar: sage primary, gold line; secondary krem */
     .actions{
       margin-top: 12px;
       display:flex;
@@ -379,16 +358,15 @@
     .btn.primary{
       color:#fff;
       background:
-        radial-gradient(700px 180px at 20% 30%, rgba(226,208,163,.14), transparent 55%),
-        linear-gradient(135deg, var(--sage-950), var(--sage-650));
-      box-shadow: 0 16px 36px rgba(15,47,36,.18);
+        radial-gradient(700px 180px at 20% 30%, rgba(203,181,126,.18), transparent 55%),
+        linear-gradient(135deg, var(--sage-900), var(--leaf));
+      box-shadow: 0 16px 36px rgba(15,47,36,.16);
       border: 1px solid rgba(255,255,255,.10);
     }
     .btn.secondary{
       color: var(--sage-900);
-      background:
-        linear-gradient(135deg, rgba(239,198,210,.38), rgba(255,252,246,.92));
-      border: 1px solid rgba(239,198,210,.70);
+      background: rgba(255,250,241,.94);
+      border: 1px solid rgba(72,101,83,.22);
       box-shadow: 0 10px 22px rgba(10,28,21,.06);
     }
 
@@ -407,10 +385,10 @@
       align-items:center;
       gap:10px;
       flex-wrap:wrap;
-      border-top: 1px solid rgba(18,51,38,.10);
-      background: rgba(255,252,246,.62);
+      border-top: 1px solid rgba(47,67,53,.10);
+      background: rgba(255,250,241,.62);
       font-size: 12px;
-      color: rgba(14,28,22,.76);
+      color: rgba(21,32,24,.76);
     }
     .footer b{ color: var(--sage-900); font-weight: 950; }
 
@@ -419,7 +397,7 @@
       left:50%;
       bottom: max(14px, env(safe-area-inset-bottom));
       transform: translateX(-50%);
-      background: rgba(18,51,38,.92);
+      background: rgba(38,53,42,.92);
       color:#fff;
       padding: 10px 12px;
       border-radius: 14px;
@@ -449,13 +427,13 @@
         </div>
 
         <h1 class="title">
-          <span class="badgeRing">💞</span>
+          <span class="badgeRing">💍</span>
           Ruken & Samet
         </h1>
 
         <p class="subtitle">
           <span class="dot"></span>
-          Anılarınızı bizimle paylaşın 🌸
+          Anılarınızı bizimle paylaşın 🌿
         </p>
       </header>
 
@@ -533,7 +511,7 @@
     statusEl.style.color =
       type === "ok"  ? "var(--ok)" :
       type === "err" ? "var(--err)" :
-      "rgba(14,28,22,.70)";
+      "rgba(21,32,24,.70)";
   }
 
   function formatMB(bytes){
@@ -639,7 +617,6 @@
 
       card.appendChild(thumb);
       card.appendChild(meta);
-
       grid.appendChild(card);
     });
   }
