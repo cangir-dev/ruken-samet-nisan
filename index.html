@@ -27,27 +27,41 @@
       --ok:#167a3a;
       --err:#c62828;
 
-      /* ✅ cache kır (sayıyı artırdıkça tarayıcı yeni dosyayı çeker) */
-      --bg-image: url("assets/floral-bg.png?v=200");
+      /* ✅ cache kır */
+      --bg-image: url("assets/floral-bg.png?v=300");
     }
 
     *{ box-sizing:border-box; }
     html,body{ height:100%; }
 
-    /* ✅ ARKA PLAN NET: blur/filter yok, direkt görsel */
+    /* ✅ HER TELEFONDA UYUMLU ARKA PLAN:
+       - 1) cover ile ekranı full doldur
+       - 2) üstüne hafif repeat desen katmanı ekle (her çözünürlükte dolu hissi)
+    */
     body{
       margin:0;
       font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
       color: var(--ink);
 
-      /* Arka plan görseli */
       background-color: #e9f3ee;
-      background-image: var(--bg-image);
-      background-repeat: no-repeat;
-      background-position: center;
-      /* ✅ cover yerine “NET” için kontrollü ölçek:
-         büyük ekranda görseli aşırı büyütmez, daha keskin kalır */
-      background-size: min(1600px, 120vw);
+
+      /* 2 katman: altta cover, üstte hafif repeat */
+      background-image:
+        var(--bg-image),
+        var(--bg-image);
+
+      background-repeat:
+        no-repeat,
+        repeat;
+
+      background-position:
+        center center,
+        center center;
+
+      /* ✅ mobilde cover: tam ekran dolsun */
+      background-size:
+        cover,
+        420px auto;  /* ✅ repeat katmanı: telefonda da dolu görünür */
 
       padding:
         max(18px, env(safe-area-inset-top))
@@ -59,19 +73,29 @@
       overflow-x:hidden;
     }
 
-    /* Desktop’ta sabit dursun (net hissi artar) */
+    /* ✅ Büyük ekranlarda repeat katmanını biraz büyütelim */
     @media (min-width: 900px){
-      body{ background-attachment: fixed; }
+      body{
+        background-size:
+          cover,
+          560px auto;
+        background-attachment:
+          fixed,
+          fixed;
+      }
     }
 
-    /* ✅ Çok geniş ekranlarda biraz daha büyütebiliriz ama kontrollü */
-    @media (min-width: 1600px){
-      body{ background-size: 1800px; }
+    /* ✅ Çok küçük telefonlarda repeat biraz küçülsün */
+    @media (max-width: 380px){
+      body{
+        background-size:
+          cover,
+          360px auto;
+      }
     }
 
-    .wrap{
-      width:min(860px, 100%);
-    }
+    /* Kart */
+    .wrap{ width:min(860px, 100%); }
 
     .card{
       border-radius: var(--radius-xl);
@@ -79,7 +103,6 @@
       border: 1px solid var(--stroke);
       box-shadow: var(--shadow);
       overflow:hidden;
-      /* ✅ backdrop-filter yok: arka planı “çamur” yapmasın */
     }
 
     .header{
@@ -235,7 +258,6 @@
 
     @media (max-width:560px){
       .title{ font-size: 28px; }
-      body{ background-size: 1200px; }
     }
   </style>
 </head>
@@ -340,7 +362,6 @@
     setStatus("");
     try{
       for(const f of files) await uploadFile(f);
-      // İstersen mesaj tamamen kapalı kalsın:
       // setStatus("Yüklendi. Teşekkürler!");
     }catch(err){
       setStatus("HATA: " + String(err), "err");
