@@ -14,8 +14,8 @@
       --text:#0f261e;
       --muted:#2b5245;
 
-      --card: rgba(255,255,255,.93);
-      --stroke: rgba(20,54,42,.18);
+      --card: rgba(255,255,255,.94);
+      --stroke: rgba(20,54,42,.20);
       --shadow: 0 26px 70px rgba(10, 28, 21, .22);
       --radius: 26px;
 
@@ -32,11 +32,11 @@
       display:grid;
       place-items:center;
       color:var(--text);
-      background: #e9f5ee;
+      background:#e9f5ee;
       overflow-x:hidden;
     }
 
-    /* ✅ ARKA PLAN: afiş süslemeleri (soft) */
+    /* ✅ Arka plan görseli (afiş süslemesi) */
     .bg{
       position:fixed;
       inset:0;
@@ -48,10 +48,11 @@
       content:"";
       position:absolute;
       inset:-40px;
-      background: url("assets/floral-bg.png") center/cover no-repeat;
-      opacity: .18;          /* dikkat dağıtmasın */
-      filter: blur(10px) saturate(1.05);
-      transform: scale(1.06);
+      /* ✅ cache kırmak için ?v=3 */
+      background: url("./assets/floral-bg.png?v=3") center/cover no-repeat;
+      opacity:.20;
+      filter: blur(12px) saturate(1.08);
+      transform: scale(1.08);
     }
     .bg::after{
       content:"";
@@ -60,8 +61,8 @@
       background:
         radial-gradient(900px 600px at 20% 15%, rgba(214,238,226,.70), transparent 60%),
         radial-gradient(900px 600px at 80% 85%, rgba(214,238,226,.65), transparent 60%),
-        linear-gradient(135deg, rgba(238,247,242,.95), rgba(214,238,226,.95));
-      opacity:.95; /* arka planın “soft paper” hissi */
+        linear-gradient(135deg, rgba(238,247,242,.96), rgba(214,238,226,.96));
+      opacity:.96;
     }
 
     .wrap{
@@ -79,7 +80,6 @@
       position:relative;
     }
 
-    /* iç çerçeve */
     .poster::before{
       content:"";
       position:absolute;
@@ -159,34 +159,28 @@
 
     .content{ padding: 16px 18px 18px; }
 
-    /* ✅ Dropzone: çizgiler eksik olmasın diye daha net */
+    /* ✅ DROPZONE (Sorun kesin çözüm) */
     .dropzone{
-      border: 2px dashed rgba(20,54,42,.45);
+      display:block;          /* ✅ label inline kalmasın */
+      width:100%;
+      border: 2px dashed rgba(20,54,42,.70); /* ✅ daha net */
       border-radius: 18px;
       padding: 16px;
-      background: rgba(255,255,255,.88);
-      transition: .2s ease;
+      background: rgba(255,255,255,.95);     /* ✅ kutu belli olsun */
       cursor:pointer;
       user-select:none;
-      position:relative;
+      transition:.18s ease;
+      box-shadow: 0 10px 28px rgba(10,28,21,.08); /* ✅ ayrışsın */
+      overflow:hidden; /* ✅ mobilde kesilme olmasın */
     }
-    .dropzone::after{
-      /* hafif iç “dikiş” efekti */
-      content:"";
-      position:absolute;
-      inset:10px;
-      border-radius: 14px;
-      border: 1px dashed rgba(20,54,42,.18);
-      pointer-events:none;
-    }
+
     .dropzone:hover{
-      background: rgba(255,255,255,.99);
-      border-color: rgba(20,54,42,.70);
+      border-color: rgba(20,54,42,.90);
       transform: translateY(-1px);
     }
     .dropzone.dragover{
-      background: rgba(231, 246, 239, .97);
-      border-color: rgba(20,54,42,.90);
+      background: rgba(231, 246, 239, .98);
+      border-color: rgba(20,54,42,1);
     }
 
     .dz-top{
@@ -196,8 +190,6 @@
       gap:10px;
       margin-bottom:10px;
       flex-wrap:wrap;
-      position:relative;
-      z-index:1;
     }
     .dz-title{
       font-weight: 950;
@@ -215,20 +207,15 @@
       padding: 6px 10px;
       border-radius: 999px;
       white-space:nowrap;
-      position:relative;
-      z-index:1;
     }
     .dz-hint{
       margin:0;
       font-size: 13px;
       color: rgba(36,72,60,.95);
       line-height:1.45;
-      position:relative;
-      z-index:1;
     }
     input[type=file]{ display:none; }
 
-    /* List */
     .filelist{
       margin-top: 12px;
       display:none;
@@ -291,7 +278,6 @@
       flex:0 0 auto;
     }
 
-    /* Buttons: tek parça hissi */
     .actions{
       margin-top: 12px;
       display:grid;
@@ -327,7 +313,6 @@
     .btn:hover{ transform: translateY(-1px); }
     .btn:disabled{ opacity:.55; cursor:not-allowed; transform:none; }
 
-    /* Progress */
     .progresswrap{ margin-top: 12px; display:none; }
     progress{
       width:100%;
@@ -353,7 +338,6 @@
       white-space:nowrap;
     }
 
-    /* Status */
     .status{
       margin-top: 10px;
       font-size: 13px;
@@ -376,7 +360,6 @@
     }
     .bottomband b{ color: var(--forest); font-weight: 950; }
 
-    /* Toast */
     .toast{
       position:fixed;
       left:50%;
@@ -394,7 +377,6 @@
     }
 
     @media (max-width:560px){
-      body{ padding: max(14px, env(safe-area-inset-top)) 12px max(18px, env(safe-area-inset-bottom)); }
       .title{ font-size: 28px; }
       .actions{ grid-template-columns: 1fr; }
       .fname b{ max-width: 210px; }
@@ -584,9 +566,7 @@
     setStatus("Hazır. Yüklemeyi başlatabilirsiniz.");
   }
 
-  fileInput.addEventListener("change", (e)=>{
-    validateAndSet([...e.target.files]);
-  });
+  fileInput.addEventListener("change", (e)=> validateAndSet([...e.target.files]));
 
   ["dragenter","dragover"].forEach(ev=>{
     dropzone.addEventListener(ev, (e)=>{
@@ -624,10 +604,6 @@
   uploadBtn.addEventListener("click", startUpload);
 
   async function startUpload(){
-    if(!API_URL || !API_URL.includes("/exec")){
-      setStatus("API_URL hatalı görünüyor. /exec ile bitmeli.", "var(--err)");
-      return;
-    }
     if(files.length === 0){
       setStatus("Dosya seçilmedi.", "var(--err)");
       return;
@@ -646,7 +622,6 @@
 
     for(const file of files){
       currentFile.textContent = file.name;
-
       try{
         await uploadFile(file);
         done++;
@@ -678,11 +653,9 @@
   function uploadFile(file){
     return new Promise((resolve, reject)=>{
       const reader = new FileReader();
-
       reader.onload = async ()=>{
         try{
           const base64 = String(reader.result).split(",")[1];
-
           const res = await fetch(API_URL, {
             method: "POST",
             body: new URLSearchParams({
@@ -697,16 +670,12 @@
           try { json = JSON.parse(text); }
           catch { return reject("Sunucu JSON dönmedi. Deploy ayarlarını kontrol edin."); }
 
-          if(json.status !== "ok"){
-            return reject(json.message || "Drive'a kaydedilemedi");
-          }
-
+          if(json.status !== "ok") return reject(json.message || "Drive'a kaydedilemedi");
           resolve();
         }catch{
           reject("Yükleme hatası");
         }
       };
-
       reader.onerror = ()=>reject("Dosya okunamadı");
       reader.readAsDataURL(file);
     });
