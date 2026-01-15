@@ -8,20 +8,20 @@
 
   <style>
     :root{
-      /* Palette */
+      /* 🎨 Bu palette arka plandaki pembe/yeşil/sıcak tonlara uyumlu */
       --forest-950:#071b14;
       --forest-900:#0f2f24;
       --forest-700:#1e4b3a;
       --forest-600:#2a5c47;
 
+      --rose-500:#d7a7b3;
       --gold:#cbb57e;
-      --blush:#d7a7b3;
 
       --ink:#0d1b15;
       --muted: rgba(13,27,21,.72);
 
-      --panel: rgba(255,255,255,.90);
-      --panel-2: rgba(255,255,255,.82);
+      --panel: rgba(255,255,255,.88);
+      --panel2: rgba(255,255,255,.78);
       --stroke: rgba(15,47,36,.14);
 
       --shadow: 0 24px 80px rgba(10,28,21,.18);
@@ -33,77 +33,81 @@
       --ok:#167a3a;
       --err:#c62828;
 
-      /* ✅ cache kır */
-      --floral: url("assets/floral-bg.png?v=900");
+      /* ✅ TEK GÖRSEL ARKA PLAN (telefon için dikey görselin) */
+      --bg: url("assets/floral-bg.png?v=1000");
     }
 
     *{ box-sizing:border-box; }
     html,body{ height:100%; }
+
     body{
       margin:0;
       font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
       color: var(--ink);
       min-height: 100dvh;
-      padding: max(18px, env(safe-area-inset-top)) 14px max(22px, env(safe-area-inset-bottom));
+
+      padding:
+        max(18px, env(safe-area-inset-top))
+        14px
+        max(22px, env(safe-area-inset-bottom));
+
       display:grid;
       place-items:center;
       overflow-x:hidden;
+
       background:#eaf4ee;
     }
 
-    /* =========================
-       PREMIUM BACKGROUND SYSTEM
-       4 corner + 4 side ornaments
-       (No stretch, no overlap)
-       ========================= */
+    /* ✅ Tek görsel + okunabilirlik overlay’leri */
     .bg{
-      position:fixed; inset:0; z-index:0;
+      position:fixed;
+      inset:0;
+      z-index:0;
       pointer-events:none;
-      background:
-        radial-gradient(1100px 760px at 18% 18%, rgba(66,153,122,.16), transparent 62%),
-        radial-gradient(1100px 760px at 82% 86%, rgba(215,167,179,.12), transparent 62%),
-        radial-gradient(900px 520px at 50% 12%, rgba(203,181,126,.10), transparent 70%),
-        linear-gradient(135deg, rgba(240,249,245,.98), rgba(220,241,231,.96));
-    }
 
-    .orn{
-      position:absolute;
-      opacity:.55;
-      filter: saturate(1.08) contrast(1.02);
-      background-image: var(--floral);
+      /* 1) Ana görsel (tek) */
+      background-image: var(--bg);
       background-repeat:no-repeat;
-      /* Her orn kendi position’unu ayarlıyor */
-      background-size: clamp(820px, 110vw, 1400px) auto;
+      background-position:center;
+      background-size:cover; /* telefonlarda tam dolsun */
+
+      /* 2) Çok hafif “soft wash” ile kart okunurluğu artsın */
+      filter: saturate(1.06) contrast(1.02);
     }
 
-    /* Köşeler */
-    .orn.tl{ left:-10px; top:-10px; width: clamp(220px, 36vw, 520px); height: clamp(220px, 36vw, 520px); background-position: left top; }
-    .orn.tr{ right:-10px; top:-10px; width: clamp(220px, 36vw, 520px); height: clamp(220px, 36vw, 520px); background-position: right top; }
-    .orn.bl{ left:-10px; bottom:-10px; width: clamp(220px, 36vw, 520px); height: clamp(220px, 36vw, 520px); background-position: left bottom; }
-    .orn.br{ right:-10px; bottom:-10px; width: clamp(220px, 36vw, 520px); height: clamp(220px, 36vw, 520px); background-position: right bottom; }
+    /* ✅ Görseli çok baskın görüyorsan bunu arttır (0.10–0.30 arası güzel) */
+    .bg::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        radial-gradient(1200px 760px at 18% 18%, rgba(42,92,71,.14), transparent 62%),
+        radial-gradient(1200px 760px at 82% 86%, rgba(215,167,179,.12), transparent 62%),
+        radial-gradient(900px 520px at 50% 12%, rgba(203,181,126,.10), transparent 70%),
+        linear-gradient(135deg, rgba(240,249,245,.42), rgba(220,241,231,.34));
+      opacity:.85;
+      pointer-events:none;
+    }
 
-    /* Kenarlar (telefonlarda ortayı doldurur, “tek taraf görünüyor” biter) */
-    .orn.top{ left:50%; top:-18px; transform:translateX(-50%); width: clamp(260px, 50vw, 560px); height: clamp(160px, 24vw, 280px); background-position: center top; opacity:.33; }
-    .orn.bot{ left:50%; bottom:-18px; transform:translateX(-50%); width: clamp(260px, 50vw, 560px); height: clamp(160px, 24vw, 280px); background-position: center bottom; opacity:.33; }
-    .orn.left{ left:-22px; top:50%; transform:translateY(-50%); width: clamp(160px, 24vw, 280px); height: clamp(260px, 50vw, 560px); background-position: left center; opacity:.28; }
-    .orn.right{ right:-22px; top:50%; transform:translateY(-50%); width: clamp(160px, 24vw, 280px); height: clamp(260px, 50vw, 560px); background-position: right center; opacity:.28; }
-
-    /* Çok küçük telefonlarda çakışma olmasın diye side orn biraz küçülsün */
-    @media (max-width:380px){
-      .orn.top,.orn.bot{ width: 78vw; }
-      .orn.left,.orn.right{ height: 78vw; }
+    /* Desktop’ta “fixed” hoş durur, bazı мобил tarayıcılar fixed’i sevmez */
+    @media (min-width: 900px){
+      .bg{
+        background-attachment: fixed;
+      }
     }
 
     /* =========================
        LAYOUT
        ========================= */
     .wrap{ width:min(920px, 100%); position:relative; z-index:1; }
+
     .card{
       border-radius: var(--r-xl);
-      background: var(--panel-2);
+      background: var(--panel2);
       border: 1px solid var(--stroke);
       box-shadow: var(--shadow);
       overflow:hidden;
+      backdrop-filter: blur(6px);
     }
 
     .header{
@@ -131,6 +135,7 @@
       position:relative;
       z-index:1;
     }
+
     .chip{
       display:inline-flex;
       align-items:center;
@@ -163,7 +168,7 @@
     }
     .accent-line{
       height:2px;
-      width:140px;
+      width:150px;
       background: linear-gradient(90deg, transparent, var(--gold), transparent);
       border-radius:999px;
       opacity:.95;
@@ -173,17 +178,16 @@
 
     .content{
       padding: 16px 18px 18px;
-      background: rgba(255,255,255,.70);
+      background: rgba(255,255,255,.50);
     }
 
-    /* Dropzone (uyumlu renkler) */
+    /* Dropzone */
     .dropzone{
       display:block;
       width:100%;
       border-radius: var(--r-lg);
-      border: 1.5px dashed rgba(15,47,36,.38);
-      background:
-        linear-gradient(180deg, rgba(255,255,255,.95), rgba(255,255,255,.90));
+      border: 1.5px dashed rgba(15,47,36,.36);
+      background: linear-gradient(180deg, rgba(255,255,255,.92), rgba(255,255,255,.84));
       padding: 16px;
       cursor:pointer;
       user-select:none;
@@ -193,11 +197,10 @@
     }
     .dropzone:hover{
       transform: translateY(-1px);
-      border-color: rgba(15,47,36,.58);
+      border-color: rgba(15,47,36,.56);
     }
     .dropzone.dragover{
-      background:
-        linear-gradient(180deg, rgba(231,246,239,.98), rgba(255,255,255,.92));
+      background: linear-gradient(180deg, rgba(231,246,239,.96), rgba(255,255,255,.86));
       border-color: rgba(15,47,36,.85);
       transform: translateY(-1px);
     }
@@ -241,8 +244,9 @@
       display:none;
       border-radius: var(--r-lg);
       border: 1px solid rgba(15,47,36,.12);
-      background: rgba(255,255,255,.86);
+      background: rgba(255,255,255,.82);
       overflow:hidden;
+      box-shadow: 0 14px 40px rgba(10,28,21,.10);
     }
     .preview-head{
       padding: 10px 12px;
@@ -369,7 +373,7 @@
     }
     .btn.secondary{
       color: var(--forest-900);
-      background: rgba(255,255,255,.92);
+      background: rgba(255,255,255,.90);
       border: 1px solid rgba(15,47,36,.16);
     }
 
@@ -389,7 +393,7 @@
       gap:10px;
       flex-wrap:wrap;
       border-top: 1px solid rgba(15,47,36,.10);
-      background: rgba(255,255,255,.78);
+      background: rgba(255,255,255,.62);
       font-size: 12px;
       color: rgba(13,27,21,.76);
     }
@@ -419,18 +423,7 @@
 </head>
 
 <body>
-  <div class="bg" aria-hidden="true">
-    <!-- köşe + kenar süsleri -->
-    <div class="orn tl"></div>
-    <div class="orn tr"></div>
-    <div class="orn bl"></div>
-    <div class="orn br"></div>
-    <div class="orn top"></div>
-    <div class="orn bot"></div>
-    <div class="orn left"></div>
-    <div class="orn right"></div>
-  </div>
-
+  <div class="bg" aria-hidden="true"></div>
   <div class="toast" id="toast"></div>
 
   <main class="wrap">
@@ -449,7 +442,7 @@
         <label class="dropzone" id="dropzone" for="fileInput">
           <div class="dz-top">
             <div class="dz-title">📸 Fotoğraf / 🎥 Video seçin</div>
-            <div class="pill" id="limits">Maks: 25 dosya • Toplam: 250 MB</div>
+            <div class="pill">Maks: 25 dosya • Toplam: 250 MB</div>
           </div>
           <p class="dz-hint">Tıklayın veya sürükleyip bırakın. Göndermeden önce önizleme göreceksiniz.</p>
           <input id="fileInput" type="file" multiple accept="image/*,video/*" />
@@ -497,11 +490,10 @@
   const statusEl  = el("status");
   const toastEl   = el("toast");
 
-  let files = [];       // File list
-  let urls  = new Map(); // fileKey -> objectURL
+  let files = [];
+  let urls  = new Map();
   let busy  = false;
 
-  // Date label
   (function setDate(){
     const d = new Date();
     const months = ["Ocak","Şubat","Mart","Nisan","Mayıs","Haziran","Temmuz","Ağustos","Eylül","Ekim","Kasım","Aralık"];
@@ -533,7 +525,6 @@
   function keyOf(f){ return `${f.name}__${f.size}__${f.lastModified}`; }
 
   function clearAll(){
-    // revoke URLs
     for(const u of urls.values()) URL.revokeObjectURL(u);
     urls.clear();
     files = [];
@@ -616,7 +607,6 @@
       rm.textContent = "Sil";
       rm.onclick = ()=>{
         if(busy) return;
-        // revoke url
         const kk = keyOf(files[idx]);
         if(urls.has(kk)){ URL.revokeObjectURL(urls.get(kk)); urls.delete(kk); }
         files = files.filter((_, i)=> i !== idx);
@@ -634,7 +624,6 @@
     });
   }
 
-  // File pick
   fileInput.addEventListener("change", (e)=>{
     if(busy) return;
     const picked = [...e.target.files].filter(isAllowed);
@@ -650,7 +639,6 @@
     render();
   });
 
-  // Drag&drop
   ["dragenter","dragover"].forEach(ev=>{
     dropzone.addEventListener(ev, (e)=>{
       e.preventDefault(); e.stopPropagation();
@@ -677,7 +665,6 @@
     render();
   });
 
-  // Buttons
   clearBtn.addEventListener("click", ()=>{
     if(busy) return;
     clearAll();
@@ -708,8 +695,6 @@
 
       setStatus("🎉 Başarıyla gönderildi. Teşekkürler!", "ok");
       showToast("Gönderildi ✅");
-
-      // temizle
       clearAll();
 
     }catch(err){
