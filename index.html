@@ -8,29 +8,37 @@
 
   <style>
     :root{
-      /* ✅ Arka plan (pembe gül + yeşil yaprak + sıcak sarı) ile uyumlu premium palet */
-      --forest-950:#081c14;
-      --forest-900:#103326;
-      --forest-700:#1f4f3b;
-      --forest-600:#2a5c47;
+      /* =========================
+         ✅ KONSEPT: "Sage & Blush Wedding"
+         Yeşil header + ivory kart + blush detay + gold vurgu
+         ========================= */
 
-      --rose-200:#f3d7df;
-      --rose-300:#eabfcc;
-      --rose-500:#d7a7b3;
+      --sage-950:#0a1f18;
+      --sage-900:#123326;
+      --sage-800:#174031;
+      --sage-700:#1e4f3b;
+      --sage-650:#245844;
+      --sage-600:#2a5c47;
 
-      --gold:#cbb57e;
-      --gold-2:#d9c79a;
+      --blush-100:#fbf0f3;
+      --blush-200:#f5dde4;
+      --blush-300:#efc6d2;
+      --blush-500:#d7a7b3;
 
-      --ink:#0d1b15;
-      --muted: rgba(13,27,21,.72);
+      --gold-300:#e2d0a3;
+      --gold-400:#d9c79a;
+      --gold-500:#cbb57e;
 
-      /* Kartlar (arka plan desenine uyumlu “ivory” tonları) */
-      --ivory: rgba(255,252,246,.90);
-      --ivory2: rgba(255,252,246,.82);
-      --stroke: rgba(16,51,38,.14);
+      --ink:#0e1c16;
+      --muted: rgba(14,28,22,.68);
 
-      --shadow: 0 24px 80px rgba(10,28,21,.16);
-      --shadow-soft: 0 12px 28px rgba(10,28,21,.09);
+      /* kart yüzeyleri */
+      --ivory: rgba(255,252,246,.92);
+      --ivory2: rgba(255,252,246,.84);
+
+      --stroke: rgba(18,51,38,.14);
+      --shadow: 0 26px 90px rgba(10,28,21,.16);
+      --shadow-soft: 0 14px 32px rgba(10,28,21,.10);
 
       --r-xl: 28px;
       --r-lg: 18px;
@@ -38,8 +46,8 @@
       --ok:#167a3a;
       --err:#c62828;
 
-      /* ✅ Tek arka plan görseli */
-      --bg: url("assets/floral-bg.png?v=1100");
+      /* ✅ Tek görsel arka plan */
+      --bg: url("assets/floral-bg.png?v=1200");
     }
 
     *{ box-sizing:border-box; }
@@ -50,41 +58,31 @@
       font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
       color: var(--ink);
       min-height: 100dvh;
-      padding: max(18px, env(safe-area-inset-top)) 14px max(22px, env(safe-area-inset-bottom));
+      padding: max(16px, env(safe-area-inset-top)) 14px max(18px, env(safe-area-inset-bottom));
       display:grid;
       place-items:center;
       overflow-x:hidden;
-      background:#eaf4ee;
+      background: #eaf4ee;
     }
 
-    /* ✅ Tek görsel arka plan + okunabilirlik */
+    /* ✅ Arka plan */
     .bg{
-      position:fixed;
-      inset:0;
-      z-index:0;
+      position:fixed; inset:0; z-index:0;
       pointer-events:none;
-      background-image: var(--bg);
-      background-repeat:no-repeat;
-      background-position:center;
-      background-size:cover;
-      filter: saturate(1.10) contrast(1.05);
+      background: var(--bg) center/cover no-repeat;
+      filter: saturate(1.15) contrast(1.05);
     }
     .bg::after{
       content:"";
-      position:absolute;
-      inset:0;
+      position:absolute; inset:0;
       background:
-        radial-gradient(1200px 760px at 20% 18%, rgba(42,92,71,.14), transparent 62%),
-        radial-gradient(1200px 760px at 82% 86%, rgba(215,167,179,.16), transparent 62%),
+        radial-gradient(1200px 760px at 18% 18%, rgba(42,92,71,.16), transparent 62%),
+        radial-gradient(1200px 760px at 82% 86%, rgba(215,167,179,.18), transparent 62%),
         radial-gradient(900px 520px at 50% 12%, rgba(203,181,126,.14), transparent 70%),
-        linear-gradient(135deg, rgba(255,252,246,.42), rgba(225,244,234,.26));
+        linear-gradient(135deg, rgba(255,252,246,.42), rgba(225,244,234,.20));
       opacity:.86;
-      pointer-events:none;
     }
 
-    /* =========================
-       Layout
-       ========================= */
     .wrap{ width:min(920px, 100%); position:relative; z-index:1; }
 
     .card{
@@ -93,42 +91,46 @@
       border: 1px solid var(--stroke);
       box-shadow: var(--shadow);
       overflow:hidden;
-      backdrop-filter: blur(7px);
+      backdrop-filter: blur(8px);
     }
 
-    /* ✅ Nişan konsepti: altın shimmer + küçük kalp/desen hissi */
+    /* ✅ HEADER: daha premium, gold çizgi + blush highlight */
     .header{
       padding: 18px 18px 16px;
       background:
-        radial-gradient(900px 260px at 20% 0%, rgba(255,255,255,.18), transparent 60%),
-        radial-gradient(700px 240px at 85% 100%, rgba(255,255,255,.12), transparent 58%),
-        linear-gradient(135deg, var(--forest-950), var(--forest-600));
+        radial-gradient(900px 260px at 20% 0%, rgba(255,255,255,.16), transparent 60%),
+        radial-gradient(700px 240px at 85% 100%, rgba(255,255,255,.10), transparent 58%),
+        linear-gradient(135deg, var(--sage-950), var(--sage-650));
       color:#fff;
       position:relative;
     }
-    .header::after{
+    .header::before{
       content:"";
       position:absolute; inset:0;
-      opacity:.35;
-      pointer-events:none;
       background:
-        radial-gradient(2px 2px at 10% 30%, rgba(255,255,255,.55), transparent 60%),
-        radial-gradient(2px 2px at 22% 55%, rgba(255,255,255,.45), transparent 60%),
-        radial-gradient(2px 2px at 55% 25%, rgba(255,255,255,.35), transparent 60%),
-        radial-gradient(2px 2px at 78% 60%, rgba(255,255,255,.42), transparent 60%),
-        radial-gradient(2px 2px at 90% 35%, rgba(255,255,255,.35), transparent 60%);
+        radial-gradient(520px 260px at 12% 55%, rgba(239,198,210,.12), transparent 62%),
+        radial-gradient(520px 260px at 92% 30%, rgba(226,208,163,.10), transparent 62%);
+      opacity:.9;
+      pointer-events:none;
+    }
+    .header::after{
+      content:"";
+      position:absolute; left:0; right:0; bottom:0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold-400), transparent);
+      opacity:.9;
+      pointer-events:none;
     }
 
-    .row{
+    .top{
       display:flex;
-      align-items:center;
       justify-content:space-between;
+      align-items:center;
       gap:10px;
       flex-wrap:wrap;
       position:relative;
       z-index:1;
     }
-
     .chip{
       display:inline-flex;
       align-items:center;
@@ -136,8 +138,9 @@
       padding: 8px 12px;
       border-radius: 999px;
       font-size: 12px;
-      background: rgba(255,255,255,.14);
-      border: 1px solid rgba(255,255,255,.22);
+      background: rgba(255,255,255,.12);
+      border: 1px solid rgba(255,255,255,.20);
+      backdrop-filter: blur(6px);
       white-space:nowrap;
     }
     .date{ font-size:12px; opacity:.92; white-space:nowrap; }
@@ -146,59 +149,54 @@
       margin: 12px 0 4px;
       font-size: 34px;
       letter-spacing:.2px;
-      position:relative; z-index:1;
       display:flex;
-      align-items:center;
       gap:10px;
-      flex-wrap:wrap;
-    }
-    .ring{
-      display:inline-flex;
       align-items:center;
-      justify-content:center;
-      width:34px;
-      height:34px;
-      border-radius: 12px;
-      background: rgba(255,255,255,.14);
-      border: 1px solid rgba(255,255,255,.18);
-      box-shadow: 0 10px 26px rgba(0,0,0,.14);
-      font-size: 18px;
+      flex-wrap:wrap;
+      position:relative;
+      z-index:1;
     }
-
+    .badgeRing{
+      width:34px; height:34px;
+      border-radius: 14px;
+      display:grid; place-items:center;
+      background: rgba(255,255,255,.12);
+      border: 1px solid rgba(255,255,255,.18);
+      box-shadow: 0 10px 26px rgba(0,0,0,.12);
+    }
     .subtitle{
       margin:0;
       font-size: 14px;
       opacity:.95;
-      line-height:1.45;
-      position:relative; z-index:1;
       display:flex;
       gap:8px;
       align-items:center;
       flex-wrap:wrap;
+      position:relative;
+      z-index:1;
+    }
+    .subtitle .dot{
+      width:6px;height:6px;border-radius:999px;
+      background: rgba(226,208,163,.92);
+      display:inline-block;
+      box-shadow: 0 0 0 4px rgba(226,208,163,.12);
     }
 
-    .accent-line{
-      height:2px;
-      width:160px;
-      background: linear-gradient(90deg, transparent, var(--gold-2), transparent);
-      border-radius:999px;
-      opacity:.95;
-      margin-top:10px;
-      position:relative; z-index:1;
-    }
-
+    /* ✅ CONTENT: kutuların rengi artık header ile uyumlu */
     .content{
       padding: 16px 18px 18px;
-      background: rgba(255,252,246,.55);
+      background: rgba(255,252,246,.58);
     }
 
-    /* ✅ Dropzone kutusu arka plana uyumlu: ivory + rose border */
+    /* ✅ Dropzone: Sage border + blush tint + gold pill */
     .dropzone{
       display:block;
       width:100%;
       border-radius: var(--r-lg);
-      border: 1.5px dashed rgba(215,167,179,.55);
+      border: 1.6px dashed rgba(30,79,59,.32);
       background:
+        radial-gradient(700px 240px at 10% 20%, rgba(239,198,210,.18), transparent 58%),
+        radial-gradient(700px 240px at 90% 90%, rgba(226,208,163,.14), transparent 58%),
         linear-gradient(180deg, rgba(255,252,246,.96), rgba(255,252,246,.88));
       padding: 16px;
       cursor:pointer;
@@ -206,105 +204,87 @@
       transition: transform .16s ease, border-color .16s ease, box-shadow .16s ease;
       box-shadow: var(--shadow-soft);
       outline:none;
-      position:relative;
-      overflow:hidden;
     }
-    .dropzone::after{
-      content:"";
-      position:absolute;
-      inset:-40px;
-      background:
-        radial-gradient(500px 220px at 15% 20%, rgba(203,181,126,.12), transparent 60%),
-        radial-gradient(520px 240px at 90% 90%, rgba(215,167,179,.10), transparent 60%);
-      pointer-events:none;
-    }
-    .dropzone > *{ position:relative; z-index:1; }
-
     .dropzone:hover{
       transform: translateY(-1px);
-      border-color: rgba(203,181,126,.70);
+      border-color: rgba(30,79,59,.52);
     }
     .dropzone.dragover{
-      border-color: rgba(42,92,71,.70);
-      background: linear-gradient(180deg, rgba(231,246,239,.96), rgba(255,252,246,.90));
+      border-color: rgba(203,181,126,.72);
+      box-shadow: 0 18px 44px rgba(10,28,21,.12);
       transform: translateY(-1px);
     }
-
-    .dz-top{
+    .dzTop{
       display:flex;
-      align-items:center;
       justify-content:space-between;
+      align-items:center;
       gap:10px;
       flex-wrap:wrap;
       margin-bottom:10px;
     }
-    .dz-title{
+    .dzTitle{
+      font-weight: 950;
+      color: var(--sage-900);
       display:flex;
       align-items:center;
       gap:10px;
-      font-weight: 950;
-      color: var(--forest-900);
       font-size: 15px;
     }
     .pill{
       font-size: 12px;
-      color: rgba(13,27,21,.74);
-      background: rgba(255,252,246,.88);
-      border: 1px solid rgba(203,181,126,.35);
+      color: rgba(14,28,22,.76);
+      background: rgba(255,252,246,.90);
+      border: 1px solid rgba(203,181,126,.42);
       padding: 6px 10px;
       border-radius: 999px;
       white-space:nowrap;
       box-shadow: 0 8px 18px rgba(10,28,21,.06);
     }
-    .dz-hint{
+    .dzHint{
       margin:0;
-      color: rgba(13,27,21,.72);
       font-size: 13px;
+      color: rgba(14,28,22,.70);
       line-height:1.45;
     }
     input[type=file]{ display:none; }
 
-    /* ✅ Önizlemeler küçük: 5 kolon desktop, 4 kolon tablet, 3 kolon mobil */
+    /* ✅ Önizleme: küçük küçük + kompakt */
     .preview{
       margin-top: 14px;
       display:none;
       border-radius: var(--r-lg);
-      border: 1px solid rgba(16,51,38,.10);
+      border: 1px solid rgba(18,51,38,.10);
       background: rgba(255,252,246,.78);
       overflow:hidden;
       box-shadow: 0 14px 40px rgba(10,28,21,.10);
     }
-    .preview-head{
+    .previewHead{
       padding: 10px 12px;
       display:flex;
       justify-content:space-between;
       align-items:center;
       gap:10px;
       font-size: 12px;
-      color: rgba(13,27,21,.72);
-      background: rgba(203,181,126,.10);
-      border-bottom: 1px solid rgba(16,51,38,.08);
+      color: rgba(14,28,22,.70);
+      background:
+        linear-gradient(90deg, rgba(239,198,210,.18), rgba(226,208,163,.14));
+      border-bottom: 1px solid rgba(18,51,38,.08);
     }
 
     .grid{
       display:grid;
-      grid-template-columns: repeat(5, minmax(0, 1fr));
+      grid-template-columns: repeat(6, minmax(0, 1fr));
       gap: 10px;
       padding: 12px;
     }
-    @media (max-width:900px){
-      .grid{ grid-template-columns: repeat(4, minmax(0, 1fr)); }
-    }
-    @media (max-width:620px){
-      .grid{ grid-template-columns: repeat(3, minmax(0, 1fr)); gap:8px; padding:10px; }
-    }
-    @media (max-width:380px){
-      .grid{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    }
+    @media (max-width:980px){ .grid{ grid-template-columns: repeat(5, 1fr); } }
+    @media (max-width:820px){ .grid{ grid-template-columns: repeat(4, 1fr); } }
+    @media (max-width:620px){ .grid{ grid-template-columns: repeat(3, 1fr); gap:8px; padding:10px; } }
+    @media (max-width:380px){ .grid{ grid-template-columns: repeat(2, 1fr); } }
 
     .item{
       border-radius: 14px;
-      border: 1px solid rgba(16,51,38,.10);
+      border: 1px solid rgba(18,51,38,.10);
       background: rgba(255,252,246,.92);
       overflow:hidden;
       box-shadow: 0 10px 20px rgba(10,28,21,.06);
@@ -313,23 +293,22 @@
     }
     .thumb{
       position:relative;
-      aspect-ratio: 1 / 1; /* ✅ küçük küçük kare preview */
-      background: rgba(16,51,38,.05);
+      aspect-ratio: 1 / 1;
+      background: rgba(18,51,38,.05);
       overflow:hidden;
     }
     .thumb img, .thumb video{
-      width:100%;
-      height:100%;
+      width:100%; height:100%;
       object-fit: cover;
       display:block;
     }
-    .badge{
+    .typeBadge{
       position:absolute;
       left:8px; top:8px;
       padding: 5px 8px;
       border-radius: 999px;
       font-size: 11px;
-      background: rgba(16,51,38,.72);
+      background: rgba(18,51,38,.74);
       color:#fff;
       border: 1px solid rgba(255,255,255,.18);
       backdrop-filter: blur(4px);
@@ -342,48 +321,44 @@
       align-items:center;
       gap:8px;
     }
-    .name{
-      min-width:0;
-    }
+    .name{ min-width:0; }
     .name b{
       display:block;
       font-size: 12px;
-      font-weight: 900;
-      color: var(--forest-900);
+      font-weight: 950;
+      color: var(--sage-900);
       white-space:nowrap;
       overflow:hidden;
       text-overflow:ellipsis;
-      max-width: 100%;
     }
     .name span{
       display:block;
       font-size: 11px;
-      color: rgba(13,27,21,.66);
+      color: rgba(14,28,22,.64);
       margin-top: 1px;
       white-space:nowrap;
       overflow:hidden;
       text-overflow:ellipsis;
-      max-width: 100%;
     }
 
     .remove{
       border:none;
       cursor:pointer;
       background: rgba(255,252,246,.96);
-      border: 1px solid rgba(215,167,179,.45);
-      color: rgba(13,27,21,.84);
+      border: 1px solid rgba(239,198,210,.70);
+      color: rgba(14,28,22,.84);
       border-radius: 12px;
       padding: 7px 9px;
       font-weight: 950;
-      flex:0 0 auto;
     }
 
-    /* Actions */
+    /* ✅ Butonlar: uyumlu (sage primary, blush secondary) */
     .actions{
       margin-top: 12px;
       display:flex;
       gap:10px;
       flex-wrap:wrap;
+      align-items:center;
     }
     .btn{
       border:none;
@@ -404,13 +379,17 @@
     .btn.primary{
       color:#fff;
       background:
-        linear-gradient(135deg, var(--forest-950), var(--forest-600));
+        radial-gradient(700px 180px at 20% 30%, rgba(226,208,163,.14), transparent 55%),
+        linear-gradient(135deg, var(--sage-950), var(--sage-650));
       box-shadow: 0 16px 36px rgba(15,47,36,.18);
+      border: 1px solid rgba(255,255,255,.10);
     }
     .btn.secondary{
-      color: var(--forest-900);
-      background: rgba(255,252,246,.92);
-      border: 1px solid rgba(203,181,126,.35);
+      color: var(--sage-900);
+      background:
+        linear-gradient(135deg, rgba(239,198,210,.38), rgba(255,252,246,.92));
+      border: 1px solid rgba(239,198,210,.70);
+      box-shadow: 0 10px 22px rgba(10,28,21,.06);
     }
 
     .status{
@@ -428,20 +407,19 @@
       align-items:center;
       gap:10px;
       flex-wrap:wrap;
-      border-top: 1px solid rgba(16,51,38,.10);
+      border-top: 1px solid rgba(18,51,38,.10);
       background: rgba(255,252,246,.62);
       font-size: 12px;
-      color: rgba(13,27,21,.76);
+      color: rgba(14,28,22,.76);
     }
-    .footer b{ color: var(--forest-900); font-weight: 900; }
+    .footer b{ color: var(--sage-900); font-weight: 950; }
 
-    /* Toast */
     .toast{
       position:fixed;
       left:50%;
       bottom: max(14px, env(safe-area-inset-bottom));
       transform: translateX(-50%);
-      background: rgba(16,51,38,.90);
+      background: rgba(18,51,38,.92);
       color:#fff;
       padding: 10px 12px;
       border-radius: 14px;
@@ -465,27 +443,34 @@
   <main class="wrap">
     <section class="card">
       <header class="header">
-        <div class="row">
+        <div class="top">
           <div class="chip">💍 Nişan Anı Kutusu • Fotoğraf & Video</div>
           <div class="date" id="dateLabel"></div>
         </div>
-        <h1 class="title"><span class="ring">💍</span> Ruken & Samet</h1>
-        <p class="subtitle">Anılarınızı bizimle paylaşın 🌸</p>
-        <div class="accent-line"></div>
+
+        <h1 class="title">
+          <span class="badgeRing">💞</span>
+          Ruken & Samet
+        </h1>
+
+        <p class="subtitle">
+          <span class="dot"></span>
+          Anılarınızı bizimle paylaşın 🌸
+        </p>
       </header>
 
       <div class="content">
         <label class="dropzone" id="dropzone" for="fileInput">
-          <div class="dz-top">
-            <div class="dz-title">📸 Fotoğraf / 🎥 Video seçin</div>
+          <div class="dzTop">
+            <div class="dzTitle">📸 Fotoğraf / 🎥 Video seçin</div>
             <div class="pill">Maks: 25 dosya • Toplam: 250 MB</div>
           </div>
-          <p class="dz-hint">Tıklayın veya sürükleyip bırakın. Göndermeden önce küçük önizlemeler göreceksiniz.</p>
+          <p class="dzHint">Tıklayın veya sürükleyip bırakın. Göndermeden önce küçük önizlemeler göreceksiniz.</p>
           <input id="fileInput" type="file" multiple accept="image/*,video/*" />
         </label>
 
         <div class="preview" id="preview">
-          <div class="preview-head">
+          <div class="previewHead">
             <div id="countLabel">0 dosya</div>
             <div id="sizeLabel">0 MB</div>
           </div>
@@ -548,7 +533,7 @@
     statusEl.style.color =
       type === "ok"  ? "var(--ok)" :
       type === "err" ? "var(--err)" :
-      "rgba(13,27,21,.72)";
+      "rgba(14,28,22,.70)";
   }
 
   function formatMB(bytes){
@@ -606,7 +591,7 @@
       thumb.className = "thumb";
 
       const badge = document.createElement("div");
-      badge.className = "badge";
+      badge.className = "typeBadge";
       badge.textContent = f.type?.startsWith("video/") ? "🎥" : "📷";
 
       if(f.type?.startsWith("image/")){
@@ -622,7 +607,6 @@
         vid.preload = "metadata";
         thumb.appendChild(vid);
       }
-
       thumb.appendChild(badge);
 
       const meta = document.createElement("div");
