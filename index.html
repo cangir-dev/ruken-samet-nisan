@@ -7,19 +7,16 @@
   <title>Ruken & Samet | Nişan Anıları</title>
 
   <style>
-    /* =========================
-       Premium theme (clean)
-    ========================== */
     :root{
       --bg: #eef6f0;
       --ink: #0d1b15;
-      --muted: rgba(13,27,21,.72);
 
       --brand-900:#0f2f24;
       --brand-700:#1e4b3a;
       --brand-600:#2a5c47;
 
       --gold:#cbb57e;
+
       --card: rgba(255,255,255,.86);
       --card-strong: rgba(255,255,255,.92);
       --stroke: rgba(15,47,36,.12);
@@ -29,17 +26,17 @@
 
       --radius-xl: 28px;
       --radius-lg: 18px;
-      --radius-md: 14px;
 
       --ok:#167a3a;
       --err:#c62828;
 
-      /* 👇 background image path */
-      --bg-image: url("assets/floral-bg.png");
+      /* ✅ GitHub cache kırma: v=6 arttır */
+      --bg-image: url("assets/floral-bg.png?v=6");
     }
 
     *{ box-sizing:border-box; }
     html,body{ height:100%; }
+
     body{
       margin:0;
       font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
@@ -57,9 +54,7 @@
       overflow-x:hidden;
     }
 
-    /* =========================
-       Background (soft & elegant)
-    ========================== */
+    /* ✅ Background (net görünsün) */
     .bg{
       position:fixed;
       inset:0;
@@ -71,28 +66,23 @@
         radial-gradient(1000px 700px at 80% 85%, rgba(214,238,226,.55), transparent 60%),
         linear-gradient(135deg, rgba(245,250,247,.92), rgba(226,242,233,.92));
     }
-
     .bg::before{
       content:"";
       position:absolute;
       inset:-60px;
       background: var(--bg-image) center/cover no-repeat;
-      opacity:.22;
-      filter: blur(14px) saturate(1.06);
+      opacity:.45;                 /* ✅ daha görünür */
+      filter: blur(10px) saturate(1.08);
       transform: scale(1.08);
     }
-
     .bg::after{
       content:"";
       position:absolute;
       inset:0;
-      background: linear-gradient(180deg, rgba(255,255,255,.70), rgba(255,255,255,.40));
-      opacity:.65;
+      background: linear-gradient(180deg, rgba(255,255,255,.62), rgba(255,255,255,.30));
+      opacity:.35;                 /* ✅ üst katman az kapatsın */
     }
 
-    /* =========================
-       Layout
-    ========================== */
     .wrap{
       width:min(820px, 100%);
       position:relative;
@@ -190,9 +180,7 @@
       background: linear-gradient(180deg, rgba(255,255,255,.92), rgba(255,255,255,.86));
     }
 
-    /* =========================
-       Dropzone
-    ========================== */
+    /* ✅ Dropzone */
     .dropzone{
       display:block;
       width:100%;
@@ -257,144 +245,7 @@
 
     input[type=file]{ display:none; }
 
-    /* =========================
-       File list
-    ========================== */
-    .panel{
-      margin-top: 12px;
-      border-radius: var(--radius-lg);
-      border: 1px solid rgba(15,47,36,.12);
-      background: rgba(255,255,255,.88);
-      overflow:hidden;
-      display:none;
-    }
-
-    .panel-head{
-      padding: 10px 12px;
-      display:flex;
-      justify-content:space-between;
-      gap:10px;
-      font-size: 12px;
-      color: rgba(13,27,21,.76);
-      background: rgba(15,47,36,.05);
-      border-bottom: 1px solid rgba(15,47,36,.08);
-    }
-
-    .items{
-      max-height: 210px;
-      overflow:auto;
-    }
-
-    .item{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:10px;
-      padding: 10px 12px;
-      border-bottom: 1px solid rgba(15,47,36,.06);
-    }
-    .item:last-child{ border-bottom:none; }
-
-    .left{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      min-width:0;
-    }
-
-    .icon{
-      width:34px;
-      height:34px;
-      border-radius: 12px;
-      display:grid;
-      place-items:center;
-      background: rgba(15,47,36,.08);
-      color: var(--brand-900);
-      flex:0 0 auto;
-      font-size: 16px;
-    }
-
-    .meta{ min-width:0; }
-    .name{
-      display:block;
-      font-size: 13px;
-      font-weight: 850;
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
-      max-width: 420px;
-    }
-    .sub{
-      display:block;
-      font-size: 12px;
-      color: rgba(13,27,21,.70);
-    }
-
-    .ghost{
-      border: 1px solid rgba(15,47,36,.14);
-      background: rgba(255,255,255,.92);
-      color: rgba(13,27,21,.78);
-      border-radius: 12px;
-      padding: 8px 10px;
-      cursor:pointer;
-      font-weight: 800;
-      transition: transform .16s ease, background .16s ease;
-      flex: 0 0 auto;
-    }
-    .ghost:hover{ transform: translateY(-1px); background: rgba(255,255,255,.98); }
-
-    /* =========================
-       Actions
-    ========================== */
-    .actions{
-      margin-top: 12px;
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:10px;
-    }
-
-    .btn{
-      width:100%;
-      border:none;
-      border-radius: var(--radius-lg);
-      padding: 14px 14px;
-      font-size: 15px;
-      font-weight: 900;
-      letter-spacing:.2px;
-      cursor:pointer;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      gap:10px;
-      min-height: 52px;
-      transition: transform .16s ease, filter .16s ease, box-shadow .16s ease;
-    }
-
-    .btn-primary{
-      color:#fff;
-      background: linear-gradient(135deg, var(--brand-900), var(--brand-600));
-      box-shadow: 0 18px 40px rgba(15,47,36,.22);
-    }
-    .btn-primary:hover{ transform: translateY(-1px); filter: brightness(1.02); }
-
-    .btn-secondary{
-      background: rgba(255,255,255,.95);
-      color: var(--brand-900);
-      border: 1px solid rgba(15,47,36,.16);
-      box-shadow: 0 10px 24px rgba(10,28,21,.10);
-    }
-    .btn-secondary:hover{ transform: translateY(-1px); }
-
-    .btn:disabled{
-      opacity:.52;
-      cursor:not-allowed;
-      transform:none !important;
-      box-shadow:none;
-    }
-
-    /* =========================
-       Progress & status
-    ========================== */
+    /* ✅ Progress */
     .progresswrap{
       margin-top: 12px;
       display:none;
@@ -442,9 +293,6 @@
       color: rgba(13,27,21,.76);
     }
 
-    /* =========================
-       Footer
-    ========================== */
     .footer{
       padding: 12px 16px;
       display:flex;
@@ -459,41 +307,17 @@
     }
     .footer b{ color: var(--brand-900); font-weight: 900; }
 
-    /* =========================
-       Toast
-    ========================== */
-    .toast{
-      position:fixed;
-      left:50%;
-      bottom: max(14px, env(safe-area-inset-bottom));
-      transform: translateX(-50%);
-      background: rgba(13,27,21,.92);
-      color:#fff;
-      padding: 10px 12px;
-      border-radius: 14px;
-      font-size: 13px;
-      box-shadow: 0 18px 40px rgba(0,0,0,.18);
-      display:none;
-      z-index:10;
-      max-width: min(520px, 92vw);
-    }
-
     @media (max-width:560px){
       .title{ font-size: 28px; }
-      .actions{ grid-template-columns: 1fr; }
-      .name{ max-width: 240px; }
-      .items{ max-height: 180px; }
     }
-
     @media (prefers-reduced-motion: reduce){
-      *{ transition:none !important; scroll-behavior:auto !important; }
+      *{ transition:none !important; }
     }
   </style>
 </head>
 
 <body>
   <div class="bg" aria-hidden="true"></div>
-  <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
   <main class="wrap">
     <section class="card" aria-label="Nişan anıları yükleme paneli">
@@ -508,27 +332,15 @@
       </header>
 
       <div class="content">
+        <!-- ✅ Tek tık: seçince otomatik yükle -->
         <label class="dropzone" id="dropzone" for="fileInput" tabindex="0">
           <div class="dz-top">
             <div class="dz-title">📸 Fotoğraf / 🎥 Video seçin</div>
             <div class="pill">Maks: 25 dosya • Toplam: 250 MB</div>
           </div>
-          <p class="dz-hint">Tıklayın veya dosyaları sürükleyip bırakın. Yükleme sırayla yapılır.</p>
+          <p class="dz-hint">Tıklayın → galeriden seçin → otomatik yüklensin.</p>
           <input id="fileInput" type="file" multiple accept="image/*,video/*" />
         </label>
-
-        <div class="panel" id="filePanel">
-          <div class="panel-head">
-            <div id="countLabel">0 dosya</div>
-            <div id="sizeLabel">0 MB</div>
-          </div>
-          <div class="items" id="fileItems"></div>
-        </div>
-
-        <div class="actions">
-          <button class="btn btn-secondary" id="clearBtn" type="button" disabled>🧹 Temizle</button>
-          <button class="btn btn-primary" id="uploadBtn" type="button" disabled>⬆️ Yüklemeyi Başlat</button>
-        </div>
 
         <div class="progresswrap" id="progressWrap">
           <progress id="progress" value="0" max="100"></progress>
@@ -563,23 +375,16 @@
 
   const fileInput    = el("fileInput");
   const dropzone     = el("dropzone");
-  const filePanel    = el("filePanel");
-  const fileItems    = el("fileItems");
-  const countLabel   = el("countLabel");
-  const sizeLabel    = el("sizeLabel");
-  const uploadBtn    = el("uploadBtn");
-  const clearBtn     = el("clearBtn");
   const progressWrap = el("progressWrap");
   const progress     = el("progress");
   const progressText = el("progressText");
   const currentFile  = el("currentFile");
   const statusEl     = el("status");
-  const toastEl      = el("toast");
 
-  let files = [];
+  let busy = false;
 
   /* =========================
-     Helpers
+     Date
   ========================== */
   (function setDate(){
     const d = new Date();
@@ -587,116 +392,29 @@
     el("dateLabel").textContent = `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`;
   })();
 
-  const fmtMB = (bytes) => (bytes / (1024 * 1024)).toFixed(bytes >= 1024 * 1024 ? 1 : 2);
-  const sumBytes = (list) => list.reduce((a,f)=> a + f.size, 0);
+  /* =========================
+     Helpers
+  ========================== */
+  const sumBytes = (list) => list.reduce((a,f)=>a+f.size,0);
+  const isAllowed = (f) => f.type?.startsWith("image/") || f.type?.startsWith("video/");
 
-  function toast(msg){
-    toastEl.textContent = msg;
-    toastEl.style.display = "block";
-    clearTimeout(toast._t);
-    toast._t = setTimeout(()=> toastEl.style.display = "none", 2400);
-  }
-
-  function setStatus(text, kind="default"){
-    statusEl.textContent = text || "";
+  function setStatus(msg, type="default"){
+    statusEl.textContent = msg || "";
     statusEl.style.color =
-      kind === "ok" ? "var(--ok)" :
-      kind === "err" ? "var(--err)" :
+      type === "ok"  ? "var(--ok)" :
+      type === "err" ? "var(--err)" :
       "rgba(13,27,21,.76)";
   }
 
-  function iconFor(file){
-    if(file.type?.startsWith("image/")) return "🖼️";
-    if(file.type?.startsWith("video/")) return "🎬";
-    return "📄";
-  }
+  function validate(files){
+    if(files.length === 0) return {ok:false, msg:"Dosya seçilmedi."};
+    if(files.length > MAX_FILES) return {ok:false, msg:`En fazla ${MAX_FILES} dosya seçebilirsiniz.`};
 
-  function isAllowed(file){
-    return file.type?.startsWith("image/") || file.type?.startsWith("video/");
-  }
-
-  function validate(newFiles){
-    if(newFiles.length > MAX_FILES){
-      setStatus(`En fazla ${MAX_FILES} dosya yükleyebilirsiniz.`, "err");
-      toast(`En fazla ${MAX_FILES} dosya`);
-      return false;
-    }
-    const totalMB = sumBytes(newFiles) / (1024*1024);
+    const totalMB = sumBytes(files) / (1024*1024);
     if(totalMB > MAX_TOTAL_MB){
-      setStatus(`Toplam boyut ${MAX_TOTAL_MB} MB’ı geçemez. (Şu an: ${totalMB.toFixed(1)} MB)`, "err");
-      toast(`Toplam ${MAX_TOTAL_MB} MB sınırı`);
-      return false;
+      return {ok:false, msg:`Toplam boyut ${MAX_TOTAL_MB} MB’ı geçemez. (Şu an: ${totalMB.toFixed(1)} MB)`};
     }
-    return true;
-  }
-
-  function setFiles(newFiles){
-    files = newFiles;
-    render();
-  }
-
-  function render(){
-    fileItems.innerHTML = "";
-
-    if(files.length === 0){
-      filePanel.style.display = "none";
-      uploadBtn.disabled = true;
-      clearBtn.disabled = true;
-      setStatus("");
-      return;
-    }
-
-    filePanel.style.display = "block";
-    uploadBtn.disabled = false;
-    clearBtn.disabled = false;
-
-    countLabel.textContent = `${files.length} dosya`;
-    sizeLabel.textContent = `${fmtMB(sumBytes(files))} MB`;
-
-    for (const [idx, f] of files.entries()){
-      const row = document.createElement("div");
-      row.className = "item";
-
-      const left = document.createElement("div");
-      left.className = "left";
-
-      const ic = document.createElement("div");
-      ic.className = "icon";
-      ic.textContent = iconFor(f);
-
-      const meta = document.createElement("div");
-      meta.className = "meta";
-
-      const name = document.createElement("span");
-      name.className = "name";
-      name.textContent = f.name;
-
-      const sub = document.createElement("span");
-      sub.className = "sub";
-      sub.textContent = `${fmtMB(f.size)} MB • ${f.type || "dosya"}`;
-
-      meta.appendChild(name);
-      meta.appendChild(sub);
-
-      left.appendChild(ic);
-      left.appendChild(meta);
-
-      const btn = document.createElement("button");
-      btn.className = "ghost";
-      btn.type = "button";
-      btn.textContent = "Sil";
-      btn.addEventListener("click", ()=>{
-        files = files.filter((_, i)=> i !== idx);
-        if(files.length === 0) fileInput.value = "";
-        render();
-      });
-
-      row.appendChild(left);
-      row.appendChild(btn);
-      fileItems.appendChild(row);
-    }
-
-    setStatus("Hazır. Yüklemeyi başlatabilirsiniz.");
+    return {ok:true};
   }
 
   function resetProgress(){
@@ -706,24 +424,23 @@
     currentFile.textContent = "-";
   }
 
-  function setBusy(busy){
-    uploadBtn.disabled = busy || files.length === 0;
-    clearBtn.disabled = busy || files.length === 0;
-    fileInput.disabled = busy;
-  }
-
   /* =========================
      Events
   ========================== */
-  fileInput.addEventListener("change", (e)=>{
+  fileInput.addEventListener("change", async (e)=>{
+    if(busy) return;
+
     const picked = [...e.target.files].filter(isAllowed);
-    if(picked.length === 0){
-      setStatus("Sadece fotoğraf veya video seçebilirsiniz.", "err");
-      toast("Sadece fotoğraf/video");
+    const v = validate(picked);
+
+    if(!v.ok){
+      setStatus(v.msg, "err");
+      fileInput.value = "";
       return;
     }
-    if(!validate(picked)) return;
-    setFiles(picked);
+
+    await startUpload(picked);
+    fileInput.value = "";
   });
 
   // Drag & drop
@@ -740,48 +457,37 @@
     });
   });
 
-  dropzone.addEventListener("drop", (e)=>{
+  dropzone.addEventListener("drop", async (e)=>{
+    if(busy) return;
+
     const dropped = [...e.dataTransfer.files].filter(isAllowed);
-    if(dropped.length === 0){
-      setStatus("Sadece fotoğraf veya video bırakabilirsiniz.", "err");
-      toast("Sadece fotoğraf/video");
+    const v = validate(dropped);
+
+    if(!v.ok){
+      setStatus(v.msg || "Sadece fotoğraf/video yükleyebilirsiniz.", "err");
       return;
     }
-    if(!validate(dropped)) return;
-    setFiles(dropped);
-  });
 
-  clearBtn.addEventListener("click", ()=>{
-    files = [];
-    fileInput.value = "";
-    resetProgress();
-    render();
-    toast("Temizlendi");
+    await startUpload(dropped);
   });
-
-  uploadBtn.addEventListener("click", startUpload);
 
   /* =========================
      Upload
   ========================== */
-  async function startUpload(){
-    if(files.length === 0){
-      setStatus("Dosya seçilmedi.", "err");
-      return;
-    }
+  async function startUpload(files){
+    busy = true;
 
-    setBusy(true);
     progressWrap.style.display = "block";
     progress.value = 0;
     progressText.textContent = "0%";
     setStatus("Yükleme başladı…");
 
-    let done = 0;
-
     try{
-      for(const file of files){
-        currentFile.textContent = file.name;
-        await uploadFile(file);
+      let done = 0;
+
+      for(const f of files){
+        currentFile.textContent = f.name;
+        await uploadFile(f);
 
         done++;
         const pct = Math.round((done / files.length) * 100);
@@ -789,20 +495,15 @@
         progressText.textContent = pct + "%";
       }
 
-      setStatus("🎉 Tüm dosyalar başarıyla yüklendi!", "ok");
       currentFile.textContent = "Bitti";
-      toast("Yükleme tamam ✅");
+      setStatus("🎉 Yükleme tamamlandı. Teşekkürler!", "ok");
+      setTimeout(resetProgress, 1400);
 
-      files = [];
-      fileInput.value = "";
-      render();
-      resetProgress();
     }catch(err){
       setStatus("HATA: " + String(err), "err");
+      // progress görünür kalsın (kullanıcı görsün)
     }finally{
-      setBusy(false);
-      // Eğer dosya kalmadıysa butonlar zaten disable olacak (render içinde)
-      render();
+      busy = false;
     }
   }
 
@@ -814,28 +515,44 @@
         try{
           const base64 = String(reader.result).split(",")[1];
 
+          // timeout (donma olmasın)
+          const controller = new AbortController();
+          const t = setTimeout(()=>controller.abort(), 60000);
+
           const res = await fetch(API_URL, {
             method: "POST",
             body: new URLSearchParams({
               file: base64,
               originalName: file.name,
               type: file.type || "application/octet-stream"
-            })
+            }),
+            signal: controller.signal
           });
 
+          clearTimeout(t);
+
           const text = await res.text();
+
+          // JSON dönmüyorsa: Deploy/CORS ihtimali çok yüksek
           let json;
           try { json = JSON.parse(text); }
-          catch { return reject("Sunucu JSON dönmedi. Apps Script Deploy ayarlarını kontrol edin."); }
+          catch {
+            const preview = text.slice(0, 160).replace(/\s+/g," ").trim();
+            return reject("Sunucu JSON dönmedi (Deploy/CORS). Yanıt: " + preview);
+          }
 
-          if(json.status !== "ok") return reject(json.message || "Drive'a kaydedilemedi");
+          if(json.status !== "ok"){
+            return reject(json.message || "Drive'a kaydedilemedi.");
+          }
+
           resolve();
-        }catch{
-          reject("Yükleme hatası (bağlantı veya sunucu).");
+        }catch(e){
+          if(String(e).includes("AbortError")) return reject("Zaman aşımı. İnternet yavaş olabilir.");
+          reject(e?.message || "Yükleme hatası");
         }
       };
 
-      reader.onerror = ()=> reject("Dosya okunamadı");
+      reader.onerror = ()=> reject("Dosya okunamadı.");
       reader.readAsDataURL(file);
     });
   }
