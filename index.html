@@ -8,12 +8,12 @@
 
   <style>
     :root{
-      /* Premium palette */
-      --bg:#eef6f0;
+      /* ✅ Premium palette (daha belirgin) */
+      --bg:#e9f3ee;
       --ink:#0d1b15;
       --muted: rgba(13,27,21,.72);
 
-      --brand-950:#0b231b;
+      --brand-950:#071b14;
       --brand-900:#0f2f24;
       --brand-700:#1e4b3a;
       --brand-600:#2a5c47;
@@ -21,12 +21,13 @@
       --gold:#cbb57e;
       --rose:#d7a7b3;
 
-      --card: rgba(255,255,255,.86);
-      --card-strong: rgba(255,255,255,.92);
-      --stroke: rgba(15,47,36,.12);
+      --card: rgba(255,255,255,.84);
+      --card-strong: rgba(255,255,255,.90);
+      --stroke: rgba(15,47,36,.14);
 
-      --shadow: 0 28px 80px rgba(10,28,21,.18);
-      --shadow-soft: 0 10px 30px rgba(10,28,21,.10);
+      /* ✅ kart gölgesi biraz daha az, arka plan daha görünür */
+      --shadow: 0 22px 70px rgba(10,28,21,.16);
+      --shadow-soft: 0 10px 26px rgba(10,28,21,.09);
 
       --radius-xl: 28px;
       --radius-lg: 18px;
@@ -34,8 +35,8 @@
       --ok:#167a3a;
       --err:#c62828;
 
-      /* ✅ cache kırmak için v= */
-      --bg-image: url("assets/floral-bg.png?v=12");
+      /* ✅ cache kır */
+      --bg-image: url("assets/floral-bg.png?v=20");
     }
 
     *{ box-sizing:border-box; }
@@ -53,38 +54,45 @@
         max(18px, env(safe-area-inset-top))
         14px
         max(22px, env(safe-area-inset-bottom));
-
       display:grid;
       place-items:center;
       overflow-x:hidden;
     }
 
-    /* ✅ Background: arka plan net, ama gözü yormaz */
+    /* ✅ Background (palet NET) */
     .bg{
       position:fixed; inset:0; z-index:0;
-      pointer-events:none;
-      overflow:hidden;
+      pointer-events:none; overflow:hidden;
+
+      /* ✅ palet katmanları (belirgin) */
       background:
-        radial-gradient(1100px 760px at 18% 18%, rgba(214,238,226,.75), transparent 62%),
-        radial-gradient(1100px 760px at 82% 86%, rgba(231,217,224,.42), transparent 62%),
-        linear-gradient(135deg, rgba(245,250,247,.96), rgba(226,242,233,.94));
+        radial-gradient(1150px 780px at 18% 18%, rgba(66, 153, 122, .22), transparent 62%),
+        radial-gradient(1100px 760px at 82% 86%, rgba(215, 167, 179, .18), transparent 62%),
+        radial-gradient(900px 520px at 50% 12%, rgba(203, 181, 126, .12), transparent 70%),
+        linear-gradient(135deg, rgba(240, 249, 245, .96), rgba(220, 241, 231, .94));
     }
+
     .bg::before{
       content:"";
-      position:absolute; inset:-60px;
+      position:absolute; inset:-70px;
       background: var(--bg-image) center/cover no-repeat;
-      opacity:.55; /* ✅ daha görünür */
-      filter: blur(10px) saturate(1.12);
+
+      /* ✅ görseli daha belirgin yap */
+      opacity:.72;
+      filter: blur(8px) saturate(1.20) contrast(1.05);
       transform: scale(1.08);
     }
+
     .bg::after{
       content:"";
       position:absolute; inset:0;
+
+      /* ✅ “süt” katmanını AZALTTIK: arka plan boğulmasın */
       background:
-        radial-gradient(900px 500px at 50% 15%, rgba(255,255,255,.72), transparent 70%),
-        radial-gradient(900px 500px at 50% 95%, rgba(255,255,255,.55), transparent 70%),
-        linear-gradient(180deg, rgba(255,255,255,.40), rgba(255,255,255,.20));
-      opacity:.34; /* ✅ kapatma az */
+        radial-gradient(900px 520px at 50% 10%, rgba(255,255,255,.45), transparent 70%),
+        radial-gradient(900px 520px at 50% 95%, rgba(255,255,255,.30), transparent 70%),
+        linear-gradient(180deg, rgba(255,255,255,.18), rgba(255,255,255,.08));
+      opacity:.24;
     }
 
     .wrap{
@@ -99,7 +107,9 @@
       border: 1px solid var(--stroke);
       box-shadow: var(--shadow);
       overflow:hidden;
-      backdrop-filter: blur(10px);
+
+      /* ✅ blur azalt: arka planı öldürmesin */
+      backdrop-filter: blur(6px);
     }
 
     .header{
@@ -158,9 +168,10 @@
       align-items:center;
       flex-wrap:wrap;
     }
+
     .accent-line{
       height:2px;
-      width:110px;
+      width:120px;
       background: linear-gradient(90deg, transparent, var(--gold), transparent);
       border-radius:999px;
       opacity:.95;
@@ -170,10 +181,11 @@
 
     .content{
       padding: 16px 18px 18px;
-      background: linear-gradient(180deg, rgba(255,255,255,.92), rgba(255,255,255,.86));
+
+      /* ✅ content arkasını biraz şeffaf yaptık */
+      background: linear-gradient(180deg, rgba(255,255,255,.86), rgba(255,255,255,.78));
     }
 
-    /* ✅ Tek tık dropzone */
     .dropzone{
       display:block;
       width:100%;
@@ -234,13 +246,12 @@
     }
     input[type=file]{ display:none; }
 
-    /* ✅ Progress */
     .progresswrap{
       margin-top: 12px;
       display:none;
       border-radius: var(--radius-lg);
       border: 1px solid rgba(15,47,36,.12);
-      background: rgba(255,255,255,.88);
+      background: rgba(255,255,255,.84);
       padding: 12px;
     }
     progress{
@@ -288,7 +299,9 @@
       gap:10px;
       flex-wrap:wrap;
       border-top: 1px solid rgba(15,47,36,.10);
-      background: rgba(15,47,36,.035);
+
+      /* ✅ footer’ı da şeffaf yaptık */
+      background: rgba(255,255,255,.50);
       font-size: 12px;
       color: rgba(13,27,21,.76);
     }
@@ -347,7 +360,6 @@
   </main>
 
 <script>
-  /* ✅ Buraya Apps Script Web App URL’in (seninki) */
   const API_URL = "https://script.google.com/macros/s/AKfycbwIgq1XMRIH4l0nubP-5HRUl9Znq2MzimEGLlRGzoiKJnSjXe3UYs9KYUlI3XdlL2kw/exec";
 
   const MAX_FILES = 25;
@@ -401,7 +413,6 @@
 
   fileInput.addEventListener("change", async (e)=>{
     if(busy) return;
-
     const picked = [...e.target.files].filter(isAllowed);
     const v = validate(picked);
 
@@ -438,7 +449,6 @@
       setStatus(v.msg || "Sadece fotoğraf/video yükleyebilirsiniz.", "err");
       return;
     }
-
     await startUpload(dropped);
   });
 
@@ -466,7 +476,6 @@
       currentFile.textContent = "Bitti";
       setStatus("🎉 Yükleme tamamlandı. Teşekkürler!", "ok");
       setTimeout(resetProgress, 1200);
-
     }catch(err){
       setStatus("HATA: " + String(err), "err");
     }finally{
@@ -477,7 +486,6 @@
   function uploadFile(file){
     return new Promise((resolve, reject)=>{
       const reader = new FileReader();
-
       reader.onload = async ()=>{
         try{
           const base64 = String(reader.result).split(",")[1];
@@ -512,7 +520,6 @@
           reject(e?.message || "Yükleme hatası");
         }
       };
-
       reader.onerror = ()=> reject("Dosya okunamadı.");
       reader.readAsDataURL(file);
     });
