@@ -8,186 +8,99 @@
 
   <style>
     :root{
+      /* Palette */
+      --forest-950:#071b14;
+      --forest-900:#0f2f24;
+      --forest-700:#1e4b3a;
+      --forest-600:#2a5c47;
+
+      --gold:#cbb57e;
+      --blush:#d7a7b3;
+
       --ink:#0d1b15;
       --muted: rgba(13,27,21,.72);
 
-      --brand-950:#071b14;
-      --brand-900:#0f2f24;
-      --brand-600:#2a5c47;
-      --gold:#cbb57e;
-
-      --card: rgba(255,255,255,.92);
+      --panel: rgba(255,255,255,.90);
+      --panel-2: rgba(255,255,255,.82);
       --stroke: rgba(15,47,36,.14);
-      --shadow: 0 22px 70px rgba(10,28,21,.16);
 
-      --radius-xl: 28px;
-      --radius-lg: 18px;
+      --shadow: 0 24px 80px rgba(10,28,21,.18);
+      --shadow-soft: 0 12px 28px rgba(10,28,21,.10);
+
+      --r-xl: 28px;
+      --r-lg: 18px;
 
       --ok:#167a3a;
       --err:#c62828;
 
       /* ✅ cache kır */
-      --floral: url("assets/floral-bg.png?v=700");
+      --floral: url("assets/floral-bg.png?v=900");
     }
 
     *{ box-sizing:border-box; }
     html,body{ height:100%; }
-
     body{
       margin:0;
       font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
       color: var(--ink);
       min-height: 100dvh;
-
-      padding:
-        max(18px, env(safe-area-inset-top))
-        14px
-        max(22px, env(safe-area-inset-bottom));
-
+      padding: max(18px, env(safe-area-inset-top)) 14px max(22px, env(safe-area-inset-bottom));
       display:grid;
       place-items:center;
       overflow-x:hidden;
-
-      background: #eaf4ee;
+      background:#eaf4ee;
     }
 
-    /* ✅ PREMIUM BACKGROUND: 4 köşe + paper + soft gradients (no stretch) */
+    /* =========================
+       PREMIUM BACKGROUND SYSTEM
+       4 corner + 4 side ornaments
+       (No stretch, no overlap)
+       ========================= */
     .bg{
-      position:fixed;
-      inset:0;
-      z-index:0;
+      position:fixed; inset:0; z-index:0;
       pointer-events:none;
-      min-height:100dvh;
-
-      /* Katman sırası: en üstte köşeler, sonra paper, sonra gradient */
-      background-image:
-        /* Köşeler (aynı görsel, farklı anchor) */
-        var(--floral),
-        var(--floral),
-        var(--floral),
-        var(--floral),
-
-        /* Paper hissi */
-        radial-gradient(1200px 700px at 50% 20%, rgba(255,255,255,.85), transparent 68%),
-        radial-gradient(1200px 700px at 50% 90%, rgba(255,255,255,.72), transparent 68%),
-
-        /* Palet */
-        radial-gradient(1100px 760px at 18% 18%, rgba(66,153,122,.18), transparent 62%),
+      background:
+        radial-gradient(1100px 760px at 18% 18%, rgba(66,153,122,.16), transparent 62%),
         radial-gradient(1100px 760px at 82% 86%, rgba(215,167,179,.12), transparent 62%),
         radial-gradient(900px 520px at 50% 12%, rgba(203,181,126,.10), transparent 70%),
         linear-gradient(135deg, rgba(240,249,245,.98), rgba(220,241,231,.96));
-
-      background-repeat:
-        no-repeat,
-        no-repeat,
-        no-repeat,
-        no-repeat,
-
-        no-repeat,
-        no-repeat,
-
-        no-repeat,
-        no-repeat,
-        no-repeat,
-        no-repeat;
-
-      /* Köşelere sabitle */
-      background-position:
-        left top,
-        right top,
-        left bottom,
-        right bottom,
-
-        center top,
-        center bottom,
-
-        18% 18%,
-        82% 86%,
-        50% 12%,
-        center;
-
-      /* ✅ Köşe görselleri: cihazdan bağımsız “maksimum boyut” */
-      background-size:
-        720px auto,  /* left top */
-        720px auto,  /* right top */
-        720px auto,  /* left bottom */
-        720px auto,  /* right bottom */
-
-        100% 100%,
-        100% 100%,
-
-        100% 100%,
-        100% 100%,
-        100% 100%,
-        100% 100%;
     }
 
-    /* Telefonlarda köşe boyutu küçülsün */
-    @media (max-width: 560px){
-      .bg{
-        background-size:
-          520px auto,
-          520px auto,
-          520px auto,
-          520px auto,
-
-          100% 100%,
-          100% 100%,
-
-          100% 100%,
-          100% 100%,
-          100% 100%,
-          100% 100%;
-      }
+    .orn{
+      position:absolute;
+      opacity:.55;
+      filter: saturate(1.08) contrast(1.02);
+      background-image: var(--floral);
+      background-repeat:no-repeat;
+      /* Her orn kendi position’unu ayarlıyor */
+      background-size: clamp(820px, 110vw, 1400px) auto;
     }
 
-    /* Çok küçük telefonlarda daha da küçült */
-    @media (max-width: 380px){
-      .bg{
-        background-size:
-          460px auto,
-          460px auto,
-          460px auto,
-          460px auto,
+    /* Köşeler */
+    .orn.tl{ left:-10px; top:-10px; width: clamp(220px, 36vw, 520px); height: clamp(220px, 36vw, 520px); background-position: left top; }
+    .orn.tr{ right:-10px; top:-10px; width: clamp(220px, 36vw, 520px); height: clamp(220px, 36vw, 520px); background-position: right top; }
+    .orn.bl{ left:-10px; bottom:-10px; width: clamp(220px, 36vw, 520px); height: clamp(220px, 36vw, 520px); background-position: left bottom; }
+    .orn.br{ right:-10px; bottom:-10px; width: clamp(220px, 36vw, 520px); height: clamp(220px, 36vw, 520px); background-position: right bottom; }
 
-          100% 100%,
-          100% 100%,
+    /* Kenarlar (telefonlarda ortayı doldurur, “tek taraf görünüyor” biter) */
+    .orn.top{ left:50%; top:-18px; transform:translateX(-50%); width: clamp(260px, 50vw, 560px); height: clamp(160px, 24vw, 280px); background-position: center top; opacity:.33; }
+    .orn.bot{ left:50%; bottom:-18px; transform:translateX(-50%); width: clamp(260px, 50vw, 560px); height: clamp(160px, 24vw, 280px); background-position: center bottom; opacity:.33; }
+    .orn.left{ left:-22px; top:50%; transform:translateY(-50%); width: clamp(160px, 24vw, 280px); height: clamp(260px, 50vw, 560px); background-position: left center; opacity:.28; }
+    .orn.right{ right:-22px; top:50%; transform:translateY(-50%); width: clamp(160px, 24vw, 280px); height: clamp(260px, 50vw, 560px); background-position: right center; opacity:.28; }
 
-          100% 100%,
-          100% 100%,
-          100% 100%,
-          100% 100%;
-      }
+    /* Çok küçük telefonlarda çakışma olmasın diye side orn biraz küçülsün */
+    @media (max-width:380px){
+      .orn.top,.orn.bot{ width: 78vw; }
+      .orn.left,.orn.right{ height: 78vw; }
     }
 
-    /* Büyük ekran: köşeler daha büyük */
-    @media (min-width: 1200px){
-      .bg{
-        background-size:
-          860px auto,
-          860px auto,
-          860px auto,
-          860px auto,
-
-          100% 100%,
-          100% 100%,
-
-          100% 100%,
-          100% 100%,
-          100% 100%,
-          100% 100%;
-      }
-    }
-
-    .wrap{
-      width:min(860px, 100%);
-      position:relative;
-      z-index:1;
-    }
-
+    /* =========================
+       LAYOUT
+       ========================= */
+    .wrap{ width:min(920px, 100%); position:relative; z-index:1; }
     .card{
-      border-radius: var(--radius-xl);
-      background: var(--card);
+      border-radius: var(--r-xl);
+      background: var(--panel-2);
       border: 1px solid var(--stroke);
       box-shadow: var(--shadow);
       overflow:hidden;
@@ -195,7 +108,7 @@
 
     .header{
       padding: 18px 18px 16px;
-      background: linear-gradient(135deg, var(--brand-950), var(--brand-600));
+      background: linear-gradient(135deg, var(--forest-950), var(--forest-600));
       color:#fff;
       position:relative;
     }
@@ -218,7 +131,6 @@
       position:relative;
       z-index:1;
     }
-
     .chip{
       display:inline-flex;
       align-items:center;
@@ -230,7 +142,6 @@
       border: 1px solid rgba(255,255,255,.22);
       white-space:nowrap;
     }
-
     .date{ font-size:12px; opacity:.92; white-space:nowrap; }
 
     .title{
@@ -239,7 +150,6 @@
       letter-spacing:.2px;
       position:relative; z-index:1;
     }
-
     .subtitle{
       margin:0;
       font-size: 14px;
@@ -251,10 +161,9 @@
       align-items:center;
       flex-wrap:wrap;
     }
-
     .accent-line{
       height:2px;
-      width:120px;
+      width:140px;
       background: linear-gradient(90deg, transparent, var(--gold), transparent);
       border-radius:999px;
       opacity:.95;
@@ -264,28 +173,32 @@
 
     .content{
       padding: 16px 18px 18px;
-      background: rgba(255,255,255,.92);
+      background: rgba(255,255,255,.70);
     }
 
+    /* Dropzone (uyumlu renkler) */
     .dropzone{
       display:block;
       width:100%;
-      border-radius: var(--radius-lg);
-      border: 1.5px dashed rgba(15,47,36,.42);
-      background: rgba(255,255,255,.96);
+      border-radius: var(--r-lg);
+      border: 1.5px dashed rgba(15,47,36,.38);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.95), rgba(255,255,255,.90));
       padding: 16px;
       cursor:pointer;
       user-select:none;
-      transition: transform .16s ease, border-color .16s ease;
+      transition: transform .16s ease, border-color .16s ease, box-shadow .16s ease, background .16s ease;
+      box-shadow: var(--shadow-soft);
       outline:none;
     }
     .dropzone:hover{
       transform: translateY(-1px);
-      border-color: rgba(15,47,36,.65);
+      border-color: rgba(15,47,36,.58);
     }
     .dropzone.dragover{
-      background: rgba(231, 246, 239, .96);
-      border-color: rgba(15,47,36,.90);
+      background:
+        linear-gradient(180deg, rgba(231,246,239,.98), rgba(255,255,255,.92));
+      border-color: rgba(15,47,36,.85);
       transform: translateY(-1px);
     }
 
@@ -302,12 +215,12 @@
       align-items:center;
       gap:10px;
       font-weight: 900;
-      color: var(--brand-900);
+      color: var(--forest-900);
       font-size: 15px;
     }
     .pill{
       font-size: 12px;
-      color: rgba(13,27,21,.72);
+      color: rgba(13,27,21,.74);
       background: rgba(15,47,36,.06);
       border: 1px solid rgba(15,47,36,.10);
       padding: 6px 10px;
@@ -316,11 +229,149 @@
     }
     .dz-hint{
       margin:0;
-      color: rgba(13,27,21,.70);
+      color: rgba(13,27,21,.72);
       font-size: 13px;
       line-height:1.45;
     }
     input[type=file]{ display:none; }
+
+    /* Preview list */
+    .preview{
+      margin-top: 14px;
+      display:none;
+      border-radius: var(--r-lg);
+      border: 1px solid rgba(15,47,36,.12);
+      background: rgba(255,255,255,.86);
+      overflow:hidden;
+    }
+    .preview-head{
+      padding: 10px 12px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+      font-size: 12px;
+      color: rgba(13,27,21,.72);
+      background: rgba(15,47,36,.05);
+      border-bottom: 1px solid rgba(15,47,36,.10);
+    }
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      padding: 12px;
+    }
+    @media (max-width:720px){
+      .grid{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width:420px){
+      .grid{ grid-template-columns: 1fr; }
+    }
+
+    .item{
+      border-radius: 16px;
+      border: 1px solid rgba(15,47,36,.12);
+      background: rgba(255,255,255,.92);
+      overflow:hidden;
+      box-shadow: 0 10px 22px rgba(10,28,21,.08);
+      display:flex;
+      flex-direction:column;
+      min-height: 168px;
+    }
+    .thumb{
+      position:relative;
+      aspect-ratio: 16 / 10;
+      background: rgba(15,47,36,.06);
+      overflow:hidden;
+    }
+    .thumb img, .thumb video{
+      width:100%;
+      height:100%;
+      object-fit: cover;
+      display:block;
+    }
+    .badge{
+      position:absolute;
+      left:10px; top:10px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      background: rgba(7,27,20,.70);
+      color:#fff;
+      border: 1px solid rgba(255,255,255,.18);
+      backdrop-filter: blur(4px);
+    }
+    .meta{
+      padding: 10px 10px 12px;
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      gap:10px;
+    }
+    .name{
+      min-width:0;
+    }
+    .name b{
+      display:block;
+      font-size: 13px;
+      font-weight: 900;
+      color: var(--forest-900);
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      max-width: 100%;
+    }
+    .name span{
+      display:block;
+      font-size: 12px;
+      color: rgba(13,27,21,.68);
+      margin-top: 2px;
+    }
+    .remove{
+      border:none;
+      cursor:pointer;
+      background: rgba(255,255,255,.96);
+      border: 1px solid rgba(15,47,36,.14);
+      color: rgba(13,27,21,.80);
+      border-radius: 12px;
+      padding: 8px 10px;
+      font-weight: 900;
+      flex:0 0 auto;
+    }
+
+    /* Actions */
+    .actions{
+      margin-top: 12px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    .btn{
+      border:none;
+      cursor:pointer;
+      border-radius: 16px;
+      padding: 12px 14px;
+      font-weight: 950;
+      font-size: 14px;
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      transition: transform .16s ease, opacity .16s ease;
+      min-height: 48px;
+    }
+    .btn:disabled{ opacity:.55; cursor:not-allowed; transform:none; }
+    .btn:hover{ transform: translateY(-1px); }
+
+    .btn.primary{
+      color:#fff;
+      background: linear-gradient(135deg, var(--forest-950), var(--forest-600));
+      box-shadow: 0 16px 36px rgba(15,47,36,.22);
+    }
+    .btn.secondary{
+      color: var(--forest-900);
+      background: rgba(255,255,255,.92);
+      border: 1px solid rgba(15,47,36,.16);
+    }
 
     .status{
       margin-top: 10px;
@@ -338,11 +389,28 @@
       gap:10px;
       flex-wrap:wrap;
       border-top: 1px solid rgba(15,47,36,.10);
-      background: rgba(255,255,255,.92);
+      background: rgba(255,255,255,.78);
       font-size: 12px;
       color: rgba(13,27,21,.76);
     }
-    .footer b{ color: var(--brand-900); font-weight: 900; }
+    .footer b{ color: var(--forest-900); font-weight: 900; }
+
+    /* Toast */
+    .toast{
+      position:fixed;
+      left:50%;
+      bottom: max(14px, env(safe-area-inset-bottom));
+      transform: translateX(-50%);
+      background: rgba(7,27,20,.88);
+      color:#fff;
+      padding: 10px 12px;
+      border-radius: 14px;
+      font-size: 13px;
+      box-shadow: 0 18px 40px rgba(0,0,0,.18);
+      display:none;
+      z-index:10;
+      max-width: min(520px, 92vw);
+    }
 
     @media (max-width:560px){
       .title{ font-size: 28px; }
@@ -351,7 +419,19 @@
 </head>
 
 <body>
-  <div class="bg" aria-hidden="true"></div>
+  <div class="bg" aria-hidden="true">
+    <!-- köşe + kenar süsleri -->
+    <div class="orn tl"></div>
+    <div class="orn tr"></div>
+    <div class="orn bl"></div>
+    <div class="orn br"></div>
+    <div class="orn top"></div>
+    <div class="orn bot"></div>
+    <div class="orn left"></div>
+    <div class="orn right"></div>
+  </div>
+
+  <div class="toast" id="toast"></div>
 
   <main class="wrap">
     <section class="card">
@@ -369,11 +449,24 @@
         <label class="dropzone" id="dropzone" for="fileInput">
           <div class="dz-top">
             <div class="dz-title">📸 Fotoğraf / 🎥 Video seçin</div>
-            <div class="pill">Maks: 25 dosya • Toplam: 250 MB</div>
+            <div class="pill" id="limits">Maks: 25 dosya • Toplam: 250 MB</div>
           </div>
-          <p class="dz-hint">Tıklayın → galeriden seçin → otomatik yüklensin.</p>
+          <p class="dz-hint">Tıklayın veya sürükleyip bırakın. Göndermeden önce önizleme göreceksiniz.</p>
           <input id="fileInput" type="file" multiple accept="image/*,video/*" />
         </label>
+
+        <div class="preview" id="preview">
+          <div class="preview-head">
+            <div id="countLabel">0 dosya</div>
+            <div id="sizeLabel">0 MB</div>
+          </div>
+          <div class="grid" id="grid"></div>
+        </div>
+
+        <div class="actions">
+          <button class="btn secondary" id="clearBtn" type="button" disabled>🧹 Temizle</button>
+          <button class="btn primary" id="uploadBtn" type="button" disabled>⬆️ Gönder</button>
+        </div>
 
         <div class="status" id="status"></div>
       </div>
@@ -387,103 +480,280 @@
 
 <script>
   const API_URL = "https://script.google.com/macros/s/AKfycbwIgq1XMRIH4l0nubP-5HRUl9Znq2MzimEGLlRGzoiKJnSjXe3UYs9KYUlI3XdlL2kw/exec";
+
   const MAX_FILES = 25;
   const MAX_TOTAL_MB = 250;
 
   const el = (id)=>document.getElementById(id);
+
   const fileInput = el("fileInput");
   const dropzone  = el("dropzone");
+  const preview   = el("preview");
+  const grid      = el("grid");
+  const countLabel= el("countLabel");
+  const sizeLabel = el("sizeLabel");
+  const uploadBtn = el("uploadBtn");
+  const clearBtn  = el("clearBtn");
   const statusEl  = el("status");
-  let busy = false;
+  const toastEl   = el("toast");
 
+  let files = [];       // File list
+  let urls  = new Map(); // fileKey -> objectURL
+  let busy  = false;
+
+  // Date label
   (function setDate(){
     const d = new Date();
     const months = ["Ocak","Şubat","Mart","Nisan","Mayıs","Haziran","Temmuz","Ağustos","Eylül","Ekim","Kasım","Aralık"];
     el("dateLabel").textContent = `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`;
   })();
 
-  const sumBytes = (list)=> list.reduce((a,f)=>a+f.size,0);
-  const isAllowed = (f)=> f.type?.startsWith("image/") || f.type?.startsWith("video/");
+  function showToast(msg){
+    toastEl.textContent = msg;
+    toastEl.style.display = "block";
+    clearTimeout(showToast._t);
+    showToast._t = setTimeout(()=> toastEl.style.display = "none", 2400);
+  }
 
   function setStatus(msg, type="default"){
     statusEl.textContent = msg || "";
-    statusEl.style.color = (type==="err") ? "var(--err)" : "rgba(13,27,21,.72)";
+    statusEl.style.color =
+      type === "ok"  ? "var(--ok)" :
+      type === "err" ? "var(--err)" :
+      "rgba(13,27,21,.72)";
   }
 
-  function validate(files){
-    if(files.length===0) return {ok:false, msg:"Dosya seçilmedi."};
-    if(files.length>MAX_FILES) return {ok:false, msg:`En fazla ${MAX_FILES} dosya seçebilirsiniz.`};
-    const totalMB = sumBytes(files)/(1024*1024);
-    if(totalMB>MAX_TOTAL_MB) return {ok:false, msg:`Toplam ${MAX_TOTAL_MB} MB sınırı aşıldı.`};
+  function formatMB(bytes){
+    const mb = bytes / (1024*1024);
+    return mb >= 10 ? mb.toFixed(0) : mb.toFixed(1);
+  }
+
+  function totalBytes(list){ return list.reduce((a,f)=>a+f.size,0); }
+  function isAllowed(f){ return f.type?.startsWith("image/") || f.type?.startsWith("video/"); }
+  function keyOf(f){ return `${f.name}__${f.size}__${f.lastModified}`; }
+
+  function clearAll(){
+    // revoke URLs
+    for(const u of urls.values()) URL.revokeObjectURL(u);
+    urls.clear();
+    files = [];
+    fileInput.value = "";
+    render();
+    setStatus("");
+  }
+
+  function validate(list){
+    if(list.length === 0) return {ok:false, msg:"Dosya seçilmedi."};
+    if(list.length > MAX_FILES) return {ok:false, msg:`En fazla ${MAX_FILES} dosya seçebilirsiniz.`};
+    const mb = totalBytes(list)/(1024*1024);
+    if(mb > MAX_TOTAL_MB) return {ok:false, msg:`Toplam boyut ${MAX_TOTAL_MB} MB’ı geçemez. (Şu an: ${mb.toFixed(1)} MB)`};
     return {ok:true};
   }
 
-  fileInput.addEventListener("change", async (e)=>{
+  function render(){
+    grid.innerHTML = "";
+
+    if(files.length === 0){
+      preview.style.display = "none";
+      uploadBtn.disabled = true;
+      clearBtn.disabled = true;
+      return;
+    }
+
+    preview.style.display = "block";
+    uploadBtn.disabled = busy;
+    clearBtn.disabled = busy;
+
+    countLabel.textContent = `${files.length} dosya`;
+    sizeLabel.textContent  = `${formatMB(totalBytes(files))} MB`;
+
+    files.forEach((f, idx)=>{
+      const k = keyOf(f);
+      if(!urls.has(k)) urls.set(k, URL.createObjectURL(f));
+      const url = urls.get(k);
+
+      const card = document.createElement("div");
+      card.className = "item";
+
+      const thumb = document.createElement("div");
+      thumb.className = "thumb";
+
+      const badge = document.createElement("div");
+      badge.className = "badge";
+      badge.textContent = f.type?.startsWith("video/") ? "🎥 Video" : "📷 Fotoğraf";
+
+      if(f.type?.startsWith("image/")){
+        const img = document.createElement("img");
+        img.src = url;
+        img.alt = f.name;
+        thumb.appendChild(img);
+      }else{
+        const vid = document.createElement("video");
+        vid.src = url;
+        vid.muted = true;
+        vid.playsInline = true;
+        vid.preload = "metadata";
+        thumb.appendChild(vid);
+      }
+
+      thumb.appendChild(badge);
+
+      const meta = document.createElement("div");
+      meta.className = "meta";
+
+      const name = document.createElement("div");
+      name.className = "name";
+      const b = document.createElement("b");
+      b.textContent = f.name;
+      const s = document.createElement("span");
+      s.textContent = `${formatMB(f.size)} MB • ${f.type || "dosya"}`;
+      name.appendChild(b);
+      name.appendChild(s);
+
+      const rm = document.createElement("button");
+      rm.className = "remove";
+      rm.type = "button";
+      rm.textContent = "Sil";
+      rm.onclick = ()=>{
+        if(busy) return;
+        // revoke url
+        const kk = keyOf(files[idx]);
+        if(urls.has(kk)){ URL.revokeObjectURL(urls.get(kk)); urls.delete(kk); }
+        files = files.filter((_, i)=> i !== idx);
+        render();
+        showToast("Silindi");
+      };
+
+      meta.appendChild(name);
+      meta.appendChild(rm);
+
+      card.appendChild(thumb);
+      card.appendChild(meta);
+
+      grid.appendChild(card);
+    });
+  }
+
+  // File pick
+  fileInput.addEventListener("change", (e)=>{
     if(busy) return;
     const picked = [...e.target.files].filter(isAllowed);
     const v = validate(picked);
-    if(!v.ok){ setStatus(v.msg,"err"); fileInput.value=""; return; }
-    await startUpload(picked);
-    fileInput.value="";
+    if(!v.ok){
+      setStatus(v.msg, "err");
+      fileInput.value = "";
+      return;
+    }
+    clearAll();
+    files = picked;
+    setStatus("Önizleme hazır. İsterseniz bazılarını silip sonra “Gönder” diyebilirsiniz.");
+    render();
   });
 
+  // Drag&drop
   ["dragenter","dragover"].forEach(ev=>{
-    dropzone.addEventListener(ev,(e)=>{
+    dropzone.addEventListener(ev, (e)=>{
       e.preventDefault(); e.stopPropagation();
       dropzone.classList.add("dragover");
     });
   });
   ["dragleave","drop"].forEach(ev=>{
-    dropzone.addEventListener(ev,(e)=>{
+    dropzone.addEventListener(ev, (e)=>{
       e.preventDefault(); e.stopPropagation();
       dropzone.classList.remove("dragover");
     });
   });
-  dropzone.addEventListener("drop", async (e)=>{
+  dropzone.addEventListener("drop", (e)=>{
     if(busy) return;
     const dropped = [...e.dataTransfer.files].filter(isAllowed);
     const v = validate(dropped);
-    if(!v.ok){ setStatus(v.msg,"err"); return; }
-    await startUpload(dropped);
+    if(!v.ok){
+      setStatus(v.msg || "Sadece fotoğraf/video ekleyebilirsiniz.", "err");
+      return;
+    }
+    clearAll();
+    files = dropped;
+    setStatus("Önizleme hazır. İsterseniz bazılarını silip sonra “Gönder” diyebilirsiniz.");
+    render();
   });
 
-  async function startUpload(files){
+  // Buttons
+  clearBtn.addEventListener("click", ()=>{
+    if(busy) return;
+    clearAll();
+    showToast("Temizlendi");
+  });
+
+  uploadBtn.addEventListener("click", async ()=>{
+    if(busy) return;
+    if(files.length === 0){
+      setStatus("Dosya seçilmedi.", "err");
+      return;
+    }
+
     busy = true;
-    setStatus("");
+    uploadBtn.disabled = true;
+    clearBtn.disabled = true;
+    fileInput.disabled = true;
+
     try{
-      for(const f of files) await uploadFile(f);
+      setStatus("Yükleme başladı…");
+      let done = 0;
+
+      for(const f of files){
+        await uploadFile(f);
+        done++;
+        setStatus(`Yükleniyor… (${done}/${files.length})`);
+      }
+
+      setStatus("🎉 Başarıyla gönderildi. Teşekkürler!", "ok");
+      showToast("Gönderildi ✅");
+
+      // temizle
+      clearAll();
+
     }catch(err){
       setStatus("HATA: " + String(err), "err");
+      showToast("Hata oluştu");
     }finally{
       busy = false;
+      uploadBtn.disabled = files.length === 0;
+      clearBtn.disabled = files.length === 0;
+      fileInput.disabled = false;
+      render();
     }
-  }
+  });
 
   function uploadFile(file){
-    return new Promise((resolve,reject)=>{
+    return new Promise((resolve, reject)=>{
       const reader = new FileReader();
+
       reader.onload = async ()=>{
         try{
           const base64 = String(reader.result).split(",")[1];
-          const res = await fetch(API_URL,{
-            method:"POST",
+
+          const res = await fetch(API_URL, {
+            method: "POST",
             body: new URLSearchParams({
               file: base64,
               originalName: file.name,
               type: file.type || "application/octet-stream"
             })
           });
+
           const text = await res.text();
           let json;
           try{ json = JSON.parse(text); }
-          catch{ return reject("Sunucu JSON dönmedi."); }
-          if(json.status!=="ok") return reject(json.message || "Drive'a kaydedilemedi.");
+          catch{ return reject("Sunucu JSON dönmedi. Deploy/izin kontrol edin."); }
+
+          if(json.status !== "ok") return reject(json.message || "Drive'a kaydedilemedi.");
           resolve();
         }catch(e){
           reject(e?.message || "Yükleme hatası");
         }
       };
-      reader.onerror = ()=>reject("Dosya okunamadı.");
+
+      reader.onerror = ()=> reject("Dosya okunamadı.");
       reader.readAsDataURL(file);
     });
   }
